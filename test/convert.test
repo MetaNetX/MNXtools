@@ -1,5 +1,5 @@
 TEST=CONVERT
-../bin/convert_mnet.pl -V ../cache/ChemSpace.bindump $MNET/unmapped $TMP \
-&& ./mnet_diff.pl $MNET/mapped $MNET/mapped
+$PERL ../bin/convert_mnet.pl $MNET/unmapped $TMP \
+&& $PERL ./mnet_diff.pl $MNET/mapped $MNET/mapped
 
 
