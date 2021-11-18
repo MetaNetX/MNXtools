@@ -6,7 +6,7 @@ use warnings;
 use diagnostics;
 
 use FindBin qw( $RealBin );
-use lib "$RealBin/../perl";
+use lib "$RealBin/../perl/SBML";
 use Formaters;
 
 sub parse_notes {
