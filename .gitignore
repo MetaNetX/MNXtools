@@ -1,1 +1,2 @@
-*.sif
+nohup.out*
+*.swp
