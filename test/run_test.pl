@@ -13,7 +13,7 @@ my $tb = Toolbox->new();
 my $usage = "$0 [option] test_file...
 
 options: -h           this help
-         -t <regexp>  only execute test with that name (all by default)
+         -t <regexp>  execute the test with matching name(s) (all by default)
 ";
 
 my %opt;  # GLOBAL: to store the options
@@ -23,8 +23,6 @@ if( $opt{'h'} or @ARGV == 0 ){
     exit 0;
 }
 $opt{t} = '.'  unless $opt{t};
-
-
 
 my %test_info = ();
 my %elapsed   = ();
@@ -51,28 +49,26 @@ while( <> ){
 	}
 }
 
-# foreach my $mnet_path ( @mnet_path ){
-    foreach my $test_id ( sort { $test_info{$a}{rank} <=> $test_info{$b}{rank} } keys %test_info ){
-        unless( $test_id =~ /$opt{t}/o ){
-            $tb->report( 'skip', $test_id );
-            next;
-        }
-        my @cmd = (
-            'TEST_NAME=' . $test_id,
-            'SOFT='  . '../..',
-            'TMP='   . $ENV{TMP},
-            'REF='   . $ENV{REF},
-            'NCORE=' . $ENV{NCORE},
-            );
-        push @cmd, $ENV{INIT} if $ENV{INIT};
-        push @cmd, $test_info{$test_id}{cmd};
-        my $t0 = time();
-        warn "\n";
-        $tb->system( join "\n", @cmd );
-        $test_info{$test_id}{elapsed} = time() - $t0;
-        $tb->report( $test_id, $test_info{$test_id}{elapsed} . ' s');
+foreach my $test_id ( sort { $test_info{$a}{rank} <=> $test_info{$b}{rank} } keys %test_info ){
+    unless( $test_id =~ /$opt{t}/o ){
+        $tb->report( 'skip', $test_id );
+        next;
     }
-# }
+    my @cmd = (
+        'TEST_NAME=' . $test_id,
+        'SOFT='  . '../..',
+        'TMP='   . $ENV{TMP},
+        'MNET='   . $ENV{MNET},
+        'NCORE=' . $ENV{NCORE},
+    );
+    push @cmd, $ENV{INIT} if $ENV{INIT};
+    push @cmd, $test_info{$test_id}{cmd};
+    my $t0 = time();
+    warn "\n";
+    $tb->system( join "\n", @cmd );
+    $test_info{$test_id}{elapsed} = time() - $t0;
+    $tb->report( $test_id, $test_info{$test_id}{elapsed} . ' s');
+}
 
 warn "\n";
 $tb->report( '', '### Test Summary ###' );
