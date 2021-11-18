@@ -1,0 +1,14 @@
+TEST=CONVERT
+&& ../bin/convert_mnet.pl ../examples/ECOLI/bigg_iML1515/unmapped \
+| grep -v '#' \
+| sort -k 1 \
+> $TMP/RKO.tsv \
+&& ./tab_diff.pl -t 1e-3 s..r $TMP/RKO.tsv $REF/RKO.tsv
+
+TEST=PKO
+$SOFT/perl/util/run_gurobi.pl -n $NCORE -t $TMP -a PKO $REF - \
+| grep -v '#' \
+| sort -k 1 \
+> $TMP/PKO.tsv \
+&& ./tab_diff.pl -t 1e-3 s..r $TMP/PKO.tsv $REF/PKO.tsv
+
