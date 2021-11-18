@@ -29,7 +29,7 @@ LABEL mnx.lang.r.version="4.1.2"
 RUN echo '# OS update' \
 	&& export DEBIAN_FRONTEND=noninteractive \
 	&& apt-get update  -y \
-	&& apt-get install -y --no-install-recommends perl libperl-dev liblog-log4perl-perl libdigest-crc-perl libtest-simple-perl libmath-bigint-perl wget cmake make libexpat1-dev swig libbz2-dev zlib1g-dev liblzma-dev check gcc g++ gfortran python3 libexpat1 libbz2-1.0 zlib1g liblzma5 parallel patchelf gnupg apt-utils ca-certificates libterm-readline-gnu-perl readline-common software-properties-common dirmngr \
+	&& apt-get install -y --no-install-recommends perl libperl-dev liblog-log4perl-perl libdigest-crc-perl libtest-simple-perl libmath-bigint-perl wget cmake make libexpat1-dev swig libbz2-dev zlib1g-dev liblzma-dev check gcc g++ gfortran python3 libexpat1 libbz2-1.0 zlib1g liblzma5 parallel patchelf gnupg apt-utils ca-certificates libterm-readline-gnu-perl readline-common software-properties-common dirmngr git git-lfs \
 	&&        echo '# Install R (in a non-interactive way)' \
 	&& echo '# See https://cran.r-project.org/bin/linux/ubuntu/' \
 	&& echo '# Signature of Ubuntu archives on CRAN' \
@@ -40,8 +40,12 @@ RUN echo '# OS update' \
 	&& apt-get install -y  build-essential libssl-dev libncurses5-dev libcurl4-openssl-dev liblzma-dev libbz2-dev libboost-all-dev sqlite3 libsqlite3-0 libsqlite3-dev libgsl0-dev zlib1g-dev libxml2-dev libgmp-dev libgmp10 libmpfr-dev \
 	&& apt-get install -y  r-base r-base-dev \
 	&&        echo '# Install MNXtools' \
-	&& mkdir -p /usr/local/MNXtools/ \
 	&& cd /usr/local \
+	&& git clone https://github.com/MetaNetX/MNXtools.git \
+	&& cd MNXtools/bin/ \
+	&& git lfs install \
+	&& git lfs pull \
+	&& ln -s $PWD/* /usr/local/bin/ \
 	&&        echo '# Install Perl libSBML' \
 	&& cd /usr/local/ \
 	&& wget 'https://downloads.sourceforge.net/project/sbml/libsbml/5.19.0/stable/libSBML-5.19.0-core-plus-packages-src.tar.gz' \
