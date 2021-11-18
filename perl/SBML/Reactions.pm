@@ -9,7 +9,7 @@ use XML::Parser;
 use Data::Dumper;
 use List::Util qw(min max uniq any);
 use FindBin qw( $RealBin );
-use lib "$RealBin/../perl";
+use lib "$RealBin/../perl/SBML";
 use Constants;
 use Formaters;
 use Notes;

@@ -5,12 +5,12 @@ use strict;
 use warnings;
 use diagnostics;
 use FindBin qw( $RealBin );
-use lib "$RealBin/../perl";
+use lib "$RealBin/../perl/SBML";
 use Constants;
 use Prefix;
 
 
-our $prefixes = Prefix->new( $RealBin . '/../perl/Prefix.tsv' );
+our $prefixes = Prefix->new();
 
 sub convert_to_Sid {
     my ($id) = @_;

@@ -10,7 +10,7 @@ use Data::Dumper;
 use File::Basename;
 use List::Util qw( uniq );
 use FindBin qw( $RealBin );
-use lib "$RealBin/../perl";
+use lib "$RealBin/../perl/SBML";
 use Constants;
 use Formaters;
 use Notes;
