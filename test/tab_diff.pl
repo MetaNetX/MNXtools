@@ -6,7 +6,7 @@ use Data::Dumper;
 use Getopt::Std;
 use FindBin qw( $RealBin );
 
-use lib "$RealBin/../../perl/util";
+use lib "$RealBin/../perl";
 use Toolbox;
 my $tb = Toolbox->new();
 
