@@ -29,7 +29,7 @@ LABEL mnx.lang.r.version="4.1.2"
 RUN echo '# OS update' \
 	&& export DEBIAN_FRONTEND=noninteractive \
 	&& apt-get update  -y \
-	&& apt-get install -y --no-install-recommends perl libperl-dev liblog-log4perl-perl libdigest-crc-perl libtest-simple-perl libmath-bigint-perl wget cmake make libexpat1-dev swig libbz2-dev zlib1g-dev liblzma-dev check gcc g++ gfortran python3 libexpat1 libbz2-1.0 zlib1g liblzma5 parallel patchelf gnupg apt-utils ca-certificates libterm-readline-gnu-perl readline-common software-properties-common dirmngr git git-lfs \
+	&& apt-get install -y --no-install-recommends perl libperl-dev libmodule-runtime-perl liblog-log4perl-perl libdigest-crc-perl libtest-simple-perl libmath-bigint-perl wget cmake make libexpat1-dev swig libbz2-dev zlib1g-dev liblzma-dev check gcc g++ gfortran python3 libexpat1 libbz2-1.0 zlib1g liblzma5 parallel patchelf gnupg apt-utils ca-certificates libterm-readline-gnu-perl readline-common software-properties-common dirmngr git \
 	&&        echo '# Install R (in a non-interactive way)' \
 	&& echo '# See https://cran.r-project.org/bin/linux/ubuntu/' \
 	&& echo '# Signature of Ubuntu archives on CRAN' \
@@ -43,8 +43,6 @@ RUN echo '# OS update' \
 	&& cd /usr/local \
 	&& git clone https://github.com/MetaNetX/MNXtools.git \
 	&& cd MNXtools/bin/ \
-	&& git lfs install \
-	&& git lfs pull \
 	&& ln -s $PWD/* /usr/local/bin/ \
 	&&        echo '# Install Perl libSBML' \
 	&& cd /usr/local/ \
