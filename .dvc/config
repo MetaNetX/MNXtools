@@ -1,0 +1,4 @@
+[core]
+    remote = metanetx
+['remote "metanetx"']
+    url = ssh://myhits@rserv01.vital-it.ch:/home/myhits/dvc_remote
