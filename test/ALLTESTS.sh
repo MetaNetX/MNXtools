@@ -7,7 +7,7 @@ for MNET in \
     ../examples/ECOLI/bigg_iML1515;
 do
     export MNET # used by convert.test
-    ./run_test.pl convert.test 
+    perl ./run_test.pl convert.test
     if [ $? != 0 ]
     then
         echo "command failed";
