@@ -1,0 +1,12 @@
+#MetaNetX/TSV/model.tsv 1.1
+#property	value
+ID	bigg_iML1515
+Description	
+LB	-1000
+UB	1000
+Source ID	iML1515
+Processed Date	2021/09/28
+Organism	Escherichia coli (strain K12) (Strain: K12 / MG1655 / ATCC 47076)
+Taxid	83333
+Lineage	Bacteria, Proteobacteria, Gammaproteobacteria, Enterobacterales, Enterobacteriaceae, Escherichia
+Proteome ID	UP000000625
