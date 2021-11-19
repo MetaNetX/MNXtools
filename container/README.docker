@@ -17,6 +17,10 @@ docker build -t mnxtools:$MNXTOOLS_VERSION --no-cache=true --build-arg BUILD_DAT
 # List Docker local images (imported or built)
 docker images
 
+# Purging All Unused or Dangling Images, Containers, Volumes, and Networks
+# see https://www.digitalocean.com/community/tutorials/how-to-remove-docker-images-containers-and-volumes
+docker system prune
+
 # Inspect images
 docker inspect  mnxtools:$MNXTOOLS_VERSION
 
