@@ -2,11 +2,8 @@
 # See https://www.hpe.com/us/en/insights/articles/5-ways-to-secure-your-containers-1904.html
 #     https://blog.sqreen.com/docker-security/
 #     https://www.techrepublic.com/article/5-tips-for-securing-your-docker-containers/
-#     https://www.aquasec.com/wiki/display/containers/Container+Security+Best+Practices#perspectives-on-container-security-best-practices
 #     https://thenewstack.io/how-to-lock-down-the-kernel-to-secure-the-container/
 #     https://about.gitlab.com/blog/2019/08/27/beginners-guide-container-security/
-#     https://www.twistlock.com/container-security/
-#     https://www.trendmicro.com/en_us/business/campaigns/art-of-cybersecurity/devops/steps-to-container-security.html
 #     https://techbeacon.com/enterprise-it/how-secure-containers-actions-every-enterprise-should-take
 #     https://wiki.aquasec.com/display/containers/Container+Security+Best+Practices
 
