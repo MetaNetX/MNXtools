@@ -47,11 +47,12 @@ RUN echo '# OS update' \
 	&& cd .. \
 	&& rm -Rf .dvc* .git* \
 	&& cd cache \
-	&& wget -O ChemSpace.bindump 'https://os.unil.cloud.switch.ch/swift/v1/dvc-remote-metanetx/f1/a1b57dd447f2e73c6f8a1acba55466' \
+	&& export HASH=`grep md5 ChemSpace.bindump.dvc | sed -e 's/^.* //; s/^\(..\)/\1\//'` \
+	&& wget -O ChemSpace.bindump "https://os.unil.cloud.switch.ch/swift/v1/dvc-remote-metanetx/$HASH" \
 	&&        echo '# Install Perl libSBML' \
 	&& cd /usr/local/ \
 	&& wget 'https://downloads.sourceforge.net/project/sbml/libsbml/5.19.0/stable/libSBML-5.19.0-core-plus-packages-src.tar.gz' \
-	&& tar xvfz libSBML-*-core-plus-packages-src.tar.gz \
+	&& tar xfz libSBML-*-core-plus-packages-src.tar.gz \
 	&& ls -1 libSBML-*-core-plus-packages-src.tar.gz >>MANIFEST \
 	&& rm -f libSBML-*-core-plus-packages-src.tar.gz \
 	&& cd libSBML-*-Source/ \
