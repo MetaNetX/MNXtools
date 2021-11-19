@@ -30,6 +30,9 @@ RUN echo '# OS update' \
 	&& export DEBIAN_FRONTEND=noninteractive \
 	&& apt-get update  -y \
 	&& apt-get install -y --no-install-recommends perl libperl-dev libmodule-runtime-perl liblog-log4perl-perl libdigest-crc-perl libtest-simple-perl libmath-bigint-perl wget cmake make libexpat1-dev swig libbz2-dev zlib1g-dev liblzma-dev check gcc g++ gfortran python3 libexpat1 libbz2-1.0 zlib1g liblzma5 parallel patchelf gnupg apt-utils ca-certificates libterm-readline-gnu-perl readline-common software-properties-common dirmngr git \
+	&& wget 'https://github.com/iterative/dvc/releases/download/2.8.3/dvc_2.8.3_amd64.deb' \
+	&& dpkg -i dvc*.deb \
+	&& rm -f dvc*.deb \
 	&&        echo '# Install R (in a non-interactive way)' \
 	&& echo '# See https://cran.r-project.org/bin/linux/ubuntu/' \
 	&& echo '# Signature of Ubuntu archives on CRAN' \
@@ -44,6 +47,10 @@ RUN echo '# OS update' \
 	&& git clone https://github.com/MetaNetX/MNXtools.git \
 	&& cd MNXtools/bin/ \
 	&& ln -s $PWD/* /usr/local/bin/ \
+	&& cd .. \
+	&& dvc init \
+	&& dvc config cache.type symlink \
+	&& dvc pull cache/ChemSpace.bindump.dvc \
 	&&        echo '# Install Perl libSBML' \
 	&& cd /usr/local/ \
 	&& wget 'https://downloads.sourceforge.net/project/sbml/libsbml/5.19.0/stable/libSBML-5.19.0-core-plus-packages-src.tar.gz' \
