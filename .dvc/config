@@ -1,4 +1,6 @@
 [core]
-    remote = metanetx
-['remote "metanetx"']
-    url = ssh://myhits@rserv01.vital-it.ch:/home/myhits/dvc_remote
+    remote = dvc-remote-metanetx
+['remote "dvc-remote-metanetx"']
+    url = s3://dvc-remote-metanetx
+    endpointurl = https://os.unil.cloud.switch.ch
+    verify = true

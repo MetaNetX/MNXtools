@@ -48,9 +48,9 @@ RUN echo '# OS update' \
 	&& cd MNXtools/bin/ \
 	&& ln -s $PWD/* /usr/local/bin/ \
 	&& cd .. \
-	&& dvc init \
 	&& dvc config cache.type symlink \
 	&& dvc pull cache/ChemSpace.bindump.dvc \
+	&& rm -Rf .dvc* .git* \
 	&&        echo '# Install Perl libSBML' \
 	&& cd /usr/local/ \
 	&& wget 'https://downloads.sourceforge.net/project/sbml/libsbml/5.19.0/stable/libSBML-5.19.0-core-plus-packages-src.tar.gz' \
