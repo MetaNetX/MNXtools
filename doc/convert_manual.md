@@ -1,9 +1,8 @@
-# Status codes of conversion
+# Status codes (conversion to MNXref)
 
-Report of conversion to MNXref are produced in YAML format. 
+The reported observations are organized according to the `chem`/`comp`/`reac` identifiers of the source model to permit the utilisation og the report without considering further the mapped model.
 
-The reported observations are organized following the chem/comp/reac identifiers given in the source model to permit utilizing the report even if the mapped model is useless.
-The mapping always provides the source `ID_src:` and destination `ID_dst`identifiers and a status list made of codes explained below. Some of these codes comes with additioal details.Names of the different entities are supplied as comments to faciliatate reading of the log by a human ;-)
+The mapping always provides the source `ID_src:` and destination `ID_dst`identifiers and a `status` list made of the codes explained below. Some of these codes comes with additioal attributes. The names of the different entities are supplied as comments to faciliate the reading of the yaml log by a human, some of these names are propagated from the source model, the other are taken from MNXref.
 
 The following code are produced:
 
