@@ -2,6 +2,7 @@ FROM ubuntu:20.04 AS builder
 
 ARG MNXTOOLS_VERSION
 ARG BUILD_DATE
+ARG MNXREF_VERSION
 
 # METADATA
 # Use Open Containers Initiative (OCI)
@@ -18,6 +19,7 @@ LABEL org.opencontainers.image.licenses="GPL-3+"
 LABEL org.opencontainers.image.description="MNXtools is a set of tools to use the MetaNetX/MNXref namespace \
 as well as to manipulate models in MetaNetX.org"
 LABEL org.opencontainers.image.created=$BUILD_DATE
+LABEL mnx.mnxref.version=$MNXREF_VERSION
 LABEL mnx.sbml.libsbml.version="5.19.0"
 LABEL mnx.lang.perl.version="5.30.0"
 LABEL mnx.lang.r.version="4.1.2"
@@ -47,8 +49,8 @@ RUN echo '# OS update' \
 	&& cd .. \
 	&& rm -Rf .dvc* .git* \
 	&& cd cache \
-	&& export HASH=`grep md5 ChemSpace.bindump.dvc | sed -e 's/^.* //; s/^\(..\)/\1\//'` \
-	&& wget -O ChemSpace.bindump "https://os.unil.cloud.switch.ch/swift/v1/dvc-remote-metanetx/$HASH" \
+	&& wget "https://www.metanetx.org/ftp/$MNXREF_VERSION/ChemSpace.bindump.gz" \
+	&& gunzip ChemSpace.bindump.gz \
 	&&        echo '# Install Perl libSBML' \
 	&& cd /usr/local/ \
 	&& wget 'https://downloads.sourceforge.net/project/sbml/libsbml/5.19.0/stable/libSBML-5.19.0-core-plus-packages-src.tar.gz' \

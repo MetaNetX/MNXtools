@@ -2,8 +2,6 @@
 
 https://www.metanetx.org
 
+How to download MNXref cache
+`cd cache/ && wget "https://www.metanetx.org/ftp/$MNXREF_VERSION/ChemSpace.bindump.gz" && gunzip ChemSpace.bindump.gz`
 
-## For large files, we use git-lfs
-- install it for your distribution e.g. `brew install git-lfs` or `dnf install git-lfs`
-- initialize it in the repo with `git lfs install`
-- fetch the data with `git lfs pull`
