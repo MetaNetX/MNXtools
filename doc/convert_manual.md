@@ -1,8 +1,8 @@
 # Status codes (conversion to MNXref)
 
-The reported observations are organized according to the `chem`/`comp`/`reac` identifiers of the source model to permit the utilisation og the report without considering further the mapped model.
+In the yaml ouput, the mapping reports are organized according to the `chem:`/`comp:`/`reac:` identifiers of the source model to permit the utilisation of the report without considering further the mapped model.
 
-The mapping always provides the source `ID_src:` and destination `ID_dst`identifiers and a `status` list made of the codes explained below. Some of these codes comes with additioal attributes. The names of the different entities are supplied as comments to faciliate the reading of the yaml log by a human, some of these names are propagated from the source model, the other are taken from MNXref.
+The mappings always provides the source `ID_src:` and destination `ID_dst:` identifiers and a `status` list made of the codes explained below. Some of these codes comes with additioal attributes. The names of the different entities are supplied as comments to faciliate the reading of the yaml log by a human, some of these names are propagated from the source model, the other are taken from MNXref.
 
 The following code are produced:
 
@@ -28,10 +28,11 @@ The following code are produced:
 
 * A unique mapping return a single MNXref identifier
 
-**CHEM_MAP_WARN
+**CHEM_MAP_WARN**
 
 * The mapping return a single MNXref identifier, with a warning message.
 * 
+
 **CHEM_MAP_UNKNOWN**
 
 * The metabolite cannot be mapped to an MNXref identifier.
@@ -60,11 +61,11 @@ The following code are produced:
 * The original compartments have been replaced by generic compartments MNXD1 and MNXD2 as in the MNXref distribution. 
 * The network connectivity is likely to be lost
 
-**REAC_MAP_OK
+**REAC_MAP_OK**
 
-REAC_MAP_NEW
+**REAC_MAP_NEW**
 
-REAC_MAP_EMPTY
+**REAC_MAP_EMPTY**
 
 * The original equation was converted into an 'empty' equation 
 * The MNXref reconciliatoin contains a list of known empty reactions, most of them are acid-base and/or tauterization reactions. 
@@ -72,7 +73,7 @@ REAC_MAP_EMPTY
 
 **REAC_MAP_WARN**
 
-REAC_MERGE
+**REAC_MERGE**
 
 * Two or more different original reaction identifiers were mapped onto a single MNXref identifier.
 * _Suggested model improvement_: first, merge the implied metabolites into a single one; Secondly, merge the reactions into a single one.
