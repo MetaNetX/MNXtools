@@ -17,7 +17,7 @@ The following code are produced:
 * There are multiple cross-refs that correspont to different unrelated MNXref identifiers
 * _Suggested model improvement_: select which cross ref is the best one, keep it and move the others elswhere (in comments, for example) to avoid recreating this conflict latter.
 
-CHEM_XREF_AMBIGUOUS
+**CHEM_XREF_AMBIGUOUS**
 
 * This code is only produced when cross-refs are exploitied
 * There are multiple cross-refs that correspont to different MNXref identifiers, but these are related by stereochemical parent/child relationships.
