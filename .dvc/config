@@ -1,6 +1,0 @@
-[core]
-    remote = dvc-remote-metanetx
-['remote "dvc-remote-metanetx"']
-    url = s3://dvc-remote-metanetx
-    endpointurl = https://os.unil.cloud.switch.ch
-    verify = true
