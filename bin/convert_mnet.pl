@@ -33,8 +33,9 @@ options: -h          this help
 Nota bene: the content of <out-dir> is erased!
 
          -V <file-bindump> read namespace cache file ( ../cache/ChemSpace.bindump by default )
-         -p <dir>          path to dir with id_map and peptide.tsv files
 
+         -p <dir>          path to dir with id_map and peptide.tsv files
+            
          -L          use late merge data
          -x <regexp> use chem xref for mapping ('.' means all, all by default)
          -y <regexp> use pept xref for mapping ('.' means all, all by default)
@@ -86,6 +87,10 @@ $metnet2->write( $mapped_dir, $model_name );
 my $fh = $tb->open( "> $mapped_dir/convert.log" );
 print $fh join( "\n", sort $convertor->get_logs() ) . "\n";
 close $fh;
+my $yaml = $tb->open( "> $mapped_dir/convert_log.yaml" );
+print $yaml join( "\n", @{$convertor->{log4yaml}} ) . "\n";
+close $yaml;
+
 
 exit 0;
 
