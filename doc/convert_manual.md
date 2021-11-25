@@ -1,13 +1,10 @@
 # Status codes (conversion to MNXref)
 
+In the yaml output, the mapping reports are organized according to the `chem:`/`comp:`/`reac:` identifiers of the source model to permit the utilisation of the report without considering further the mapped model.
 
-toto
-
-In the yaml ouput, the mapping reports are organized according to the `chem:`/`comp:`/`reac:` identifiers of the source model to permit the utilisation of the report without considering further the mapped model.
-
-The mappings always provides the source `ID_src:` and destination `ID_dst:` identifiers and a `status` list made of the codes explained below. 
+The mapping always provides the source `ID_src:` and the destination `ID_dst:` identifiers and a `status` list made of the codes explained below. 
 Some of these codes comes with additional attributes. 
-The names of the different entities are supplied as comments to faciliate the reading of the yaml log by a human, some of these names are propagated from the source model, the other are taken from MNXref.
+The names of the different entities are supplied as comments to facilitate the reading of the yaml log by a human, some of these names are propagated from the source model, the other are taken from MNXref.
 
 The following code are produced:
 
@@ -19,29 +16,29 @@ The following code are produced:
 **CHEM_XREF_CONFLICT**
 
 * This code is only produced when cross-refs are exploited
-* There are multiple cross-refs that correspont to different unrelated MNXref identifiers
-* _Suggested model improvement_: select which cross ref is the best one, keep it and move the others elswhere (in comments, for example) to avoid recreating this conflict latter.
+* There are multiple cross-refs that correspond to different unrelated MNXref identifiers
+* _Suggested model improvement_: select which cross ref is the best one, keep it and move the others elsewhere (in comments, for example) to avoid recreating this conflict latter.
 
 **CHEM_XREF_AMBIGUOUS**
 
-* This code is only produced when cross-refs are exploitied
-* There are multiple cross-refs that correspont to different MNXref identifiers, but these are related by stereochemical parent/child relationships.
+* This code is only produced when cross-refs are exploited
+* There are multiple cross-refs that correspond to different MNXref identifiers, but these are related by stereochemical parent/child relationships.
 * The parent MNXref identifier is selected automatically to preserve chemistry, at the expense of precision.
-* _Suggested model improvement_: select which cross ref is the best one, possibly among those with the more detailed stereochemistry. It ihowever cannot be excluded that the parent cross ref correspond to a different metabolites, which precise stereochistry could be specified from a different xref.
+* _Suggested model improvement_: select which cross ref is the best one, possibly among those with the more detailed stereochemistry. It however cannot be excluded that the parent cross ref corresponds to a different metabolite, which precise stereochemistry could be specified from a different xref.
 
 **CHEM_MAP_OK**
 
-* A unique mapping return a single MNXref identifier
+* A unique mapping returns a single MNXref identifier
 
 **CHEM_MAP_WARN**
 
-* The mapping return a single MNXref identifier, with a warning message.
+* The mapping returns a single MNXref identifier, with a warning message.
 * 
 
 **CHEM_MAP_UNKNOWN**
 
 * The metabolite cannot be mapped to an MNXref identifier.
-* The prefix `UNK:` was added to the orignal metabolite identifer in the ad hoc MNX format. It should be converterd into `UNK_` in SBML.   
+* The prefix `UNK:` was added to the original metabolite identifier in the ad hoc MNX format. It should be converted into `UNK_` in SBML.   
 
 **CHEM_MERGE**
 
@@ -50,8 +47,8 @@ The following code are produced:
 
 **CHEM_ISOMERIC**
 
-* Two or more different MNXref identifers are related by isomeric parent/child relationships
-* _Suggested model improvement_: precise the sterochistry of the parent identifier, as it might be the same metabolite as the child or a different one.
+* Two or more different MNXref identifiers are related by isomeric parent/child relationships
+* _Suggested model improvement_: precise the stereochemistry of the parent identifier, as it might be the same metabolite as the child or a different one.
 
 **COMP_MAP_OK**
 
@@ -73,7 +70,7 @@ The following code are produced:
 **REAC_MAP_EMPTY**
 
 * The original equation was converted into an 'empty' equation 
-* The MNXref reconciliatoin contains a list of known empty reactions, most of them are acid-base and/or tauterization reactions. 
+* The MNXref reconciliation contains a list of known empty reactions, most of them are acid-base and/or tautomerization reactions. 
 * Valid empty reaction (e.g. acid-base) may be reported under code 
 
 **REAC_MAP_WARN**
@@ -82,5 +79,5 @@ The following code are produced:
 
 * Two or more different original reaction identifiers were mapped onto a single MNXref identifier.
 * _Suggested model improvement_: first, merge the implied metabolites into a single one; Secondly, merge the reactions into a single one.
-* _Nota Bene_: MNXref is agnostic with respect to reaction directions and place direcionality constraints on top of the (undirected) equation, together with enzyme descriptions.  
+* _Nota Bene_: MNXref is agnostic with respect to reaction directions and place directionality constraints on top of the (undirected) equation, together with enzyme descriptions.  
 
