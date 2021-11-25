@@ -7,6 +7,7 @@ our @ISA = qw( Exporter );
 use List::Util qw( uniq );
 use Data::Dumper;
 
+use lib '.';
 use Toolbox;
 my $tb = Toolbox->new();
 

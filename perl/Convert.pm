@@ -373,7 +373,7 @@ sub convert{
                 my $msg2 = join "\t", 'COMP_UNKNOWN', $source_old, $comp_new, join( '||', @$msg );
                 $self->log( $msg2 );
                 $tb->warn( $msg2 );
-                push @{$self->{comp_log}{$comp_old}{status}}, '- code: COMP_UNKNOWN', "  msg:  '" . join( '||', @$msg ) . "'";
+                push @{$self->{comp_log}{$comp_old}{status}}, '- code: COMP_MAP_UNKNOWN', "  msg:  '" . join( '||', @$msg ) . "'";
             }
             elsif( @$msg > 0 ){
                 my $msg2 = join "\t", 'COMP_WARN', $source_old, $comp_new, join( '||', @$msg );
@@ -480,7 +480,7 @@ sub convert{
                     }
                 }
                 push @{$self->{chem_log}{$parent_old}{status}},
-                    '- code: CHEM_ISOMERIC_RELATION',
+                    '- code: CHEM_ISOMERIC',
                     '  members:',
                     @member;
             }
