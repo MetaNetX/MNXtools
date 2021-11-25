@@ -1,5 +1,8 @@
 # Status codes (conversion to MNXref)
 
+
+toto
+
 In the yaml ouput, the mapping reports are organized according to the `chem:`/`comp:`/`reac:` identifiers of the source model to permit the utilisation of the report without considering further the mapped model.
 
 The mappings always provides the source `ID_src:` and destination `ID_dst:` identifiers and a `status` list made of the codes explained below. 
