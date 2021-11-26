@@ -723,7 +723,7 @@ sub map_equation{
     my( $eq, $msg )                           = $self->_map_equation( $eq_str, $prefix );
     my( $is_balanced, $str_spec, $sign_spec ) = $self->_balance_equation( $eq );
     if( $str_spec eq ' = ' ){
-        $msg->{WARNING}{"empty equation"} = 1;
+        push @$msg, '- code: REAC_MAP_EMPTY_UNKNOWN'; # might be changed latter to REAC_MAP_EMPTY_MNXREF in Convert.pm
         return ( '', ' = ', 1, 1, $msg, 'EMPTY', ' = ', 1 );
     }
     # determine reac_id and mnxr_id below
@@ -788,8 +788,9 @@ sub map_equation{
 
 sub _map_equation{
     my( $self, $str, $prefix ) = @_;
-    return( {}, {} ) if $str eq ' = '; # Empty equation
+    return( {}, [] ) if $str eq ' = '; # Empty equation
     my %msg = ();
+    my @warn = ();
     my $eq_old = $self->_normalize_coef( _parse_equation( $str ));
 #    if( exists $eq_old->{BOUNDARY} ){ # check (restricted) syntax of boundary reaction # FIXME: is this the right place?
 #        my @comp_id = keys %$eq_old;
@@ -809,14 +810,9 @@ sub _map_equation{
     my $has_PMF = 0;
     foreach my $comp_old ( keys %$eq_old ){
         my( $comp_new, $msg ) = $self->map_comp( $comp_old, $prefix );
-        $msg{map_comp}{$comp_old} = $comp_new;
         foreach my $chem_old ( keys %{$eq_old->{$comp_old}} ){
             my( $chem_new, $msg ) = $self->map_chem( $chem_old, $prefix );
             my $txt = $chem_old . ' (' . ( exists $self->{chem_xref}{$chem_old} ? $self->{chem_xref}{$chem_old}{name} : '' ) . ')';
-            $msg{map_chem}{$txt} =
-                $chem_new . ' (' .
-                    ( exists $self->{chem_prop}{$chem_new} ? $self->{chem_prop}{$chem_new}{name} : 'not in chemspace' ) .
-                ')';
             if( $chem_new eq 'MNXM1' ){
                 $proton{$comp_new} += $eq_old->{$comp_old}{$chem_old};
             }
@@ -835,19 +831,26 @@ sub _map_equation{
         }
     }
     # FIXME: check loosing comp !!!!
+    my @buf = ();
     foreach my $comp_new ( keys %eq_new ){
         foreach my $chem_new ( keys %{$eq_new{$comp_new}} ){
             if( $eq_new{$comp_new}{$chem_new} == 0 ){            # This is an VERY important test to find problem in the namepace
                 delete $eq_new{$comp_new}{$chem_new};            # to permit debugging in caller context a WARNING is issued that
-                $msg{WARNING}{"Loosing chem: $chem_new (" . join( ' same as ', keys %{$new2old{$chem_new}} ) . ')' } = 1;
+                # $msg{WARNING}{"Loosing chem: $chem_new (" . join( ' same as ', keys %{$new2old{$chem_new}} ) . ')' } = 1;
+                foreach( sort keys %{$new2old{$chem_new}} ){
+                    push @buf, " $_: $chem_new";
+                    # push @warn, "Loosing chem: $chem_new (" . join( ' same as ', keys %{$new2old{$chem_new}} ) . ')';
+                }
             }
         }
     }
+    push @warn, '- code: REAC_MAP_CHEM_LOSS', '  IDs_map ', @buf if @buf;
+    
     if( exists $eq_old->{BOUNDARY} or $has_PMF ){
         foreach( keys %proton ){              # assume PMF already properly defined
             $eq_new{$_}{MNXM1} = $proton{$_}; # hence, restore protons
         }
-        return ( \%eq_new, \%msg );           # ... and return
+        return ( \%eq_new, \@warn );           # ... and return
     }
     if( %hydroxyde ){ # replace HYDROXYDE with WATER minus PROTON in the right compartment(s)
         foreach my $comp ( keys %hydroxyde ){
@@ -899,18 +902,23 @@ sub _map_equation{
         }
     }
     if( @comp > 2 ){
+        push @warn, '- code: REAC_MAP_PROTON_SALAD';
         $msg{WARNING}{"protons found in more than two compartments"} = 1;
     }
-    return( \%eq_new, \%msg );
+    return( \%eq_new, \@warn );
 }
 sub _chose_chem{
-    my( @chem ) = @_;
-    my $msg = [];
+    my( $self, @chem ) = @_;
+    my $warn = [];
     if( @chem > 1 ){
         @chem = nsort @chem;
-        $msg = [ 'multiple mappings (first selected): ' . join( ', ', @chem ) ];
+        $warn = [
+            '- code: CHEM_MAP_MULTIPLE',
+            '  IDs_dst:',            
+        ];
+        push @$warn, "      - $_ # " . $self->{chem_prop}{$_}{name} foreach @chem;
     }
-    return( $chem[0], $msg );
+    return( $chem[0], $warn );
 }
 sub _search_chem_depr{
     my( $self, $id ) = @_;
@@ -929,27 +937,27 @@ sub _search_chem_depr{
 }
 sub map_chem{
     my( $self, $id_old ) = @_;
-    return ( $id_old, [] ) if $id_old =~ /^UNK:/;
+    return ( $id_old, [ '- code: CHEM_MAP_UNKNOWN' ] ) if $id_old =~ /^UNK:/;
     my $id_new = '';
     my $msg = [];
     if( exists $self->{id_to_chem}{$id_old} ){
-        ( $id_new, $msg ) = _chose_chem( keys %{$self->{id_to_chem}{$id_old}} );
+        ( $id_new, $msg ) = $self->_chose_chem( keys %{$self->{id_to_chem}{$id_old}} );
+        $msg = [ '- code: CHEM_MAP_OK' ] unless @$msg;
     }
     # Numeric identifier as in chebi or pubchem are possibly misleading
     if( ! $id_new and $id_old =~ /:(.+)/ and exists $self->{id_to_chem}{$1} ){
-        # if( $1 !~ /^\d+$/ ){
-            ( $id_new, $msg ) = _chose_chem( keys %{$self->{id_to_chem}{$1}} );
-        # }
+        ( $id_new, $msg ) = $self->_chose_chem( keys %{$self->{id_to_chem}{$1}} );
+        $msg = [ '- code: CHEM_MAP_OK' ] unless @$msg;
     }
     if( ! $id_new and my @id  = $self->_search_chem_depr( $id_old ) ){
-        ( $id_new, $msg ) = _chose_chem( @id );
-        unshift @$msg, 'deprecated identifier';
+        ( $id_new, $msg ) = $self->_chose_chem( @id );
+        unshift @$msg, '- code: CHEM_MAP_DEPRECATED';
     }
     if( $id_new ){
         return( $id_new, $msg );
     }
     else{
-        return ( _get_unk_id( 'chem', $id_old ), [ 'not found in MNXref' ] );
+        return ( _get_unk_id( 'chem', $id_old ), [ '- code: CHEM_MAP_UNKNOWN' ] );
     }
 }
 sub _get_unk_id{
@@ -973,13 +981,17 @@ sub search_chem_isom{ # return the list of all isom children + itself
     return sort keys %id;
 }
 sub _chose_comp{
-    my( @comp ) = @_;
-    my $msg = [];
+    my( $self, @comp ) = @_;
+    my $warn = [];
     if( @comp > 1 ){
         @comp = nsort @comp;
-        $msg = [ 'multiple mappings (first selected): ' . join( ', ', @comp ) ];
+        $warn = [
+            '- code: COMP_MAP_MULTIPLE',
+            '  IDs_dst:',            
+        ];
+        push @$warn, "      - $_ # " . $self->{chem_prop}{$_}{name} foreach @comp;
     }
-    return ( $comp[0], $msg );
+    return ( $comp[0], $warn );
 }
 sub _search_comp_depr{
     my( $self, $id ) = @_;
@@ -998,24 +1010,26 @@ sub _search_comp_depr{
 }
 sub map_comp{ # same procedure as in map_chem
     my( $self, $id_old ) = @_; # , $prefix ) = @_;
-    return ( $id_old, [] ) if $id_old =~ /^UNK:/;
+    return ( $id_old, [ '- code: COMP_MAP_UNKNOWN' ] ) if $id_old =~ /^UNK:/;
     my $id_new = '';
     my $msg = [];
     if( exists $self->{id_to_comp}{$id_old} ){
-        ( $id_new, $msg ) = _chose_comp( keys %{$self->{id_to_comp}{$id_old}} );
+        ( $id_new, $msg ) = $self->_chose_comp( keys %{$self->{id_to_comp}{$id_old}} );
+        $msg = [ '- code: COMP_MAP_OK' ] unless @$msg;    
     }
     if( ! $id_new and $id_old =~ /:(.+)/ and exists $self->{id_to_comp}{$1} ){
-        ( $id_new, $msg ) = _chose_comp( keys %{$self->{id_to_comp}{$1}} );
+        ( $id_new, $msg ) = $self->_chose_comp( keys %{$self->{id_to_comp}{$1}} );
+        $msg = [ '- code: COMP_MAP_OK' ] unless @$msg;
     }
     if( ! $id_new and my @id  = $self->_search_comp_depr( $id_old ) ){
-        ( $id_new, $msg ) = _chose_comp( @id );
-        unshift @$msg, 'deprecated identifier';
+        ( $id_new, $msg ) = $self->_chose_comp( @id );
+        unshift @$msg, '- code: COMP_MAP_DEPRECATED';
     }
     if( $id_new ){
         return( $id_new, $msg );
     }
     else{
-        return ( _get_unk_id( 'comp', $id_old ), [ 'not found in MNXref' ] );
+        return ( _get_unk_id( 'comp', $id_old ), [ '- code: COMP_MAP_UNKNOWN' ]);
     }
 }
 sub _balance_equation{ # Nota bene: MNXM1 and MNXM01 are treated differently

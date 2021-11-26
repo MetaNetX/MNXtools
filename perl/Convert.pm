@@ -124,9 +124,9 @@ sub _use_xref{
                 foreach my $chem_old ( @chem_old ){
                     my $source_old = $metnet->get_chem_source( $source_name, $chem_old ) || $chem_old;
                     $self->{chem_dict}{$chem_old} = $parent;
-                    my $msg2 = join "\t", 'CHEM_WARN', $source_old, $parent, $msg;
-                    $self->log( $msg2 );
-                    $tb->warn( $msg2 );
+#                    my $msg2 = join "\t", 'CHEM_WARN', $source_old, $parent, $msg;
+#                    $self->log( $msg2 );
+#                    $tb->warn( $msg2 );
                     push @{$self->{chem_log}{$chem_old}{status}}, '- code: CHEM_XREF_AMBIGUOUS', " mappings:";
                     foreach my $chem_new ( sort keys %{$chem_map{$chem_old}} ){
                         my %prop = $self->{ns}->get_chem_prop( $chem_new );
@@ -141,9 +141,9 @@ sub _use_xref{
                 foreach my $chem_old ( @chem_old ){
                     my $source_old = $metnet->get_chem_source( $source_name, $chem_old ) || $chem_old;
                     $self->{chem_dict}{$chem_old} = 'UNK:' . $chem_old;
-                    my $msg2 = join "\t", 'CHEM_WARN', $source_old, 'UNK:' . $chem_old, $msg;
-                    $self->log( $msg2 );
-                    $tb->warn( $msg2 );
+#                    my $msg2 = join "\t", 'CHEM_WARN', $source_old, 'UNK:' . $chem_old, $msg;
+#                    $self->log( $msg2 );
+#                    $tb->warn( $msg2 );
                     push @{$self->{chem_log}{$chem_old}{status}}, '- code: CHEM_XREF_CONFLICT', "  mappings:";
                     foreach my $chem_new ( sort keys %{$chem_map{$chem_old}} ){
                         my %prop = $self->{ns}->get_chem_prop( $chem_new );
@@ -185,17 +185,10 @@ sub convert{
     $self->{chem_log}   = {};
     $self->{comp_log}   = {};
     $self->{reac_log}   = {};
-    $self->{count} = {
-        reac => { ok => [], ko => [] },
-        chem => { ok => [], ko => [] },
-        comp => { ok => [], ko => [] },
-        pept => { ok => [], ko => [] },
-    };
     $self->_use_xref( $metnet, $source_name, $option->{use_xref} ) if $option->{use_xref};
     my %reac_info = (); # Reac-centric temporary data structure to prepare the new model
     foreach my $reac_id ( sort $metnet->select_reac_ids( mnet => $source_name ) ){
         my $eq_orig = $metnet->get_reac_equation( $reac_id );
-        # next if $eq_orig =~ /\(/; # polymer noatation FIXME !!!
         $eq_orig = $self->_premap_comp( $eq_orig ) if $self->{option}{comp_premap};
         my $source  = $metnet->get_reac_source( $source_name, $reac_id );
         my( $new_id, $eq_new, $sign, $is_balanced, $msg, $mnxr_id, $str_gen, $sign_gen ) = eval{ $self->_map_equation( $eq_orig )}; 
@@ -204,17 +197,19 @@ sub convert{
             die $@;
         }
         $self->{reac_log}{$reac_id}{ID_dst} = $new_id;
-        if( exists $msg->{WARNING} ){  # equation added
+        if( $msg and $msg->[-1] =~ /REAC_MAP_EMPTY_UNKNOWN/ ){
+            $msg->[-1] = '- code: REAC_MAP_EMPTY_MNXREF' if exists $self->{reac_xref}{EMPTY}{$reac_id};
+        }
+        
+        if( 0 ){ # exists $msg->{WARNING} ){  # equation added
             warn "$reac_id " .Dumper $msg->{WARNING};
                      "  msg: " . join( '||', keys %{$msg->{WARNING}});
-            my $msg2 = join "\t", 'REAC_WARN', $source, $eq_orig, $new_id, $eq_new, $mnxr_id, join '|', keys %{$msg->{WARNING}};
-            $self->log( $msg2 );
-            $tb->warn( $msg2 );
+#            my $msg2 = join "\t", 'REAC_WARN', $source, $eq_orig, $new_id, $eq_new, $mnxr_id, join '|', keys %{$msg->{WARNING}};
+#            $self->log( $msg2 );
+#            $tb->warn( $msg2 );
             if( $mnxr_id ){
-                push @{$self->{count}{reac}{ok}}, $reac_id;
             }
             else{
-                push @{$self->{count}{reac}{ko}}, $reac_id;
             }
             push @{$self->{reac_log}{$reac_id}{status}},
                 '- code: REAC_MAP_WARN',
@@ -231,18 +226,16 @@ sub convert{
             }
         }
         else{
-            $self->log( join "\t", 'REAC_MAPOK', $source, $eq_orig, $new_id, $eq_new, $mnxr_id );
+#            $self->log( join "\t", 'REAC_MAPOK', $source, $eq_orig, $new_id, $eq_new, $mnxr_id );
             if( $eq_new eq ' = ' ){
                 push @{$self->{reac_log}{$reac_id}{status}}, '- code: REAC_MAP_EMPTY', "  msg: " . join '||', keys %{$msg->{WARNING}};
                 next;
             }
             elsif( $mnxr_id ){
-                push @{$self->{count}{reac}{ok}}, $reac_id;
-                push @{$self->{reac_log}{$reac_id}{status}}, '- code: REAC_MAP_OK', "  mnxr: " . $mnxr_id;
+                push @{$self->{reac_log}{$reac_id}{status}}, '- code: REAC_MAP_OK_MNXREF', "  mnxr: " . $mnxr_id;
             }
             else{
-                push @{$self->{count}{reac}{ko}}, $reac_id;
-                push @{$self->{reac_log}{$reac_id}{status}}, '- code: REAC_MAP_NEW';
+                push @{$self->{reac_log}{$reac_id}{status}}, '- code: REAC_MAP_OK_ORIG';
             }
             next if $eq_new eq ' = ';
         }
@@ -320,21 +313,24 @@ sub convert{
         push @{$chem_new2old{$chem_new}}, $chem_old;
         $chem_source{$chem_new}{$_} = 1 foreach split /;/, $source_old;
         if( $chem_new =~ /^UNK:/ ){
-            my $msg2 = join "\t", 'CHEM_UNKNOWN', $source_old, $chem_new, join( '||', @$msg );
-            $self->log( $msg2 );
-            $tb->warn( $msg2 );
-            push @{$self->{chem_log}{$chem_old}{status}}, '- code: CHEM_UNKNOWN', "  msg:  '" . join( '||', @$msg ) . "'";
+#            my $msg2 = join "\t", 'CHEM_UNKNOWN', $source_old, $chem_new, join( '||', @$msg );
+#            $self->log( $msg2 );
+#            $tb->warn( $msg2 );
+            # push @{$self->{chem_log}{$chem_old}{status}}, '- code: CHEM_MAP_UNKNOWN', "  msg:  '" . join( '||', @$msg ) . "'";
+            push @{$self->{chem_log}{$chem_old}{status}}, @$msg;
         }
         elsif( @$msg > 0 ){
-            my $msg2 = join "\t", 'CHEM_WARN', $source_old, $chem_new, join( '||', @$msg );
-            $self->log( $msg2 );
-            $tb->warn( $msg2 );
-            push @{$self->{chem_log}{$chem_old}{status}}, '- code: CHEM_MAP_WARN', "  msg:  '" . join( '||', @$msg ) . "'";
+#            my $msg2 = join "\t", 'CHEM_WARN', $source_old, $chem_new, join( '||', @$msg );
+#            $self->log( $msg2 );
+#            $tb->warn( $msg2 );
+            # push @{$self->{chem_log}{$chem_old}{status}}, '- code: CHEM_MAP_WARN', "  msg:  '" . join( '||', @$msg ) . "'";
+            push @{$self->{chem_log}{$chem_old}{status}}, @$msg;
         }
         else{
-            my $msg = join "\t", 'CHEM_MAPOK', $source_old, $chem_new, '';
-            $self->log( $msg );
-            push @{$self->{chem_log}{$chem_old}{status}}, '- code: CHEM_MAP_OK';
+#            my $msg2 = join "\t", 'CHEM_MAPOK', $source_old, $chem_new, '';
+#            $self->log( $msg2 );
+            # push @{$self->{chem_log}{$chem_old}{status}}, '- code: CHEM_MAP_OK';
+            push @{$self->{chem_log}{$chem_old}{status}}, @$msg;
         }
     }
     foreach my $chem_id ( $metnet2->select_chem_ids( mnet => $dest_name ) ){
@@ -370,21 +366,21 @@ sub convert{
             $comp_source{$comp_new}{$_} = 1 foreach split /;/, $source_old;
             push @{$comp_new2old{$comp_new}}, $comp_old;
             if( $comp_new =~ /^UNK:/ ){
-                my $msg2 = join "\t", 'COMP_UNKNOWN', $source_old, $comp_new, join( '||', @$msg );
-                $self->log( $msg2 );
-                $tb->warn( $msg2 );
-                push @{$self->{comp_log}{$comp_old}{status}}, '- code: COMP_MAP_UNKNOWN', "  msg:  '" . join( '||', @$msg ) . "'";
+#                my $msg2 = join "\t", 'COMP_UNKNOWN', $source_old, $comp_new, join( '||', @$msg );
+#                $self->log( $msg2 );
+#                $tb->warn( $msg2 );
+                push @{$self->{comp_log}{$comp_old}{status}}, @$msg; 
             }
             elsif( @$msg > 0 ){
-                my $msg2 = join "\t", 'COMP_WARN', $source_old, $comp_new, join( '||', @$msg );
-                $self->log( $msg2 );
-                $tb->warn( $msg2 );
-                push @{$self->{comp_log}{$comp_old}{status}}, '- code: COMP_MAP_WARN', "  msg:  '" . join( '||', @$msg ) . "'";
+#                my $msg2 = join "\t", 'COMP_WARN', $source_old, $comp_new, join( '||', @$msg );
+#                $self->log( $msg2 );
+#                $tb->warn( $msg2 );
+                push @{$self->{comp_log}{$comp_old}{status}}, @$msg;
             }
             else{
-                my $msg2 = join "\t", 'COMP_MAPOK', $source_old, $comp_new, '';
-                $self->log( $msg2 );
-                push @{$self->{comp_log}{$comp_old}{status}}, '- code: COMP_MAP_OK';
+#                my $msg2 = join "\t", 'COMP_MAPOK', $source_old, $comp_new, '';
+#                $self->log( $msg2 );
+                push @{$self->{comp_log}{$comp_old}{status}}, @$msg;
             }
         }
     }
@@ -467,8 +463,8 @@ sub convert{
                     $child,
                     $metnet2->get_chem_source( $dest_name, $child ),
                     $metnet2->get_chem_desc( $child );
-                $self->log( $msg );
-                $tb->warn( $msg );
+#                $self->log( $msg );
+#                $tb->warn( $msg );
             }
         }
         if( @child ){
@@ -480,8 +476,8 @@ sub convert{
                     }
                 }
                 push @{$self->{chem_log}{$parent_old}{status}},
-                    '- code: CHEM_ISOMERIC',
-                    '  members:',
+                    '- code: CHEM_MNET_ISOMERIC',
+                    '  IDs_map:',
                     @member;
             }
         }
@@ -504,8 +500,8 @@ sub convert{
             }
             foreach( @chem_old ){
                 push @{$self->{chem_log}{$_}{status}}, 
-                    '- code: CHEM_MERGE', 
-                    '  members:',
+                    '- code: CHEM_MNET_MERGE', 
+                    '  IDs_src:',
                     @member;
             }
         }

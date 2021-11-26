@@ -30,24 +30,33 @@ The following code are produced:
 
 * A unique mapping returns a single MNXref identifier
 
-**CHEM_MAP_WARN**
+**CHEM_MAP_MULTIPLE**
 
-* The mapping returns a single MNXref identifier, with a warning message.
-* 
+* The mapping returns more than one MNXref identifiers and one of them is **arbitrarily** selected in the mapped model. 
+* This situation may arise because of not enough information is supplied in the source model or because of a deprecated MNXref identifiers which was remapped onto more than one identifiers in the latest MNXref releases.
+* _Suggested model improvement_: update the identifier in the source model to remove the ambiguity.
+
+**CHEM_MAP_DEPRECATED**
+
+* The source identifier is a deprecated MNXref identifier.
+* It might cause a CHEM_MAP_MULTIPLE code, or not.
+* _Suggested model improvement_: update the identifier in the source model 
 
 **CHEM_MAP_UNKNOWN**
 
 * The metabolite cannot be mapped to an MNXref identifier.
-* The prefix `UNK:` was added to the original metabolite identifier in the ad hoc MNX format. It should be converted into `UNK_` in SBML.   
+* The prefix `UNK:` was added to the original metabolite identifier in the ad hoc MNX format. 
+* _Suggested model improvement_: update the identifier in the source model if (and only if) the chemical exist somewhere in MNXref namespace 
 
-**CHEM_MERGE**
+**CHEM_MNET_MERGE**
 
 * Two chemicals from the original model were merged into the same MNXref identifier.
 * _Suggested model improvement_: merge the two original identifiers or correct one of them to realize the distinction or report a bug in MNXref
 
-**CHEM_ISOMERIC**
+**CHEM_MNET_ISOMERIC**
 
-* Two or more different MNXref identifiers are related by isomeric parent/child relationships
+* Two or more different MNXref identifiers were found related by isomeric parent/child relationships.
+* Identification of parent/child is (unfortunately) not specified in the report.
 * _Suggested model improvement_: precise the stereochemistry of the parent identifier, as it might be the same metabolite as the child or a different one.
 
 **COMP_MAP_OK**
@@ -63,19 +72,25 @@ The following code are produced:
 * The original compartments have been replaced by generic compartments MNXD1 and MNXD2 as in the MNXref distribution. 
 * The network connectivity is likely to be lost
 
-**REAC_MAP_OK**
+**REAC_MAP_MNXREF**
 
-**REAC_MAP_NEW**
 
-**REAC_MAP_EMPTY**
+**REAC_MAP_UNKNOWN**
 
-* The original equation was converted into an 'empty' equation 
-* The MNXref reconciliation contains a list of known empty reactions, most of them are acid-base and/or tautomerization reactions. 
-* Valid empty reaction (e.g. acid-base) may be reported under code 
 
-**REAC_MAP_WARN**
+**REAC_MAP_EMPTY_MNXREF**
 
-**REAC_MERGE**
+* The original equation was converted into an EMPTY equation. 
+* The orginal reaction identifier belongs to the list of known empty reactions in the MNXref reconciliation, which correspond to acid-base and/or tautomerization reactions. 
+* _Suggested model improvement_: 
+
+**REAC_MAP_EMPTY_UNKNOWN**
+
+* The original equation was converted into an EMPTY equation.
+* The orginal reaction identifier does not belong to the list of known empty reactions in the MNXref reconciliation.
+* _Suggested model improvement_: 
+
+**REAC_MNET_MERGE**
 
 * Two or more different original reaction identifiers were mapped onto a single MNXref identifier.
 * _Suggested model improvement_: first, merge the implied metabolites into a single one; Secondly, merge the reactions into a single one.

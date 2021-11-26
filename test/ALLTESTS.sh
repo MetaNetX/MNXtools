@@ -1,6 +1,6 @@
 # Useful reading: http://www.davidpashley.com/articles/writing-robust-shell-scripts.html
 
-export TMP=/tmp/$USER/tests/$$ # scratch dir
+export TMP=/tmp/MNXtools_test/$USER/tests/$$ # scratch dir
 mkdir -p $TMP
 
 for PERL in perl;
