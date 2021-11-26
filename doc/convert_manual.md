@@ -2,13 +2,13 @@
 
 In the yaml output, the mapping reports are organized according to the `chem:`/`comp:`/`reac:` identifiers of the source model to permit the utilisation of the report without considering further the mapped model.
 
-The mapping always provides the source `ID_src:` and the destination `ID_dst:` identifiers and a `status` list made of the codes explained below. 
-Some of these codes come with additional attributes. 
+The mapping always provides the source `ID_src:` and the destination `ID_dst:` identifiers and a `status` list made of the codes explained below.
+Some of these codes come with additional attributes.
 The names of the different entities are supplied as comments to facilitate the reading of the yaml log by a human, some of these names are propagated from the source model, the others are taken from MNXref.
 
 The following code are produced:
 
-**CHEM_XREF_OK** 
+**CHEM_XREF_OK**
 
 * This code is only produced when cross-refs are exploited
 * There is a single cross-ref or there are multiple cross-refs that correspond to a same MNXref identifier
@@ -33,12 +33,11 @@ The following code are produced:
 **CHEM_MAP_WARN**
 
 * The mapping returns a single MNXref identifier, with a warning message.
-* 
 
 **CHEM_MAP_UNKNOWN**
 
 * The metabolite cannot be mapped to an MNXref identifier.
-* The prefix `UNK:` was added to the original metabolite identifier in the ad hoc MNX format. It should be converted into `UNK_` in SBML.   
+* The prefix `UNK:` was added to the original metabolite identifier in the ad hoc MNX format. It should be converted into `UNK_` in SBML.
 
 **CHEM_MERGE**
 
@@ -60,7 +59,7 @@ The following code are produced:
 
 **COMP_TO_GENERIC**
 
-* The original compartments have been replaced by generic compartments MNXD1 and MNXD2 as in the MNXref distribution. 
+* The original compartments have been replaced by generic compartments MNXD1 and MNXD2 as in the MNXref distribution.
 * The network connectivity is likely to be lost
 
 **REAC_MAP_OK**
@@ -69,9 +68,9 @@ The following code are produced:
 
 **REAC_MAP_EMPTY**
 
-* The original equation was converted into an 'empty' equation 
-* The MNXref reconciliation contains a list of known empty reactions, most of them are acid-base and/or tautomerization reactions. 
-* Valid empty reaction (e.g. acid-base) may be reported under code 
+* The original equation was converted into an 'empty' equation.
+* The MNXref reconciliation contains a list of known empty reactions, most of them are acid-base and/or tautomerization reactions.
+* Valid empty reaction (e.g. acid-base) may be reported under code.
 
 **REAC_MAP_WARN**
 
@@ -79,5 +78,5 @@ The following code are produced:
 
 * Two or more different original reaction identifiers were mapped onto a single MNXref identifier.
 * _Suggested model improvement_: first, merge the implied metabolites into a single one; Secondly, merge the reactions into a single one.
-* _Nota Bene_: MNXref is agnostic with respect to reaction directions and places directionality constraints on top of the (undirected) equation, together with enzyme descriptions.  
+* _Nota Bene_: MNXref is agnostic with respect to reaction directions and places directionality constraints on top of the (undirected) equation, together with enzyme descriptions.
 

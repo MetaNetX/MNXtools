@@ -198,7 +198,7 @@ sub convert{
         # next if $eq_orig =~ /\(/; # polymer noatation FIXME !!!
         $eq_orig = $self->_premap_comp( $eq_orig ) if $self->{option}{comp_premap};
         my $source  = $metnet->get_reac_source( $source_name, $reac_id );
-        my( $new_id, $eq_new, $sign, $is_balanced, $msg, $mnxr_id, $str_gen, $sign_gen ) = eval{ $self->_map_equation( $eq_orig )}; 
+        my( $new_id, $eq_new, $sign, $is_balanced, $msg, $mnxr_id, $str_gen, $sign_gen ) = eval{ $self->_map_equation( $eq_orig )};
         if( $@ ){ # triggered by malformed equation for example
             warn "$reac_id\t$eq_orig \n";
             die $@;
@@ -206,7 +206,7 @@ sub convert{
         $self->{reac_log}{$reac_id}{ID_dst} = $new_id;
         if( exists $msg->{WARNING} ){  # equation added
             warn "$reac_id " .Dumper $msg->{WARNING};
-                     "  msg: " . join( '||', keys %{$msg->{WARNING}});
+                     '  msg: ' . join( '||', keys %{$msg->{WARNING}});
             my $msg2 = join "\t", 'REAC_WARN', $source, $eq_orig, $new_id, $eq_new, $mnxr_id, join '|', keys %{$msg->{WARNING}};
             $self->log( $msg2 );
             $tb->warn( $msg2 );
@@ -224,9 +224,9 @@ sub convert{
                 $self->{reac_log}{$reac_id}{ID_dst} = 'EMPTY';
                 next;
             }
-            else{ 
-#                push @{$self->{reac_log}{$reac_id}{status}}, 
-#                     '- code: REAC_WARN', 
+            else{
+#                push @{$self->{reac_log}{$reac_id}{status}},
+#                     '- code: REAC_WARN',
 #                     '  msg: ' . join( '||', keys %{$msg->{WARNING}});
             }
         }
@@ -307,7 +307,7 @@ sub convert{
         $metnet2->set_reac_info( $new_id, @info );
         $metnet2->set_reac_source( $dest_name, $new_id, join ';', sort keys %{$reac_info{$new_id}{source}} );
     }
-    
+
     my %chem_source  = ();
     my %chem_new2old = ();
     foreach my $chem_old ( $metnet->select_chem_ids( mnet => $source_name ) ){
@@ -489,7 +489,7 @@ sub convert{
 
     # ------------------------------------------------ #
     # Detect merged chems
-    # ------------------------------------------------ #    
+    # ------------------------------------------------ #
 
     my %buf = ();
     foreach my $chem_old ( keys %{$self->{chem_log}} ){
@@ -503,8 +503,8 @@ sub convert{
                 push @member, "      - $_ # $self->{chem_log}{$_}{name_src}";
             }
             foreach( @chem_old ){
-                push @{$self->{chem_log}{$_}{status}}, 
-                    '- code: CHEM_MERGE', 
+                push @{$self->{chem_log}{$_}{status}},
+                    '- code: CHEM_MERGE',
                     '  members:',
                     @member;
             }
@@ -513,7 +513,7 @@ sub convert{
 
     # ------------------------------------------------ #
     # Assemble YAML conver log
-    # ------------------------------------------------ #    
+    # ------------------------------------------------ #
 
     push @{$self->{log4yaml}}, "\nchem:";
     foreach my $chem_old ( sort $metnet->select_chem_ids( mnet => $source_name )){
@@ -532,8 +532,8 @@ sub convert{
     foreach my $comp_old ( sort $metnet->select_comp_ids( mnet => $source_name )){
         my @info_old = $metnet->get_comp_info( $comp_old );
         my $comp_new = $self->{comp_log}{$comp_old}{ID_dst};
-        my $desc = $option->{generic_comp} 
-                 ? 'MNXD1 or MNXD2' 
+        my $desc = $option->{generic_comp}
+                 ? 'MNXD1 or MNXD2'
                  : ( $metnet2->get_comp_info( $comp_new ))[0];
         push @{$self->{log4yaml}},
              '',  # spacer
