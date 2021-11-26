@@ -14,6 +14,7 @@ LABEL org.opencontainers.image.version=$MNXTOOLS_VERSION
 LABEL org.opencontainers.image.vendor="MetaNetX.org"
 LABEL org.opencontainers.image.authors="sebastien.moretti@sib.swiss"
 LABEL org.opencontainers.image.url="https://www.metanetx.org/"
+LABEL org.opencontainers.image.source="https://github.com/MetaNetX/MNXtools"
 LABEL org.opencontainers.image.documentation="https://www.metanetx.org/"
 LABEL org.opencontainers.image.licenses="GPL-3+"
 LABEL org.opencontainers.image.description="MNXtools is a set of tools to use the MetaNetX/MNXref namespace \
