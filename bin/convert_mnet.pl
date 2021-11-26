@@ -35,7 +35,7 @@ Nota bene: the content of <out-dir> is erased!
          -V <file-bindump> read namespace cache file ( ../cache/ChemSpace.bindump by default )
 
          -p <dir>          path to dir with id_map and peptide.tsv files
-            
+
          -L          use late merge data
          -x <regexp> use chem xref for mapping ('.' means all, all by default)
          -y <regexp> use pept xref for mapping ('.' means all, all by default)
