@@ -27,7 +27,7 @@ LABEL mnx.lang.r.version="4.1.2"
 
 
 # INSTALLATION
-#FIXME Better to use a wget from a git repo to integrate these copies in the main RUN layer!
+ENV USER=metanetx
 # In a single layer to save time AND space
 RUN echo '# OS update' \
 	&& export DEBIAN_FRONTEND=noninteractive \
@@ -80,13 +80,12 @@ RUN echo '# OS update' \
 	&& apt remove -y *-dev wget cmake make swig autoconf check gcc g++ gfortran python3* patchelf \
 	&& apt autoremove -y \
 	&& apt-get clean \
-	&& rm -rf /var/lib/apt/lists/*
+	&& rm -rf /var/lib/apt/lists/* \
+	&& groupadd -g 1001 ${USER} && useradd -r -u 1001 -g ${USER} ${USER}
 
 
 # SECURITY
 ## Control root access
-ENV USER=metanetx
-RUN groupadd -g 1001 ${USER} && useradd -r -u 1001 -g ${USER} ${USER}
 USER ${USER}
 ENV HOME=/home/${USER}
 WORKDIR ${HOME}
