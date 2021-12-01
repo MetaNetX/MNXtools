@@ -723,7 +723,7 @@ sub map_equation{
     my( $eq, $msg )                           = $self->_map_equation( $eq_str, $prefix );
     my( $is_balanced, $str_spec, $sign_spec ) = $self->_balance_equation( $eq );
     if( $str_spec eq ' = ' ){
-        push @$msg, '- code: REAC_MAP_EMPTY_UNKNOWN'; # might be changed latter to REAC_MAP_EMPTY_MNXREF in Convert.pm
+        push @$msg, '- code: REAC_MAP_EMPTY_WARN'; # might be changed latter to REAC_MAP_EMPTY_MNXREF in Convert.pm
         return ( '', ' = ', 1, 1, $msg, 'EMPTY', ' = ', 1 );
     }
     # determine reac_id and mnxr_id below
@@ -830,21 +830,19 @@ sub _map_equation{
             }
         }
     }
-    # FIXME: check loosing comp !!!!
-    my @buf = ();
     foreach my $comp_new ( keys %eq_new ){
         foreach my $chem_new ( keys %{$eq_new{$comp_new}} ){
             if( $eq_new{$comp_new}{$chem_new} == 0 ){            # This is an VERY important test to find problem in the namepace
                 delete $eq_new{$comp_new}{$chem_new};            # to permit debugging in caller context a WARNING is issued that
-                # $msg{WARNING}{"Loosing chem: $chem_new (" . join( ' same as ', keys %{$new2old{$chem_new}} ) . ')' } = 1;
                 foreach( sort keys %{$new2old{$chem_new}} ){
-                    push @buf, " $_: $chem_new";
-                    # push @warn, "Loosing chem: $chem_new (" . join( ' same as ', keys %{$new2old{$chem_new}} ) . ')';
+                    push @warn, 
+                         '- code: REAC_MAP_LOSS',
+                         "  chem: $chem_new # " . $self->{chem_prop}{$chem_new}{name}, 
+                         "  comp: $comp_new # " . $self->{comp_prop}{$chem_new}{name};
                 }
             }
         }
     }
-    push @warn, '- code: REAC_MAP_CHEM_LOSS', '  IDs_map ', @buf if @buf;
     
     if( exists $eq_old->{BOUNDARY} or $has_PMF ){
         foreach( keys %proton ){              # assume PMF already properly defined
@@ -870,7 +868,7 @@ sub _map_equation{
                 @comp = keys %proton; # update it
             }
             else{ # => there is three compartments!
-                $msg{WARNING}{"cannot determine second compartment for PMF"} = 1;
+                push @warn, '- code: REAC_MAP_PROTON_SALAD';
             }
         }
     }
@@ -903,7 +901,6 @@ sub _map_equation{
     }
     if( @comp > 2 ){
         push @warn, '- code: REAC_MAP_PROTON_SALAD';
-        $msg{WARNING}{"protons found in more than two compartments"} = 1;
     }
     return( \%eq_new, \@warn );
 }
@@ -1298,7 +1295,7 @@ sub get_reac_info{  # return the same list of arguments as MetNet->get_reac_info
         join( ';', $reference, sort @xref),
     );
 }
-sub get_chem_info{ # return the same list of arguments as MetNet->get_chem_info()
+sub get_chem_info{ # return the same list of five arguments as MetNet->get_chem_info()
     my( $self, $chem_id ) = @_;
     # xref will be sorted such as the first item is the reference one
     my $reference = $self->{chem_prop}{$chem_id}{reference};

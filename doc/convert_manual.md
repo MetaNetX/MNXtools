@@ -72,23 +72,36 @@ The following code are produced:
 * The original compartments have been replaced by generic compartments MNXD1 and MNXD2 as in the MNXref distribution.
 * The network connectivity is likely to be lost
 
+**REAC_MAP_OK**
+
+* The original equation was converted into an equation which reactants are all mapped to MNXref
+
 **REAC_MAP_MNXREF**
 
+* The original equation was converted into an equation which reactants are all mapped to MNXref
+* In addition, The mapped equation correspond to 
 
 **REAC_MAP_UNKNOWN**
 
+* Some 
 
-**REAC_MAP_EMPTY_MNXREF**
+**REAC_MAP_EMPTY**
 
 * The original equation was converted into an EMPTY equation. 
-* The orginal reaction identifier belongs to the list of known empty reactions in the MNXref reconciliation, which correspond to acid-base and/or tautomerization reactions. 
+* Accompanied with the code REAC_MAP_MNXREF: The orginal reaction identifier belongs to the list of known empty reactions in the MNXref reconciliation, which correspond to acid-base and/or tautomerization reactions. 
+* Accompanied with the code REAC_MAP_LOSS: 
 * _Suggested model improvement_: 
 
-**REAC_MAP_EMPTY_UNKNOWN**
+**REAC_MAP_LOSS**
 
-* The original equation was converted into an EMPTY equation.
+* On or several reactant have been lost from the equation, because the same reactant was present on both side of the equation (with the same stoichiometric coeficient
+* The original equation may have converted into an equation (code REAC_MAP_EMPTY), orr not which is possibly much more annoying.
 * The orginal reaction identifier does not belong to the list of known empty reactions in the MNXref reconciliation.
 * _Suggested model improvement_: 
+
+**REAC_MAP_PROTON_SALAD**
+
+* Failure to distinguish proton from PMF, for different reasons, for example if the equation implies three compartments.  
 
 **REAC_MNET_MERGE**
 

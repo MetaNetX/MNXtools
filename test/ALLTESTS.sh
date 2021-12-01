@@ -6,10 +6,10 @@ mkdir -p $TMP
 for PERL in perl;
 do
     for MNET in \
-        ../examples/ECOLI/bigg_iML1515;
+        ../examples/ECOLI/bigg_iML1515 ; # ../examples/HUMAN/metatlas_HumanGEM
     do
-        export MNET # used by convert.test
-        export PERL
+        export MNET;
+        export PERL;
         perl ./run_test.pl convert.test
         if [ $? != 0 ]
         then
