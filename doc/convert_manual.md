@@ -4,7 +4,10 @@ In the yaml output, the mapping reports are organized according to the `chem:`/`
 
 The mapping always provides the source `ID_src:` and the destination `ID_dst:` identifiers and a `status` list made of the codes explained below.
 Some of these codes come with additional attributes.
-The names of the different entities are supplied as comments to facilitate the reading of the yaml log by a human, some of these names are propagated from the source model, the others are taken from MNXref.
+
+The names of the different entities are supplied as comments in the yaml lof to facilitate its by human (as most of us are still part of them), some of these names are propagated from the source model, the others are taken from MNXref, dependig from the context.
+
+_Suggested model improvements_ are given to help improve the formulation of genome-scale metabolic networks. However, it should be realized that these suggestions might be totally inadapted for other applications. The users are strongly advised not to follow them blindly, and report the problemeatic cases here or there. 
 
 The following code are produced:
 
@@ -61,11 +64,15 @@ The following code are produced:
 
 **COMP_MAP_OK**
 
-**COMP_MAP_WARN**
+**COMP_MAP_DEPRECATED**
 
-**COMP_UNKNOWN**
+**COMP_MAP_UNKNOWN**
 
-**COMP_MERGE**
+**COMP_MAP_MULTIPLE**
+
+* The mapping returns more than one MNXref identifiers and one of them is **arbitrarily** selected in the mapped model.
+* This situation may arise because of not enough information is supplied in the source model or because of a deprecated MNXref identifiers which was remapped onto more than one identifiers in the latest MNXref releases.
+* _Suggested model improvement_: update the identifier in the source model to remove the ambiguity.
 
 **COMP_GENERIC**
 
@@ -87,24 +94,16 @@ The following code are produced:
 
 **REAC_MAP_EMPTY**
 
-* The original equation was converted into an EMPTY equation.
-* With the accompanying code REAC_MAP_MNXREF: 
-	1. The orginal reaction identifier belongs to the list of known empty reactions in the MNXref reconciliation, which correspond to acid-base and/or tautomerization reactions. All rights.
-* Accompanied with the code REAC_MAP_LOSS: 
-	2. If the reactions is an acid-base and/or tautomerization reaction (absent from MNXref), it seems legitimate to remove it from the mapped netwok.
-	3. Otherwise there is a more serious problem
-* _Suggested model improvement_: 
-	1. The source model would benefits of merging some chemical and removing the reaction. 
-	2. _ditto_
-	3. This is 
+* The original equation was converted into an EMPTY equation, _i.e._ ` = `
+* It shlould be the case for any acid-base and/or tautomerization reaction. 
+* If present, the accompanying code REAC_MAP_MNXREF indicates that the reaction belongs to the list of known empty reactions in the MNXref reconciliation. Otherwise the accompanying code is REAC_MAP_UNKNOWN 
+* _Suggested model improvement_: empty reactions should get removed after merging the implied metabolite identifiers (see CHEM_MNET_MERGE code) 
 
 **REAC_MAP_LOSS**
 
-* On or several reactant have been lost from the equation, because the same reactant was present on both side of the equation, with the same stoichiometric coeficient.
-* The original equation may have been converted into an equation (code REAC_MAP_EMPTY), which my be correct
-* or alternatively the resulting equation is not empty, which is much more annoying.
-* The orginal reaction identifier does not belong to the list of known empty reactions in the MNXref reconciliation.
-* _Suggested model improvement_: In case of REAC_MAP_EMPTY see 
+* A reactants has been lost from an equation, because it was present on both side of the equation with the same stoichiometric coeficient. As a consequence, the mapped reactions likely differ from the source reaction, which is possibly the most severe problem that can be encountered.
+* This code is not reported for empty reactions.
+* _Suggested model improvement_: Work on the metabolites to enforce the distinguish the one in the left and right term of the equatoin. It cannot be excluded that the problem arise from a mistake in the MNXref reconciliation, that shuld be reported here (thanks in advance)
 
 **REAC_MAP_PROTON_SALAD**
 
@@ -112,7 +111,7 @@ The following code are produced:
 
 **REAC_MNET_MERGE**
 
-* Two or more different original reaction identifiers were mapped onto a single MNXref identifier.
+* Two or more different original reaction were mapped onto a single one.
 * _Suggested model improvement_: first, merge the implied metabolites into a single one; Secondly, merge the reactions into a single one.
-* _Nota Bene_: MNXref is agnostic with respect to reaction directions and places directionality constraints on top of the (undirected) equation, together with enzyme descriptions.
+* _Nota Bene_: On the contrary to SBML, MNXtools are agnostic here with respect to reaction directions. Directionality constraintsare placed on top of (undirected) equation, together with enzyme descriptions. This might explain part of the observed merges.
 

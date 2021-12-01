@@ -188,11 +188,11 @@ sub convert{
 #                        : $self->{ns}->_map_equation( $eq_orig );
         if( $eq_new eq ' = ' or $mnxr_id eq 'EMPTY' ){
             $self->{reac_log}{$reac_id}{ID_dst} = ''; 
-            if( exists $self->{ns}{reac_xref}{EMPTY}{$reac_id} ){
+            if( exists $self->{ns}{reac_xref}{EMPTY}{$reac_id} ){ # possibly overwrite REAC_MAP_LOSS
                 $self->{reac_log}{$reac_id}{status} = [ '- code: REAC_MAP_EMPTY', '- code: REAC_MAP_MNXREF' ];
             } # else keep existing msg (worst case scenario!)
             else{
-                $self->{reac_log}{$reac_id}{status} = [ '- code: REAC_MAP_EMPTY' ];
+                $self->{reac_log}{$reac_id}{status} = [ '- code: REAC_MAP_EMPTY', '- code: REAC_MAP_UNKNOWN' ];
             }
             next;
         }
@@ -272,6 +272,14 @@ sub convert{
         $info[1] = ''; # pathway became a placeholder from now on (Oct 2020)
         $metnet2->set_reac_info( $new_id, @info );
         $metnet2->set_reac_source( $dest_name, $new_id, join ';', sort keys %{$reac_info{$new_id}{source}} );
+        if( @{$reac_info{$new_id}{from}} > 1 ){
+            foreach my $reac_old ( @{$reac_info{$new_id}{from}} ){
+                push @{$self->{reac_log}{$reac_old}{status}}, 
+                    '- code: REAC_MNET_MERGE', 
+                    '  IDs_src:', 
+                    map { '  - ' . $_ } sort @{$reac_info{$new_id}{from}};
+            }
+        }
     }
 
     my %chem_source  = ();

@@ -17,6 +17,7 @@ sub new{
         id2pept       => {},
         pept_info     => {},
         filter_regexp => $xref_filter ? qr/$xref_filter/ : qr/./,
+        log4yaml      => {},
     }, $package;
     $self->add_pept_dir( $pept_dir ) if $pept_dir;
     return $self;
