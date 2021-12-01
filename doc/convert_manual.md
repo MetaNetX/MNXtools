@@ -67,10 +67,10 @@ The following code are produced:
 
 **COMP_MERGE**
 
-**COMP_TO_GENERIC**
+**COMP_GENERIC**
 
 * The original compartments have been replaced by generic compartments MNXD1 and MNXD2 as in the MNXref distribution.
-* The network connectivity is likely to be lost
+* The connectivity of the network is likely have been lost, if it contained more than one compartment.
 
 **REAC_MAP_OK**
 
@@ -79,25 +79,32 @@ The following code are produced:
 **REAC_MAP_MNXREF**
 
 * The original equation was converted into an equation which reactants are all mapped to MNXref
-* In addition, The mapped equation correspond to 
+* In addition, The mapped equation correspond to an known equation int the MNXref repositry
 
 **REAC_MAP_UNKNOWN**
 
-* Some 
+* The original equation was converted into an equation which contain one or several reactant not found in MNXref.
 
 **REAC_MAP_EMPTY**
 
-* The original equation was converted into an EMPTY equation. 
-* Accompanied with the code REAC_MAP_MNXREF: The orginal reaction identifier belongs to the list of known empty reactions in the MNXref reconciliation, which correspond to acid-base and/or tautomerization reactions. 
+* The original equation was converted into an EMPTY equation.
+* With the accompanying code REAC_MAP_MNXREF: 
+	1. The orginal reaction identifier belongs to the list of known empty reactions in the MNXref reconciliation, which correspond to acid-base and/or tautomerization reactions. All rights.
 * Accompanied with the code REAC_MAP_LOSS: 
+	2. If the reactions is an acid-base and/or tautomerization reaction (absent from MNXref), it seems legitimate to remove it from the mapped netwok.
+	3. Otherwise there is a more serious problem
 * _Suggested model improvement_: 
+	1. The source model would benefits of merging some chemical and removing the reaction. 
+	2. _ditto_
+	3. This is 
 
 **REAC_MAP_LOSS**
 
-* On or several reactant have been lost from the equation, because the same reactant was present on both side of the equation (with the same stoichiometric coeficient
-* The original equation may have converted into an equation (code REAC_MAP_EMPTY), orr not which is possibly much more annoying.
+* On or several reactant have been lost from the equation, because the same reactant was present on both side of the equation, with the same stoichiometric coeficient.
+* The original equation may have been converted into an equation (code REAC_MAP_EMPTY), which my be correct
+* or alternatively the resulting equation is not empty, which is much more annoying.
 * The orginal reaction identifier does not belong to the list of known empty reactions in the MNXref reconciliation.
-* _Suggested model improvement_: 
+* _Suggested model improvement_: In case of REAC_MAP_EMPTY see 
 
 **REAC_MAP_PROTON_SALAD**
 

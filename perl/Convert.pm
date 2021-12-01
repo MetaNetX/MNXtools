@@ -206,6 +206,9 @@ sub convert{
             if( $mnxr_id ){
                 push @{$self->{reac_log}{$reac_id}{status}}, '- code: REAC_MAP_MNXREF', "  mnxr: " . $mnxr_id;
             }
+            elsif( $str_gen =~ /UNK:/){
+                push @{$self->{reac_log}{$reac_id}{status}}, '- code: REAC_MAP_UNKNOWN';
+            }
             else{
                 push @{$self->{reac_log}{$reac_id}{status}}, '- code: REAC_MAP_OK';
             }
@@ -224,7 +227,7 @@ sub convert{
         else{ # Equations merge: just need to update source and evid
             $reac_info{$new_id}{source}{$_} = 1 foreach split /;/, $source;
             push @{$reac_info{$new_id}{from}}, $reac_id;
-        }
+        } 
         $sign = $option->{generic_comp} ? $sign_gen : $sign;
         my @enzy_info = $metnet->get_enzy_info( $source_name, $reac_id );
         while( my( $complex_old, $lb, $ub, $dir ) = splice @enzy_info, 0, 4 ){
@@ -311,7 +314,7 @@ sub convert{
     if( $option->{generic_comp} ){
         foreach my $comp_old ( $metnet->select_comp_ids( mnet => $source_name ) ){
             $self->{comp_log}{$comp_old}{ID_dst} = '';
-            push @{$self->{comp_log}{$comp_old}{status}}, '- code: COMP_TO_GENERIC';
+            push @{$self->{comp_log}{$comp_old}{status}}, '- code: COMP_GENERIC';
         }
     }
     else{
