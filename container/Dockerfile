@@ -32,7 +32,7 @@ ENV USER=metanetx
 RUN echo '# OS update' \
 	&& export DEBIAN_FRONTEND=noninteractive \
 	&& apt-get update  -y \
-	&& apt-get install -y --no-install-recommends perl libperl-dev libipc-run-perl libsort-naturally-perl libmodule-runtime-perl liblog-log4perl-perl libdigest-crc-perl libtest-simple-perl libmath-bigint-perl wget cmake make libexpat1-dev swig libbz2-dev zlib1g-dev liblzma-dev check gcc g++ gfortran python3 libexpat1 libbz2-1.0 zlib1g liblzma5 parallel patchelf gnupg apt-utils ca-certificates libterm-readline-gnu-perl readline-common software-properties-common dirmngr git \
+	&& apt-get install -y --no-install-recommends perl libperl-dev libipc-run-perl libsort-naturally-perl libmodule-runtime-perl liblog-log4perl-perl libdigest-crc-perl libtest-simple-perl libmath-bigint-perl wget cmake make libexpat1-dev swig libyaml-dev libbz2-dev zlib1g-dev liblzma-dev check gcc g++ gfortran python3 libexpat1 libbz2-1.0 zlib1g liblzma5 parallel patchelf gnupg apt-utils ca-certificates libterm-readline-gnu-perl readline-common software-properties-common dirmngr git \
 	&&        echo '# Install R (in a non-interactive way)' \
 	&& echo '# See https://cran.r-project.org/bin/linux/ubuntu/' \
 	&& echo '# Signature of Ubuntu archives on CRAN' \
@@ -52,6 +52,8 @@ RUN echo '# OS update' \
 	&& cd cache \
 	&& wget "https://www.metanetx.org/ftp/$MNXREF_VERSION/ChemSpace.bindump.gz" \
 	&& gunzip ChemSpace.bindump.gz \
+	&&        echo '# Install extra Perl lib' \
+	&& cpan YAML::XS \
 	&&        echo '# Install Perl libSBML' \
 	&& cd /usr/local/ \
 	&& wget 'https://downloads.sourceforge.net/project/sbml/libsbml/5.19.0/stable/libSBML-5.19.0-core-plus-packages-src.tar.gz' \
