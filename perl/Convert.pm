@@ -114,7 +114,7 @@ sub _use_xref{
                 foreach my $chem_old ( @chem_old ){
                     my $source_old = $metnet->get_chem_source( $source_name, $chem_old ) || $chem_old;
                     $self->{chem_dict}{$chem_old} = $parent;
-                    push @{$self->{chem_log}{$chem_old}{status}}, '- code: CHEM_XREF_AMBIGUOUS', " mappings:";
+                    push @{$self->{chem_log}{$chem_old}{status}}, '- code: CHEM_XREF_AMBIGUOUS', "  mappings:";
                     foreach my $chem_new ( sort keys %{$chem_map{$chem_old}} ){
                         my %prop = $self->{ns}->get_chem_prop( $chem_new );
                         foreach my $xref ( sort @{$chem_map{$chem_old}{$chem_new}} ){
@@ -277,7 +277,7 @@ sub convert{
                 push @{$self->{reac_log}{$reac_old}{status}}, 
                     '- code: REAC_MNET_MERGE', 
                     '  IDs_src:', 
-                    map { '  - ' . $_ } sort @{$reac_info{$new_id}{from}};
+                    map { '    - ' . $_ } sort @{$reac_info{$new_id}{from}};
             }
         }
     }
@@ -424,12 +424,12 @@ sub convert{
                 my @member = ();
                 foreach my $chem_new ( $parent, @child ){
                     foreach my $chem_old ( @{$chem_new2old{$chem_new}} ){
-                        push @member, " - $chem_old: $chem_new # $self->{chem_log}{$chem_old}{name_src}";
+                        push @member, "    - $chem_new # $self->{chem_log}{$chem_old}{name_src}";
                     }
                 }
                 push @{$self->{chem_log}{$parent_old}{status}},
                     '- code: CHEM_MNET_ISOMERIC',
-                    '  IDs_map:',
+                    '  IDs_dst:',
                     @member;
             }
         }
@@ -448,7 +448,7 @@ sub convert{
         if( @chem_old > 1 ){
             my @member = ();
             foreach( @chem_old ){
-                push @member, "  - $_ # $self->{chem_log}{$_}{name_src}";
+                push @member, "    - $_ # $self->{chem_log}{$_}{name_src}";
             }
             foreach( @chem_old ){
                 push @{$self->{chem_log}{$_}{status}}, 
@@ -462,8 +462,8 @@ sub convert{
     # ------------------------------------------------ #
     # Assemble YAML conver log
     # ------------------------------------------------ #
-
-    push @{$self->{log4yaml}}, "\nchem:";
+    
+    push @{$self->{log4yaml}}, '---', '', "\nchem:\n";
     foreach my $chem_old ( sort $metnet->select_chem_ids( mnet => $source_name )){
         my @info_old = $metnet->get_chem_info( $chem_old );
         my $chem_new = $self->{chem_log}{$chem_old}{ID_dst};
@@ -474,7 +474,7 @@ sub convert{
              "  - ID_src: $chem_old # $self->{chem_log}{$chem_old}{name_src}",
              "    ID_dst: $chem_new # $info_new[0]",
              '    status:',
-             '    ' . join( "\n    ", @{$self->{chem_log}{$chem_old}{status}} );
+             '      ' . join( "\n      ", @{$self->{chem_log}{$chem_old}{status}} );
     }
     push @{$self->{log4yaml}}, "\ncomp:";
     foreach my $comp_old ( sort $metnet->select_comp_ids( mnet => $source_name )){
@@ -488,7 +488,7 @@ sub convert{
              "  - ID_src: $comp_old # " . ( $metnet->get_comp_info( $comp_old ))[0],
              "    ID_dst: $comp_new # $desc",
              '    status:',
-             '    ' . join( "\n    ", @{$self->{comp_log}{$comp_old}{status}} );
+             '      ' . join( "\n      ", @{$self->{comp_log}{$comp_old}{status}} );
     }
     push @{$self->{log4yaml}}, "\nreac:";
     foreach my $reac_old ( sort $metnet->select_reac_ids( mnet => $source_name )){
@@ -501,7 +501,7 @@ sub convert{
             "  - ID_src: $reac_old # " . $metnet->get_reac_equation( $reac_old ),
             "    ID_dst: $reac_new # $desc",
             '    status:',
-            '    ' . join( "\n    ", @{$self->{reac_log}{$reac_old}{status}} );
+            '      ' . join( "\n      ", @{$self->{reac_log}{$reac_old}{status}} );
     }
 }
 sub _premap_comp{
