@@ -88,7 +88,7 @@ sub _use_xref{
                 my %prop = $self->{ns}->get_chem_prop( $chem_new[0] );
                 push @{$self->{chem_log}{$chem_old}{status}},'- code: CHEM_XREF_OK', "  mappings:";
                 foreach my $xref ( sort @{$chem_map{$chem_old}{$chem_new[0]}} ){
-                    push @{$self->{chem_log}{$chem_old}{status}}, "   - $xref: $chem_new[0] # " . $prop{name};
+                    push @{$self->{chem_log}{$chem_old}{status}}, "    $xref: $chem_new[0] # " . $prop{name};
                 }
             }
         }
@@ -118,7 +118,7 @@ sub _use_xref{
                     foreach my $chem_new ( sort keys %{$chem_map{$chem_old}} ){
                         my %prop = $self->{ns}->get_chem_prop( $chem_new );
                         foreach my $xref ( sort @{$chem_map{$chem_old}{$chem_new}} ){
-                            push @{$self->{chem_log}{$chem_old}{status}}, "   - $xref: $chem_new # " . $prop{name};
+                            push @{$self->{chem_log}{$chem_old}{status}}, "    $xref: $chem_new # " . $prop{name};
                         }
                     }
                 }
@@ -132,7 +132,7 @@ sub _use_xref{
                     foreach my $chem_new ( sort keys %{$chem_map{$chem_old}} ){
                         my %prop = $self->{ns}->get_chem_prop( $chem_new );
                         foreach my $xref ( sort @{$chem_map{$chem_old}{$chem_new}} ){
-                            push @{$self->{chem_log}{$chem_old}{status}}, "   - $xref: $chem_new # " . $prop{name};
+                            push @{$self->{chem_log}{$chem_old}{status}}, "    $xref: $chem_new # " . $prop{name};
                         }
                     }
                 }
