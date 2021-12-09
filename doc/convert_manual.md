@@ -59,7 +59,7 @@ The following code are produced:
 **CHEM_MNET_ISOMERIC**
 
 * Two or more different MNXref identifiers were found related by isomeric parent/child relationships.
-* Identification of parent/child is (unfortunately) not specified in the report.
+* The code issued for the parent and list the children.
 * _Suggested model improvement_: precise the stereochemistry of the parent identifier, as it might be the same metabolite as the child or a different one.
 
 **COMP_MAP_OK**

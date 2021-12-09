@@ -21,7 +21,6 @@ sub new{
         ns           => $chem_space,
         gene_space   => $gene_space,
         prefix_space => $prefix_space,
-        log        => {},
         log4yaml   => [],
         chem_log   => {}, # helper data structure to build the log
         comp_log   => {}, # ditto
@@ -163,7 +162,6 @@ sub convert{
     foreach( sort keys %$option ){
         $tb->die( "Invalid option key: $_" ) unless /^prefix|use_xref|generic_comp$/;
     }
-    $self->{log}        = {}; # reset
     $self->{log4yaml}   = []; # reset
     $self->{chem_dict}  = {};
     $self->{chem_log}   = {};
@@ -405,31 +403,18 @@ sub convert{
             next unless $chem_ok{$child};
             next if $child eq $parent;
             push @child, $child;
-            foreach my $source ( split /;/, $metnet2->get_chem_source( $dest_name, $parent )){
-                my $msg = join "\t",
-                    'CHEM_WARN',
-                    $source,
-                    $parent,
-                    "Isomeric parent/child relationship found in mnet",
-                    $metnet2->get_chem_desc( $parent ),
-                    $child,
-                    $metnet2->get_chem_source( $dest_name, $child ),
-                    $metnet2->get_chem_desc( $child );
-#                $self->log( $msg );
-#                $tb->warn( $msg );
-            }
         }
         if( @child ){
             foreach my $parent_old ( @{$chem_new2old{$parent}} ){
                 my @member = ();
-                foreach my $chem_new ( $parent, @child ){
+                foreach my $chem_new ( @child ){
                     foreach my $chem_old ( @{$chem_new2old{$chem_new}} ){
-                        push @member, "    - $chem_new # $self->{chem_log}{$chem_old}{name_src}";
+                        push @member, "    $chem_old: $chem_new # " . $metnet2->get_chem_desc( $chem_new );
                     }
                 }
                 push @{$self->{chem_log}{$parent_old}{status}},
                     '- code: CHEM_MNET_ISOMERIC',
-                    '  IDs_dst:',
+                    '  children:',
                     @member;
             }
         }
@@ -524,14 +509,6 @@ sub _premap_comp{
     }
     chop $str_new;
     return $str_new;
-}
-sub log{
-    my( $self, $msg ) = @_;
-    $self->{log}{$msg} = 1;
-}
-sub get_logs{
-    my $self = shift;
-    return keys %{$self->{log}};
 }
 sub yaml_escape{
     my $str = shift;
