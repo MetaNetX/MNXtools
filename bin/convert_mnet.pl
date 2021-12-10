@@ -88,6 +88,5 @@ my $yaml = $tb->open( "> $mapped_dir/convert_log.yaml" );
 print $yaml join( "\n", @{$convertor->{log4yaml}} ) . "\n";
 close $yaml;
 
-
-exit 0;
+_exit 0;
 
