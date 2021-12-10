@@ -630,9 +630,11 @@ sub add_reac_xref{
     my( $self, $ID, $source, %arg ) = @_;
     $self->{reac_xref}{$ID}{$source} = {};
     $self->set_reac_xref( $ID, $source, %arg ); # update default
-    $self->{prefix_id_to_reac}{$source} = $ID;
-    $source =~ /:(\S+)/;
-    push @{$self->{id_to_reac}{$1}}, $ID;
+#    $self->{prefix_id_to_reac}{$source} = $ID;
+#    $source =~ /:(\S+)/;
+#    push @{$self->{id_to_reac}{$1}}, $ID;
+    $self->{id_to_reac}{$source}{$ID} = 1;
+    $self->{id_to_reac}{$1}{$ID}      = 1 if $source =~ /:(\S+)/;
 }
 sub set_reac_xref{
     my( $self, $ID, $source, %arg ) = @_;
@@ -1029,6 +1031,60 @@ sub map_comp{ # same procedure as in map_chem
         return ( _get_unk_id( 'comp', $id_old ), [ '- code: COMP_MAP_UNKNOWN' ]);
     }
 }
+sub _chose_reac{
+    my( $self, @reac ) = @_;
+    my $warn = [];
+    if( @reac > 1 ){
+        @reac = nsort @reac;
+        $warn = [
+            '- code: REAC_MAP_MULTIPLE',
+            '  IDs_dst:',
+        ];
+        push @$warn, "      - $_ # " . $self->{reac_prop}{$_}{name} foreach @reac;
+    }
+    return ( $reac[0], $warn );
+}
+sub _search_reac_depr{
+    my( $self, $id ) = @_;
+    my %buf = ();
+    if( exists $self->{reac_depr}{$id} ){
+        foreach my $id2 ( keys %{$self->{reac_depr}{$id}} ){
+            if( exists $self->{reac_prop}{$id2} ){
+                $buf{$id2} = 1;
+            }
+            else{
+                $buf{$_} = 1 foreach $self->_search_reac_depr( $id2 ); # reccursion
+            }
+        }
+    }
+    return keys %buf;
+}
+sub map_reac{ # this subs is rarely used, prefer to use map_equation() ALWAYS
+    my( $self, $id_old ) = @_;
+    return ( $id_old, [ '- code: REAC_MAP_UNKNOWN' ] ) if $id_old =~ /^UNK:/;
+    my $id_new = '';
+    my $msg = [];
+    if( exists $self->{id_to_reac}{$id_old} ){
+        ( $id_new, $msg ) = $self->_chose_reac( keys %{$self->{id_to_reac}{$id_old}} );
+        $msg = [ '- code: REAC_MAP_OK' ] unless @$msg;
+    }
+    # Numeric identifier as in chebi or pubchem are possibly misleading
+    if( ! $id_new and $id_old =~ /:(.+)/ and exists $self->{id_to_reac}{$1} ){
+        ( $id_new, $msg ) = $self->_chose_reac( keys %{$self->{id_to_reac}{$1}} );
+        $msg = [ '- code: REAC_MAP_OK' ] unless @$msg;
+    }
+    if( ! $id_new and my @id  = $self->_search_reac_depr( $id_old ) ){
+        ( $id_new, $msg ) = $self->_chose_reac( @id );
+        unshift @$msg, '- code: REAC_MAP_DEPRECATED';
+    }
+    if( $id_new ){
+        return( $id_new, $msg );
+    }
+    else{
+        return ( _get_unk_id( 'reac', $id_old ), [ '- code: REAC_MAP_UNKNOWN' ] );
+    }
+}
+
 sub _balance_equation{ # Nota bene: MNXM1 and MNXM01 are treated differently
     my( $self, $ref ) = @_;
     my %equation      = %{ $ref };

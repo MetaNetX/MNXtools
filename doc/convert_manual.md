@@ -92,12 +92,20 @@ The following code are produced:
 
 * The original equation was converted into an equation which contain one or several reactant not found in MNXref.
 
-**REAC_MAP_EMPTY**
+**REAC_EMPTY_MNXREF**
 
 * The original equation was converted into an EMPTY equation, _i.e._ ` = `
-* It shlould be the case for any acid-base and/or tautomerization reaction. 
-* If present, the accompanying code REAC_MAP_MNXREF indicates that the reaction belongs to the list of known empty reactions in the MNXref reconciliation. Otherwise the accompanying code is REAC_MAP_UNKNOWN 
-* _Suggested model improvement_: empty reactions should get removed after merging the implied metabolite identifiers (see CHEM_MNET_MERGE code) 
+* It is an acid-base reaction and/or a tautomerization.
+* The identifier of this reaction is registered in MNXref as an EMPTY reaction.
+* _Suggested model improvement_: empty reactions should be removed, after merging the implied metabolites (see CHEM_MNET_MERGE code)
+
+**REAC_EMPTY_UNKNOWN**
+
+* The original equation was converted into an EMPTY equation, _i.e._ ` = `
+* The identifier of this reaction is NOT registered in MNXref as an EMPTY reaction
+* _Suggested model improvement_: 
+	* Best case scenario: it is an acid-base reaction and/or a tautomerization, the metabolites should be merged and the reaction removed.
+	* Worst case scenario: all reactants are lost because of mapping errors, fix the chemistry of the original metabolites, to preserve the reaction in the model.
 
 **REAC_MAP_LOSS**
 

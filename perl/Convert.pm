@@ -185,12 +185,12 @@ sub convert{
 #                        ? $self->_premap_map_equation( $eq_orig ) 
 #                        : $self->{ns}->_map_equation( $eq_orig );
         if( $eq_new eq ' = ' or $mnxr_id eq 'EMPTY' ){
-            $self->{reac_log}{$reac_id}{ID_dst} = ''; 
-            if( exists $self->{ns}{reac_xref}{EMPTY}{$reac_id} ){ # possibly overwrite REAC_MAP_LOSS
-                $self->{reac_log}{$reac_id}{status} = [ '- code: REAC_MAP_EMPTY', '- code: REAC_MAP_MNXREF' ];
-            } # else keep existing msg (worst case scenario!)
+            my( $id_new, $msg ) = $self->{ns}->map_reac( $reac_id );
+            if( $id_new eq 'EMPTY' ){
+                $self->{reac_log}{$reac_id}{status} = [ '- code: REAC_EMPTY_MNXREF' ];
+            } 
             else{
-                $self->{reac_log}{$reac_id}{status} = [ '- code: REAC_MAP_EMPTY', '- code: REAC_MAP_UNKNOWN' ];
+                $self->{reac_log}{$reac_id}{status} = [ '- code: REAC_EMPTY_UNKNOWN' ];
             }
             next;
         }
@@ -208,7 +208,7 @@ sub convert{
                 push @{$self->{reac_log}{$reac_id}{status}}, '- code: REAC_MAP_UNKNOWN';
             }
             else{
-                push @{$self->{reac_log}{$reac_id}{status}}, '- code: REAC_MAP_OK';
+                push @{$self->{reac_log}{$reac_id}{status}}, '- code: REAC_MAP_OTHER';
             }
         }
         if( ! exists $reac_info{$new_id} ){
