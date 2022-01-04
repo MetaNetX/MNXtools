@@ -1,6 +1,8 @@
 # MNXtools
 
-https://www.metanetx.org
+!!! This is work in progress - no usable code are yet available here !!!
+
+see also: https://www.metanetx.org
 
 ## How to download MNXref cache
 ```
