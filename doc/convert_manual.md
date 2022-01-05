@@ -5,9 +5,9 @@ In the yaml output, the mapping reports are organized according to the `chem:`/`
 The mapping always provides the source `ID_src:` and the destination `ID_dst:` identifiers and a `status` list made of the codes explained below.
 Some of these codes come with additional attributes.
 
-The names of the different entities are supplied as comments in the yaml lof to facilitate its by human (as most of us are still part of them), some of these names are propagated from the source model, the others are taken from MNXref, dependig from the context.
+The names of the different entities are supplied as comments in the yaml lof (???????) to facilitate its by human (as most of us are still part of them), some of these names are propagated from the source model, the others are taken from MNXref, depending from the context.
 
-_Suggested model improvements_ are given to help improve the formulation of genome-scale metabolic networks. However, it should be realized that these suggestions might be totally inadapted for other applications. The users are strongly advised not to follow them blindly, and report the problemeatic cases here or there. 
+_Suggested model improvements_ are given to help improve the formulation of genome-scale metabolic networks. However, it should be realized that these suggestions might be totally inadapted for other applications. The users are strongly advised not to follow them blindly, and report the problematic cases here or there. 
 
 The following code are produced:
 
@@ -27,7 +27,7 @@ The following code are produced:
 * This code is only produced when cross-refs are exploited
 * There are multiple cross-refs that correspond to different MNXref identifiers, but these are related by stereochemical parent/child relationships.
 * The parent MNXref identifier is selected automatically to preserve chemistry, at the expense of precision.
-* _Suggested model improvement_: select which cross ref is the best one, possibly among those with the more detailed stereochemistry. It however cannot be excluded that the parent cross ref corresponds to a different metabolite, which precise stereochemistry could be specified from a different xref.
+* _Suggested model improvement_: select which cross-ref is the best one, possibly among those with the more detailed stereochemistry. It however cannot be excluded that the parent cross-ref corresponds to a different metabolite, which precise stereochemistry could be specified from a different xref.
 
 **CHEM_MAP_OK**
 
@@ -86,11 +86,11 @@ The following code are produced:
 **REAC_MAP_MNXREF**
 
 * The original equation was converted into an equation which reactants are all mapped to MNXref
-* In addition, The mapped equation correspond to an known equation int the MNXref repositry
+* In addition, the mapped equation corresponds to an known equation into the MNXref repository
 
 **REAC_MAP_UNKNOWN**
 
-* The original equation was converted into an equation which contain one or several reactant not found in MNXref.
+* The original equation was converted into an equation which contains one or several reactant not found in MNXref.
 
 **REAC_EMPTY_MNXREF**
 
@@ -109,9 +109,9 @@ The following code are produced:
 
 **REAC_MAP_LOSS**
 
-* A reactants has been lost from an equation, because it was present on both side of the equation with the same stoichiometric coeficient. As a consequence, the mapped reactions likely differ from the source reaction, which is possibly the most severe problem that can be encountered.
+* A reactant has been lost from an equation, because it was present on both sides of the equation with the same stoichiometric coefficient. As a consequence, the mapped reactions likely differ from the source reaction, which is possibly the most severe problem that can be encountered.
 * This code is not reported for empty reactions.
-* _Suggested model improvement_: Work on the metabolites to enforce the distinguish the one in the left and right term of the equatoin. It cannot be excluded that the problem arise from a mistake in the MNXref reconciliation, that shuld be reported here (thanks in advance)
+* _Suggested model improvement_: Work on the metabolites to enforce the distinguish the one in the left and right term of the equationn. It cannot be excluded that the problem arises from a mistake in the MNXref reconciliation, that should be reported here (thanks in advance)
 
 **REAC_MAP_PROTON_SALAD**
 
@@ -120,6 +120,6 @@ The following code are produced:
 **REAC_MNET_MERGE**
 
 * Two or more different original reaction were mapped onto a single one.
-* _Suggested model improvement_: first, merge the implied metabolites into a single one; Secondly, merge the reactions into a single one.
-* _Nota Bene_: On the contrary to SBML, MNXtools are agnostic here with respect to reaction directions. Directionality constraintsare placed on top of (undirected) equation, together with enzyme descriptions. This might explain part of the observed merges.
+* _Suggested model improvement_: first, merge the implied metabolites into a single one; secondly, merge the reactions into a single one.
+* _Nota Bene_: On the contrary to SBML, MNXtools are agnostic here with respect to reaction directions. Directionality constraints are placed on top of (undirected) equation, together with enzyme descriptions. This might explain part of the observed merges.
 
