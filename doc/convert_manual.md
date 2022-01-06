@@ -5,7 +5,7 @@ In the yaml output, the mapping reports are organized according to the `chem:`/`
 The mapping always provides the source `ID_src:` and the destination `ID_dst:` identifiers and a `status` list made of the codes explained below.
 Some of these codes come with additional attributes.
 
-The names of the different entities are supplied as comments in the yaml log to facilitate its by human (as most of us are still part of them), some of these names are propagated from the source model, the others are taken from MNXref, depending from the context.
+The names of the different entities are supplied as comments in the yaml log to facilitate it by humans (as most of us are still part of them), some of these names are propagated from the source model, the others are taken from MNXref, depending on the context.
 
 _Suggested model improvements_ are given to help improve the formulation of genome-scale metabolic networks. However, it should be realized that these suggestions might be totally not adapted for other applications. The users are strongly advised not to follow them blindly, and report the problematic cases here or there. 
 
@@ -35,8 +35,8 @@ The following code are produced:
 
 **CHEM_MAP_MULTIPLE**
 
-* The mapping returns more than one MNXref identifiers and one of them is **arbitrarily** selected in the mapped model. 
-* This situation may arise because of not enough information is supplied in the source model or because of a deprecated MNXref identifiers which was remapped onto more than one identifier in the latest MNXref releases.
+* The mapping returns more than one MNXref identifier and one of them is **arbitrarily** selected in the mapped model. 
+* This situation may arise because not enough information is supplied in the source model or because of a deprecated MNXref identifier which was remapped onto more than one identifier in the latest MNXref releases.
 * _Suggested model improvement_: update the identifier in the source model to remove the ambiguity.
 
 **CHEM_MAP_DEPRECATED**
@@ -59,7 +59,7 @@ The following code are produced:
 **CHEM_MNET_ISOMERIC**
 
 * Two or more different MNXref identifiers were found related by isomeric parent/child relationships.
-* The code issued for the parent and list the children.
+* The code is used for the parent and list the children.
 * _Suggested model improvement_: precise the stereochemistry of the parent identifier, as it might be the same metabolite as the child or a different one.
 
 **COMP_MAP_OK**
@@ -70,14 +70,14 @@ The following code are produced:
 
 **COMP_MAP_MULTIPLE**
 
-* The mapping returns more than one MNXref identifiers and one of them is **arbitrarily** selected in the mapped model.
-* This situation may arise because of not enough information is supplied in the source model or because of a deprecated MNXref identifiers which was remapped onto more than one identifier in the latest MNXref releases.
+* The mapping returns more than one MNXref identifier and one of them is **arbitrarily** selected in the mapped model.
+* This situation may arise because not enough information is supplied in the source model or because of a deprecated MNXref identifier which was remapped onto more than one identifier in the latest MNXref releases.
 * _Suggested model improvement_: update the identifier in the source model to remove the ambiguity.
 
 **COMP_GENERIC**
 
 * The original compartments have been replaced by generic compartments MNXD1 and MNXD2 as in the MNXref distribution.
-* The connectivity of the network is likely have been lost, if it contained more than one compartment.
+* The connectivity of the network is likely to have been lost, if it contained more than one compartment.
 
 **REAC_MAP_OK**
 
@@ -111,7 +111,7 @@ The following code are produced:
 
 * A reactant has been lost from an equation, because it was present on both sides of the equation with the same stoichiometric coefficient. As a consequence, the mapped reactions likely differ from the source reaction, which is possibly the most severe problem that can be encountered.
 * This code is not reported for empty reactions.
-* _Suggested model improvement_: Work on the metabolites to enforce the distinguish the one in the left and right term of the equationn. It cannot be excluded that the problem arises from a mistake in the MNXref reconciliation, that should be reported here (thanks in advance)
+* _Suggested model improvement_: Work on the metabolites to enforce the distinction between the one in the left and right term of the equation. It cannot be excluded that the problem arises from a mistake in the MNXref reconciliation, that should be reported here (thanks in advance)
 
 **REAC_MAP_PROTON_SALAD**
 
@@ -119,7 +119,7 @@ The following code are produced:
 
 **REAC_MNET_MERGE**
 
-* Two or more different original reaction were mapped onto a single one.
+* Two or more different original reactions were mapped onto a single one.
 * _Suggested model improvement_: first, merge the implied metabolites into a single one; secondly, merge the reactions into a single one.
-* _Nota Bene_: On the contrary to SBML, MNXtools are agnostic here with respect to reaction directions. Directionality constraints are placed on top of (undirected) equation, together with enzyme descriptions. This might explain part of the observed merges.
+* _Nota Bene_: On the contrary to SBML, MNXtools are agnostic here with respect to reaction directions. Directionality constraints are placed on top of (undirected) equations, together with enzyme descriptions. This might explain part of the observed merges.
 
