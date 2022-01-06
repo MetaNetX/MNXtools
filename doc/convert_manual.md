@@ -5,7 +5,7 @@ In the yaml output, the mapping reports are organized according to the `chem:`/`
 The mapping always provides the source `ID_src:` and the destination `ID_dst:` identifiers and a `status` list made of the codes explained below.
 Some of these codes come with additional attributes.
 
-The names of the different entities are supplied as comments in the yaml lof (???????) to facilitate its by human (as most of us are still part of them), some of these names are propagated from the source model, the others are taken from MNXref, depending from the context.
+The names of the different entities are supplied as comments in the yaml log to facilitate its by human (as most of us are still part of them), some of these names are propagated from the source model, the others are taken from MNXref, depending from the context.
 
 _Suggested model improvements_ are given to help improve the formulation of genome-scale metabolic networks. However, it should be realized that these suggestions might be totally inadapted for other applications. The users are strongly advised not to follow them blindly, and report the problematic cases here or there. 
 
