@@ -7,7 +7,7 @@ Some of these codes come with additional attributes.
 
 The names of the different entities are supplied as comments in the yaml log to facilitate its by human (as most of us are still part of them), some of these names are propagated from the source model, the others are taken from MNXref, depending from the context.
 
-_Suggested model improvements_ are given to help improve the formulation of genome-scale metabolic networks. However, it should be realized that these suggestions might be totally inadapted for other applications. The users are strongly advised not to follow them blindly, and report the problematic cases here or there. 
+_Suggested model improvements_ are given to help improve the formulation of genome-scale metabolic networks. However, it should be realized that these suggestions might be totally not adapted for other applications. The users are strongly advised not to follow them blindly, and report the problematic cases here or there. 
 
 The following code are produced:
 
@@ -36,7 +36,7 @@ The following code are produced:
 **CHEM_MAP_MULTIPLE**
 
 * The mapping returns more than one MNXref identifiers and one of them is **arbitrarily** selected in the mapped model. 
-* This situation may arise because of not enough information is supplied in the source model or because of a deprecated MNXref identifiers which was remapped onto more than one identifiers in the latest MNXref releases.
+* This situation may arise because of not enough information is supplied in the source model or because of a deprecated MNXref identifiers which was remapped onto more than one identifier in the latest MNXref releases.
 * _Suggested model improvement_: update the identifier in the source model to remove the ambiguity.
 
 **CHEM_MAP_DEPRECATED**
@@ -49,7 +49,7 @@ The following code are produced:
 
 * The metabolite cannot be mapped to an MNXref identifier.
 * The prefix `UNK:` was added to the original metabolite identifier in the ad hoc MNX format. 
-* _Suggested model improvement_: update the identifier in the source model if (and only if) the chemical exist somewhere in MNXref namespace 
+* _Suggested model improvement_: update the identifier in the source model if (and only if) the chemical exists somewhere in MNXref namespace 
 
 **CHEM_MNET_MERGE**
 
@@ -71,7 +71,7 @@ The following code are produced:
 **COMP_MAP_MULTIPLE**
 
 * The mapping returns more than one MNXref identifiers and one of them is **arbitrarily** selected in the mapped model.
-* This situation may arise because of not enough information is supplied in the source model or because of a deprecated MNXref identifiers which was remapped onto more than one identifiers in the latest MNXref releases.
+* This situation may arise because of not enough information is supplied in the source model or because of a deprecated MNXref identifiers which was remapped onto more than one identifier in the latest MNXref releases.
 * _Suggested model improvement_: update the identifier in the source model to remove the ambiguity.
 
 **COMP_GENERIC**
@@ -86,11 +86,11 @@ The following code are produced:
 **REAC_MAP_MNXREF**
 
 * The original equation was converted into an equation which reactants are all mapped to MNXref
-* In addition, the mapped equation corresponds to an known equation into the MNXref repository
+* In addition, the mapped equation corresponds to a known equation into the MNXref repository
 
 **REAC_MAP_UNKNOWN**
 
-* The original equation was converted into an equation which contains one or several reactant not found in MNXref.
+* The original equation was converted into an equation which contains one or several reactants not found in MNXref.
 
 **REAC_EMPTY_MNXREF**
 
