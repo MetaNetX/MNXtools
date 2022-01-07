@@ -1,0 +1,3 @@
+complicated to transform current stderr (Log::Log4perl) to YAML:
+	- different formats for SBML errors/warnings and my errors/warnings
+		=> must keep the SBML format people "know"
