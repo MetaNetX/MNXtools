@@ -1,6 +1,5 @@
 ```
-SBML_to_MetaNetX.pl [options] -sbml <SBML file to convert to MetaNetX TSV format> -outdir <dir>
-convert-tsv.pl                <indir> <outdir>
+SBML_to_MetaNetX.pl  [options] -sbml <SBML file to convert to MetaNetX TSV format> -outdir <dir>
+convert_mnet.pl      [options] <in-dir> <out-dir>
 
-tsv_to_SBML.pl                <indir> <outfile>
 ```
