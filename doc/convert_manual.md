@@ -7,7 +7,7 @@ Some of these codes come with additional attributes.
 
 The names of the different entities are supplied as comments in the yaml log to facilitate it for humans (as most of us are still part of them), some of these names are propagated from the source model, the others are taken from MNXref, depending on the context.
 
-_Suggested model improvements_ are given to help improve the formulation of genome-scale metabolic networks. However, it should be realized that these suggestions might be totally not adapted for other applications. The users are strongly advised not to follow them blindly, and to report the problematic cases here or there. 
+_Suggested model improvements_ are given to help improve the formulation of genome-scale metabolic networks. However, it should be realized that these suggestions might be totally not adapted for other applications. The users are strongly advised not to follow them blindly, and to report the problematic cases here or there. You can report MetaNetX related issues via our dedicated github https://github.com/MetaNetX/MNXref/issues
 
 The following code are produced:
 
