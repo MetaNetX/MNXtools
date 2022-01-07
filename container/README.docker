@@ -25,6 +25,9 @@ docker system prune
 # Inspect images
 docker inspect  mnxtools:$MNXTOOLS_VERSION
 
+# Show running containers
+docker ps
+
 
 # Run bash in the Docker image
 docker run --name mnxtools --rm -i -t mnxtools:$MNXTOOLS_VERSION bash
