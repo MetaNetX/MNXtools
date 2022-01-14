@@ -1,5 +1,10 @@
 # MNXtools
 
+!!! This is work in progress - nothing below is yet completely true !!!
+
+The code in this repository is primarily designed to build a dockerized application. The lattest stable docker version can be obtained from dockerhub.   
+
+
 !!! This is work in progress - no usable code are yet available here !!!
 
 see also: https://www.metanetx.org
