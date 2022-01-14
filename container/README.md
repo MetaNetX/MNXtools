@@ -1,4 +1,4 @@
-The Docker container can be built from the _Dockerfile_ file provided here, or pulled from ...
+The Docker container can be built from the _Dockerfile_ file provided here, or pulled from https://hub.docker.com/r/sibswiss/mnxtools
 
 Once you have the mnxtools Docker container locally you can run it like this:
 ```
