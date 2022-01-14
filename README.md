@@ -2,7 +2,7 @@
 
 !!! This is work in progress - nothing below is yet completely true !!!
 
-The code in this repository is primarily designed to build a dockerized application. The lattest stable docker version can be obtained from dockerhub.   
+The code in this repository is primarily designed to build a dockerized application. The latest stable docker version can be obtained from dockerhub: https://hub.docker.com/r/sibswiss/mnxtools.   
 
 see also: https://www.metanetx.org
 
