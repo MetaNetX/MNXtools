@@ -19,7 +19,7 @@ The following code are produced:
 **CHEM_XREF_CONFLICT**
 
 * This code is only produced when cross-refs are exploited.
-* There are multiple cross-refs that correspond to different unrelated MNXref identifiers (or to only one MNXref identifier but this identifier is involved in a conflict, in this case please check all the pages for this identifier in order to retrieve the conflicting cross-refs).
+* There are multiple cross-refs that correspond to different unrelated MNXref identifiers (or to only one MNXref identifier (that can be reported twice) but anyway this identifier is involved in a conflict, in this case please check all the pages for this identifier in order to retrieve the conflicting cross-refs).
 * _Suggested model improvement_: select which cross-ref is the best one, keep it and move the others elsewhere (in comments, for example) to avoid recreating this conflict later.
 
 **CHEM_XREF_AMBIGUOUS**
