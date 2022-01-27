@@ -2,9 +2,13 @@ The Docker container can be built from the _Dockerfile_ file provided here, or p
 
 Once you have the mnxtools Docker container locally you can run it like this:
 ```
-docker run --name mnxtools --rm -i -t mnxtools:tagname <MNXtools command>
+export MNXTOOLS_VERSION=0.0.3
+export BINDING_PATH=...
+docker run --name mnxtools --mount type=bind,source=$BINDING_PATH,target=/mybinding --rm -i -t sibswiss/mnxtools:$MNXTOOLS_VERSION <MNXtools command>
 ```
-- *tagname* is the container version
+- *MNXTOOLS_VERSION* is the container version
+- *BINDING_PATH* is the outside world path mounted in the container
+- */mybinding* is the outside world path within the container
 - *--name* assignes a name to the running container
 - *--rm* automatically removes the container when it exits
 - *-i* opens an interactive session with the container
