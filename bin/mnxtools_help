@@ -1,0 +1,14 @@
+#!/bin/bash
+
+DIR=`which $0 | sed -e 's@[^/]*$@@'`
+
+#Exclude MetaNetX_to_SBML.pl because not finished
+for all in `ls $DIR/*.pl | grep -v MetaNetX_to_SBML.pl`;
+do
+	$all
+	echo
+	echo '###################'
+done
+
+exit;
+
