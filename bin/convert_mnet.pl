@@ -37,7 +37,11 @@ Nota bene: the content of <out-dir> is erased!
          -p <dir>          path to dir with id_map and peptide.tsv files
 
          -L          use late merge data
-         -x <regexp> use chem xref for mapping ('.' means all, all by default)
+
+         # The default is to map chem from their ID. This default can be altered by one of the two options
+         -x <regexp> ignores ID and use chem xref for mapping (use '.' as regexp to mean all xrefs)
+         -X <regexp> considers ID and in addition use chem ref (use '.' as regexp to mean all xrefs)
+
          -y <regexp> use pept xref for mapping ('.' means all, all by default)
          -G          use generic compartment
 ";
@@ -63,11 +67,21 @@ $tb->system( "rm -rf $mapped_dir/*" );
 
 $tb->report( 'retrieve', $opt{V} );
 my $ns = ChemSpace->new( $tb )->retrieve_from_file( $opt{V} );
+
 $ns->enable_late_merge()    if $opt{L};
 # $ns->enable_un_merge()       if $opt{U};
 # $ns->disable_normalize_coef  if $opt{C};
 
 my $option = {};
+$tb->die( 'Options -x <regexp> and -X <regexp> are mutually exclusive!' ) if $opt{x} and $opt{X};
+if( $opt{x} ){
+    $option->{use_chem_xref} = $opt{x};
+}
+else{
+    $option->{use_chem_ID} = 1
+    $option->{use_chem_xref} = $opt{X} if $opt{X};
+}
+
 # $option->{max_range} = $opt{R}  if $opt{R};
 # $option->{prefix}    = $opt{P}  if $opt{P};
 

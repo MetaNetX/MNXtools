@@ -39,7 +39,7 @@ sub set_comp_premap{
     $self->{option}{comp_premap} = $comp_premap;
 }
 sub _use_xref{
-    my( $self, $metnet, $source_name, $filter ) = @_;
+    my( $self, $metnet, $source_name, $filter, $use_chem_id ) = @_;
     my %chem_map = ();
     my %xref_unk = ();
     my $regexp = $filter ? qr{$filter} : qr{.};
@@ -47,25 +47,25 @@ sub _use_xref{
         my $source_old = $metnet->get_chem_source( $source_name, $chem_old ) || $chem_old;
         my( $desc, $formula, $mass, $charge, $xref ) =  $metnet->get_chem_info( $chem_old );
         my @chem_unk = ();
-        foreach my $chem_id ( $chem_old, split /;/, $xref ){
-            next unless $chem_id =~ /$regexp/;
-            my( $dbkey, $id) = $chem_id =~ /^(\w+):(\S+)$/;
-            my( $chem_new, $msg ) = ( '???', [] );
-            if( $dbkey ){
-                if( $self->{prefix_space}->prefix_exists( $dbkey )){
-                    ( $chem_new, $msg ) = $self->{ns}->map_chem( $chem_id );
+        my @chem_id = $use_chem_id ? ( $chem_old ) : ();
+        foreach( split /;/, $xref ){
+            push @chem_id, $_ if /$regexp/; 
+        }
+        foreach my $chem_id ( @chem_id ){
+            my ( $chem_new, $msg ) = $self->{ns}->map_chem( $chem_id );
+            if( $chem_new =~ /^UNK:/ and $chem_id =~ /^(\w+):(\S+)$/){
+                my( $dbkey, $id) = ( $1, $2 );
+                my %buf = ();
+                foreach my $prefix ( $self->{prefix_space}->get_prefix_from_depr( 'chem', $dbkey )){
+                    ( $chem_new, $msg ) = $self->{ns}->map_chem( $prefix . ':' . $id );
+                    $buf{$chem_new} = 1 if $chem_new !~ /^UNK:/;
                 }
-                else{
-                    foreach my $prefix ( $self->{prefix_space}->get_prefix_from_depr( 'chem', $dbkey )){
-                        ( $chem_new, $msg ) = $self->{ns}->map_chem( $prefix . ':' . $id );
-                        last if $chem_new !~ /^UNK:/;
-                    }
+                my @buf = keys %buf;
+                if( @buf == 1 ){
+                    $chem_new = $buf[0];
                 }
             }
-            else{ # ! $dbkey
-                ( $chem_new, $msg ) = $self->{ns}->map_chem( $id );
-            }
-            if( $chem_new =~ /^UNK:/ or $chem_new eq '???' ){
+            if( $chem_new =~ /^UNK:/ ){
                 push @{$xref_unk{$chem_old}}, $chem_id;
             }
             else{
@@ -92,12 +92,6 @@ sub _use_xref{
             }
         }
         else{ # @chem_new > 1 ambiguous or conflicting mappings
-            my %msg = ();
-            foreach my $chem_old ( @chem_old ){
-                foreach my $chem_new ( sort keys %{$chem_map{$chem_old}} ){
-                    $msg{ join( ',', @{$chem_map{$chem_old}{$chem_new}} ) . ' => ' . $chem_new } = 1;
-                }
-            }
             my $parent = ''; # looks for incests, i.e. parent/child relations
             foreach my $chem_new ( @chem_new ){
                 next if $parent;
@@ -108,10 +102,8 @@ sub _use_xref{
                     $parent = '' unless exists $ok{$_};
                 }
             }
-            if( $parent ){ # map all children onto the parent
-                my $msg = "Ambiguous xrefs, parent $parent selected: " . join '; ', sort keys %msg;
+            if( $parent ){ # one of chem is a parent of all the others
                 foreach my $chem_old ( @chem_old ){
-                    my $source_old = $metnet->get_chem_source( $source_name, $chem_old ) || $chem_old;
                     $self->{chem_dict}{$chem_old} = $parent;
                     push @{$self->{chem_log}{$chem_old}{status}}, '- code: CHEM_XREF_AMBIGUOUS', "  mappings:";
                     foreach my $chem_new ( sort keys %{$chem_map{$chem_old}} ){
@@ -123,12 +115,12 @@ sub _use_xref{
                 }
             }
             else{ # create UNK: and report conflict
-                my $msg = 'Conflicting xrefs: ' . join '; ', sort keys %msg;
+                warn Dumper $cluster;
                 foreach my $chem_old ( @chem_old ){
-                    my $source_old = $metnet->get_chem_source( $source_name, $chem_old ) || $chem_old;
                     $self->{chem_dict}{$chem_old} = 'UNK:' . $chem_old;
                     push @{$self->{chem_log}{$chem_old}{status}}, '- code: CHEM_XREF_CONFLICT', "  mappings:";
                     foreach my $chem_new ( sort keys %{$chem_map{$chem_old}} ){
+                        warn "$chem_old ---> $chem_new\n"; 
                         my %prop = $self->{ns}->get_chem_prop( $chem_new );
                         foreach my $xref ( sort @{$chem_map{$chem_old}{$chem_new}} ){
                             push @{$self->{chem_log}{$chem_old}{status}}, "    $xref: $chem_new # " . $prop{name};
@@ -415,7 +407,7 @@ sub convert{
                 push @{$self->{chem_log}{$parent_old}{status}},
                     '- code: CHEM_MNET_ISOMERIC',
                     '  children:',
-                    @member;
+                    sort @member;
             }
         }
     }
@@ -439,7 +431,7 @@ sub convert{
                 push @{$self->{chem_log}{$_}{status}}, 
                     '- code: CHEM_MNET_MERGE', 
                     '  IDs_src:',
-                    @member;
+                    sort @member;
             }
         }
     }
