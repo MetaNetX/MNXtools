@@ -8,7 +8,7 @@ docker pull sibswiss/mnxtools
 Once you have the mnxtools Docker container locally you can run it like this:
 ```bash
 export BINDING_PATH=/tmp
-docker run --name mnxtools --mount type=bind,source=$BINDING_PATH,target=/mybinding --rm -i -t sibswiss/mnxtools <MNXtools command>
+docker run --name mnxtools --mount type=bind,source=$BINDING_PATH,target=/mybinding --rm -i -t sibswiss/mnxtools mnxtools_help
 ```
 - *BINDING_PATH* is the outside world path mounted in the container
 - */mybinding* is the outside world path within the container
@@ -19,7 +19,7 @@ docker run --name mnxtools --mount type=bind,source=$BINDING_PATH,target=/mybind
 
 
 
-Available **MNXtools commands** are:
+```mnxtools_help``` lists the available **MNXtools commands**:
 ```
 SBML_to_MetaNetX.pl  [options] -sbml <SBML file to convert to MetaNetX TSV format> -outdir <dir>
 convert_mnet.pl      [options] <in-dir> <out-dir>
