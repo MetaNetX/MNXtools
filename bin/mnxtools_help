@@ -5,7 +5,7 @@ DIR=`which $0 | sed -e 's@[^/]*$@@'`
 #Exclude MetaNetX_to_SBML.pl because not finished
 for all in `ls $DIR/*.pl | grep -v MetaNetX_to_SBML.pl`;
 do
-	$all | sed -e 's@^\./.*/@@'
+	$all | sed -e 's@^\./.*/@@; s@^/.*/@@'
 	echo
 	echo '###################'
 done
