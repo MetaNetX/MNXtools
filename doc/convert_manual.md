@@ -18,7 +18,8 @@ The following code are produced:
 **CHEM_XREF_CONFLICT**
 
 * This code is only produced when cross-refs are exploited.
-* There are multiple cross-refs that correspond to different unrelated MNXref identifiers (or to only one MNXref identifier (that can be reported twice) but anyway this identifier is involved in a conflict, in this case please check all the pages for this identifier in order to retrieve the conflicting cross-refs).
+* There are multiple cross-refs that correspond to different unrelated MNXref identifiers.
+* It may happen that this code is reported associated with a single associated cross-ref! In that case there exits another identifier in the model with multiple conflicting cross-refs, including the one reported here. 
 * _Suggested model improvement_: select which cross-ref is the best one, keep it and move the others elsewhere (in comments, for example) to avoid recreating this conflict later.
 
 **CHEM_XREF_AMBIGUOUS**
@@ -26,7 +27,7 @@ The following code are produced:
 * This code is only produced when cross-refs are exploited.
 * There are multiple cross-refs that correspond to different MNXref identifiers, but these are related by stereochemical parent/child relationships.
 * The parent MNXref identifier is selected automatically to preserve chemistry, at the expense of precision.
-* _Suggested model improvement_: select which cross-ref is the best one, possibly among those with the more detailed stereochemistry. It however cannot be excluded that the parent cross-ref corresponds to a different metabolite, which precise stereochemistry could be specified from a different xref.
+* _Suggested model improvement_: select cross-ref is the best one, possibly among those (children) with the more detailed stereochemistry. It however cannot be excluded that the parent cross-ref corresponds to a different metabolite which stereochemistry could be specified from an existing cross-ref.
 
 **CHEM_MAP_OK**
 
