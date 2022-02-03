@@ -2,7 +2,7 @@
 
 The yaml report produced by `convert_mnet.pl` is organized around the identifiers of the source model. This permits its utilisation as a diagnostic tool, without considering further the mapped model.
 
-The main report sections are `chem:`/`comp:`/`reac:`. They provides the source `ID_src:` and the destination `ID_dst:` identifiers and a `status` list made with one or several codes explained below. Some of these codes come with additional attributes.
+The main report sections are `chem:`/`comp:`/`reac:`. They provides the source `ID_src:` and the destination `ID_dst:` identifiers and a `status` list made of one or several codes which meaning is explained below. Some of these codes come with additional attributes.
 
 The names of the different entities are supplied as comments in the yaml log to facilitate its understanding by humans. Some of these names are propagated from the source model, others are taken from MNXref, depending on the mapping success.
 
