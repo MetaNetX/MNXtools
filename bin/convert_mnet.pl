@@ -30,7 +30,7 @@ my $usage = "$0 [options] <indir> <outdir>
 
 options: -h          this help
 
-Nota bene: the content of <out-dir> is erased!
+Nota bene: the content of <outdir> is erased!
 
          -V <file-bindump> read namespace cache file ( ../cache/ChemSpace.bindump by default )
 
