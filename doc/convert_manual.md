@@ -1,13 +1,12 @@
 # Status codes (conversion to MNXref)
 
-In the yaml output, the mapping reports are organized according to the `chem:`/`comp:`/`reac:` identifiers of the source model to permit the utilisation of the report without considering further the mapped model.
+The yaml report produced by `convert_mnet.pl` is organized around the identifiers of the source model. It permits its utilisation as a diagnostic tool, without considering further the mapped model.
 
-The mapping always provides the source `ID_src:` and the destination `ID_dst:` identifiers and a `status` list made of the codes explained below.
-Some of these codes come with additional attributes.
+The main report sections are `chem:`/`comp:`/`reac:`. They provides the source `ID_src:` and the destination `ID_dst:` identifiers and a `status` list made with one or several codes explained below. Some of these codes come with additional attributes.
 
-The names of the different entities are supplied as comments in the yaml log to facilitate it for humans (as most of us are still part of them), some of these names are propagated from the source model, the others are taken from MNXref, depending on the context.
+The names of the different entities are supplied as comments in the yaml log to facilitate its understanding by humans. Some of these names are propagated from the source model, others are taken from MNXref, depending on the mapping success.
 
-_Suggested model improvements_ are given to help improve the formulation of genome-scale metabolic networks. However, it should be realized that these suggestions might be totally not adapted for other applications. The users are strongly advised not to follow them blindly, and to report the problematic cases here or there. You can report MetaNetX related issues via our dedicated github https://github.com/MetaNetX/MNXref/issues
+_Suggested model improvements_ are given to help ameliorate the formulation of the input genome-scale metabolic network. The user is strongly advised not to follow them blindly, as some of these issues may originate from mistakes in the compilation of MNXref. The latter can be reported on our dedicated github page https://github.com/MetaNetX/MNXref/issues
 
 The following code are produced:
 
