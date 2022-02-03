@@ -19,3 +19,5 @@ docker login
 docker tag mnxtools:$MNXTOOLS_VERSION sibswiss/mnxtools:$MNXTOOLS_VERSION
 docker -D push sibswiss/mnxtools:$MNXTOOLS_VERSION
 
+docker tag mnxtools:$MNXTOOLS_VERSION sibswiss/mnxtools:latest
+docker -D push sibswiss/mnxtools:latest
