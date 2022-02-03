@@ -64,9 +64,19 @@ The following code are produced:
 
 **COMP_MAP_OK**
 
+* A unique mapping returns a single MNXref identifier.
+
 **COMP_MAP_DEPRECATED**
 
+* The source identifier is a deprecated MNXref identifier.
+* It might cause a CHEM_MAP_MULTIPLE code, or not.
+* _Suggested model improvement_: update the identifier in the source model.
+
 **COMP_MAP_UNKNOWN**
+
+* The compartment cannot be mapped to an MNXref identifier.
+* The prefix `UNK:` was added to the original compartment identifier in the ad hoc MNX format.
+* _Suggested model improvement_: update the identifier in the source model if (and only if) the compartment exists somewhere in MNXref namespace.
 
 **COMP_MAP_MULTIPLE**
 
@@ -77,7 +87,7 @@ The following code are produced:
 **COMP_GENERIC**
 
 * The original compartments have been replaced by generic compartments MNXD1 and MNXD2 as in the MNXref distribution.
-* The connectivity of the network is likely to have been lost, if it contained more than one compartment.
+* The connectivity of the network is likely to have been lost, if it was containing more than one compartment.
 
 **REAC_MAP_OK**
 
@@ -109,9 +119,9 @@ The following code are produced:
 
 **REAC_MAP_LOSS**
 
-* A reactant has been lost from an equation, because it was present on both sides of the equation with the same stoichiometric coefficient. As a consequence, the mapped reactions likely differ from the source reaction, which is possibly the most severe problem that can be encountered.
+* A reactant has been lost from an equation, because it was present on both sides of the equation with the same stoichiometric coefficient. As a consequence, the mapped reactions differ from the source reaction by its number of reactants, which is possibly the most severe problem that can be encountered here.
 * This code is not reported for empty reactions.
-* _Suggested model improvement_: Work on the metabolites to enforce the distinction between the one in the left and right terms of the equation. It cannot be excluded that the problem arises from a mistake in the MNXref reconciliation, that should be reported here (thanks in advance).
+* _Suggested model improvement_: Work on the metabolites to enforce the distinction between the one in the left and right terms of the equation. It cannot be excluded that the problem arises from a mistake in the MNXref reconciliation, that should be reported here (thanks in advance). Some polymer noatation are known to cause this problem. 
 
 **REAC_MAP_PROTON_SALAD**
 
@@ -121,5 +131,5 @@ The following code are produced:
 
 * Two or more different original reactions were mapped onto a single one.
 * _Suggested model improvement_: first, merge the implied metabolites into a single one; secondly, merge the reactions into a single one.
-* _Nota Bene_: On the contrary to SBML, MNXtools are agnostic here with respect to reaction directions. Directionality constraints are placed on top of (undirected) equations, together with enzyme descriptions. This might explain part of the observed merges.
+* _Nota Bene_: On the contrary to SBML, MNXtools is agnostic with respect to reaction directions. Directionality constraints are placed on top of (undirected) equations, together with enzyme descriptions. This might explain part of the observed merges.
 
