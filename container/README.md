@@ -1,12 +1,12 @@
 The Docker container can be built from the _Dockerfile_ file provided here, or pulled from https://hub.docker.com/r/sibswiss/mnxtools
 
 E.g.
-````bash
+```bash
 docker pull sibswiss/mnxtools
 ```
 
 Once you have the mnxtools Docker container locally you can run it like this:
-````bash
+```bash
 export BINDING_PATH=/tmp
 docker run --name mnxtools --mount type=bind,source=$BINDING_PATH,target=/mybinding --rm -i -t sibswiss/mnxtools <MNXtools command>
 ```
