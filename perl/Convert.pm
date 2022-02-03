@@ -152,14 +152,14 @@ sub _premap_map_equation{
 sub convert{
     my( $self, $metnet, $source_name, $metnet2, $dest_name, $option ) = @_;
     foreach( sort keys %$option ){
-        $tb->die( "Invalid option key: $_" ) unless /^prefix|use_xref|generic_comp$/;
+        $tb->die( "Invalid option key: $_" ) unless /^prefix|use_chem_ID|use_chem_xref|generic_comp$/;
     }
     $self->{log4yaml}   = []; # reset
     $self->{chem_dict}  = {};
     $self->{chem_log}   = {};
     $self->{comp_log}   = {};
     $self->{reac_log}   = {};
-    $self->_use_xref( $metnet, $source_name, $option->{use_xref} ) if $option->{use_xref};
+    $self->_use_xref( $metnet, $source_name, $option->{use_chem_ID} ) if $option->{use_chem_xref};
     my %reac_info = (); # Reac-centric temporary data structure to prepare the new model
     foreach my $reac_id ( sort $metnet->select_reac_ids( mnet => $source_name ) ){
         my $eq_orig = $metnet->get_reac_equation( $reac_id );
@@ -173,9 +173,6 @@ sub convert{
             $mnxr_id, 
             $str_gen, 
             $sign_gen ) = $self->_premap_map_equation( $eq_orig ); 
-#                        $option->{use_xref} 
-#                        ? $self->_premap_map_equation( $eq_orig ) 
-#                        : $self->{ns}->_map_equation( $eq_orig );
         if( $eq_new eq ' = ' or $mnxr_id eq 'EMPTY' ){
             my( $id_new, $msg ) = $self->{ns}->map_reac( $reac_id );
             if( $id_new eq 'EMPTY' ){

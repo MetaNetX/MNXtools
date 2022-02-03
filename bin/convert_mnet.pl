@@ -28,22 +28,30 @@ my $tb = Toolbox->new();
 
 my $usage = "$0 [options] <in-dir> <out-dir>
 
-options: -h          this help
+<in-dir>  directory with a mnet in MetaNetX format 
+<out-dir> directory to write the mapped mnet the yaml mapping report  
+          Nota bene: the content of <out-dir> is erased!
 
-Nota bene: the content of <out-dir> is erased!
+options:
 
-         -V <file-bindump> read namespace cache file ( ../cache/ChemSpace.bindump by default )
+    -h            this help
 
-         -p <dir>          path to dir with id_map and peptide.tsv files
+    -V <dumpfile> read namespace cache file
+                  (/usr/local/MNXtools/cache/ChemSpace.bindump by default)
+    -p <dir>      path to dir with id_map and peptide.tsv files
+    -L            use late merge data
 
-         -L          use late merge data
+    # The default is to map chem from their ID. This default can 
+    # be altered by one of the two options:
 
-         # The default is to map chem from their ID. This default can be altered by one of the two options
-         -x <regexp> ignores ID and use chem xref for mapping (use '.' as regexp to mean all xrefs)
-         -X <regexp> considers ID and in addition use chem ref (use '.' as regexp to mean all xrefs)
+    -x <regexp>   ignores ID and use chem xref for mapping 
+                  (use '.' as regexp to mean all xrefs)
+    -X <regexp>   considers ID and in addition use chem ref 
+                  (use '.' as regexp to mean all xrefs)
 
-         -y <regexp> use pept xref for mapping ('.' means all, all by default)
-         -G          use generic compartment
+    -y <regexp>   use pept xref for mapping 
+                  ('.' means all, all by default)
+    -G            use generic compartment
 ";
 
 my %opt;  # GLOBAL: to store the options
@@ -52,7 +60,7 @@ if( $opt{h} or @ARGV != 2 ){
     print "$usage\n";
     exit 1;
 }
-$opt{V} = '../cache/ChemSpace.bindump' unless $opt{V};
+$opt{V} = '/usr/local/MNXtools/cache/ChemSpace.bindump' unless $opt{V};
 
 $tb->die( 'Option -V <*.bindump> is mandatory!' ) unless $opt{V};
 my( $unmapped_dir, $mapped_dir ) = @ARGV;
