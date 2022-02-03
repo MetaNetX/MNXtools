@@ -4,14 +4,14 @@
 #    https://developers.redhat.com/blog/2016/03/09/more-about-docker-images-size/
 
 
-## mnxtools:0.0.3        is the built image target, usually (lowercase) name:version
+## mnxtools:0.0.4        is the built image target, usually (lowercase) name:version
 ## Dockerfile            is the Dockerfile, the commands used to build the image
 ## Dockerfile example: https://github.com/ElmerCSC/elmerfem/blob/devel/docker/elmerice.dockerfile
 #                      https://github.com/ComparativeGenomicsToolkit/cactus/blob/master/Dockerfile
 #                      https://github.com/ComparativeGenomicsToolkit/Comparative-Annotation-Toolkit/blob/master/Dockerfile
 
 # Build Docker image
-export MNXTOOLS_VERSION=0.0.3
+export MNXTOOLS_VERSION=0.0.4
 export MNXREF_VERSION=4.3
 docker build -t mnxtools:$MNXTOOLS_VERSION --no-cache=true --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') --build-arg MNXREF_VERSION=$MNXREF_VERSION --build-arg MNXTOOLS_VERSION=$MNXTOOLS_VERSION  -f Dockerfile .  2>&1 >MNXtools.Dockerfile.log
 

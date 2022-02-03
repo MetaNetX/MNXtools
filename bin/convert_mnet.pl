@@ -26,7 +26,7 @@ my $tb = Toolbox->new();
 # Read command line and check its arguments
 # ------------------------------------------------------
 
-my $usage = "$0 [options] <in-dir> <out-dir>
+my $usage = "$0 [options] <indir> <outdir>
 
 <in-dir>  directory with a mnet in MetaNetX format 
 <out-dir> directory to write the mapped mnet the yaml mapping report  
@@ -86,7 +86,7 @@ if( $opt{x} ){
     $option->{use_chem_xref} = $opt{x};
 }
 else{
-    $option->{use_chem_ID} = 1
+    $option->{use_chem_ID} = 1;
     $option->{use_chem_xref} = $opt{X} if $opt{X};
 }
 
