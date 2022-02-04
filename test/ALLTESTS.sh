@@ -2,6 +2,7 @@
 
 export TMP=/tmp/MNXtools_test/$USER/tests/$$ # scratch dir
 mkdir -p $TMP
+export MNX_OS_PATH=''
 export MNX_DEFAULT_PATH=..
 
 for PERL in perl;

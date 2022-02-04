@@ -1,5 +1,5 @@
 TEST=CONVERT
-$PERL ${DEFAULT_PATH:=$MNX_DEFAULT_PATH}/bin/convert_mnet.pl -V ${DEFAULT_PATH:=$MNX_DEFAULT_PATH}/cache/ChemSpace.bindump $MNET/unmapped $TMP \
+${OS_PATH:=$MNX_OS_PATH} $PERL ${DEFAULT_PATH:=$MNX_DEFAULT_PATH}/bin/convert_mnet.pl -V ${DEFAULT_PATH:=$MNX_DEFAULT_PATH}/cache/ChemSpace.bindump $MNET/unmapped $TMP \
 && $PERL ./mnet_diff.pl $MNET/mapped $TMP \
 && diff $MNET/mapped/convert_log.yaml $TMP/convert_log.yaml
 
