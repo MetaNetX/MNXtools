@@ -2,6 +2,7 @@
 
 export TMP=/tmp/MNXtools_test/$USER/tests/$$ # scratch dir
 mkdir -p $TMP
+export MNX_DEFAULT_CACHE=../cache/ChemSpace.bindump
 
 for PERL in perl;
 do

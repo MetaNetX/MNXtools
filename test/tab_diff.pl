@@ -15,7 +15,7 @@ my $usage = "$0 [option] col_format <file_1> <file_2>
 options: -h          this help
 
          -t <real>   tolerance (absolute value) for real number
-					 comparison (1e-6 by default)
+                     comparison (1e-6 by default)
          -z          Zombie mode: do not die on error!
 
 In addition the environment variable
@@ -47,22 +47,22 @@ my $tsv_2 = $tb->scan_tsv( $file_2 );
 my $L = @$tsv_1;
 $tb->die( "The two input files have a different number of lines!" ) unless $L == @$tsv_2;
 foreach my $i ( 0 .. @format -1 ){
-	if( $format[$i] eq 's' ){ # string comparison
-		foreach( 0 .. $L - 1 ){
+    if( $format[$i] eq 's' ){ # string comparison
+        foreach( 0 .. $L - 1 ){
             $tsv_1->[$_][$i] =~ s/_(B|LR|RL)$//;
             $tsv_2->[$_][$i] =~ s/_(B|LR|RL)$//;
-			unless( $tsv_1->[$_][$i] eq $tsv_2->[$_][$i] ){
-				msg(
+            unless( $tsv_1->[$_][$i] eq $tsv_2->[$_][$i] ){
+                msg(
                     "Strings differ: $tsv_1->[$_][$i] vs $tsv_2->[$_][$i] at line "
                     . ( $_ + 1 )
                     . ', col '
                     . ($i + 1 )
                 );
-			}
-		}
-	}
-	elsif( $format[$i] eq 'i' ){ # integer comparison
-		foreach( 0 .. $L - 1 ){
+            }
+        }
+    }
+    elsif( $format[$i] eq 'i' ){ # integer comparison
+        foreach( 0 .. $L - 1 ){
             unless( $tsv_1->[$_][$i] == $tsv_2->[$_][$i] ){
                 msg(
                     "Numbers not equal: $tsv_1->[$_][$i] vs $tsv_2->[$_][$i] at line "
@@ -72,9 +72,9 @@ foreach my $i ( 0 .. @format -1 ){
                 );
             }
         }
-	}
-	elsif( $format[$i] eq 'r' ){ # real comparison (with some tolerance)
-		foreach my $j ( 0 .. $L - 1 ){
+    }
+    elsif( $format[$i] eq 'r' ){ # real comparison (with some tolerance)
+        foreach my $j ( 0 .. $L - 1 ){
             if( abs( $tsv_1->[$j][$i] - $tsv_2->[$j][$i] ) > $opt{t} ) {
                 msg(
                     "Numbers differ too much: $tsv_1->[$j][$i] vs $tsv_2->[$j][$i] at line "
@@ -84,13 +84,13 @@ foreach my $i ( 0 .. @format -1 ){
                 );
             }
         }
-	}
-	elsif( $format[$i] eq '.' ){ # skip that column
+    }
+    elsif( $format[$i] eq '.' ){ # skip that column
 
-	}
-	else{
-		$tb->die( "Unsupported column format: $format[$i]" );
-	}
+    }
+    else{
+        $tb->die( "Unsupported column format: $format[$i]" );
+    }
 }
 
 sub msg{

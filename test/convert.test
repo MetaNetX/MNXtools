@@ -1,6 +1,5 @@
 TEST=CONVERT
-$PERL ../bin/convert_mnet.pl $MNET/unmapped $TMP \
+$PERL ../bin/convert_mnet.pl -V ${MNX_CACHE:=$MNX_DEFAULT_CACHE} $MNET/unmapped $TMP \
 && $PERL ./mnet_diff.pl $MNET/mapped $TMP \
 && diff $MNET/mapped/convert_log.yaml $TMP/convert_log.yaml
-
 

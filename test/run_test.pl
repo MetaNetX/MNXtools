@@ -33,20 +33,20 @@ while( <> ){
     next if /^\s*$/;
     if( /^TEST=(.+)/ ){
         $rank++;
-		$test_id = $1;
-		$tb->die( "Duplicated test: $test_id" ) if exists $test_info{$test_id};
-		$test_info{$test_id} = {
-			rank   => $rank,
-			cmd    => '',
-		}
-	}
+        $test_id = $1;
+        $tb->die( "Duplicated test: $test_id" ) if exists $test_info{$test_id};
+        $test_info{$test_id} = {
+            rank   => $rank,
+            cmd    => '',
+        }
+    }
     else{
         $tb->die( "Not test defined yet: $_" ) unless $test_id;
         while( /\$(\w+)/g ){
             $tb->die( "Environment variable '$1' not set in line: $_" ) unless exists $ENV{$1};
         }
         $test_info{$test_id}{cmd} .= $_;
-	}
+    }
 }
 
 foreach my $test_id ( sort { $test_info{$a}{rank} <=> $test_info{$b}{rank} } keys %test_info ){
