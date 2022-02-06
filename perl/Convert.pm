@@ -115,12 +115,10 @@ sub _use_xref{
                 }
             }
             else{ # create UNK: and report conflict
-                warn Dumper $cluster;
                 foreach my $chem_old ( @chem_old ){
                     $self->{chem_dict}{$chem_old} = 'UNK:' . $chem_old;
                     push @{$self->{chem_log}{$chem_old}{status}}, '- code: CHEM_XREF_CONFLICT', "  mappings:";
                     foreach my $chem_new ( sort keys %{$chem_map{$chem_old}} ){
-                        warn "$chem_old ---> $chem_new\n"; 
                         my %prop = $self->{ns}->get_chem_prop( $chem_new );
                         foreach my $xref ( sort @{$chem_map{$chem_old}{$chem_new}} ){
                             push @{$self->{chem_log}{$chem_old}{status}}, "    $xref: $chem_new # " . $prop{name};
@@ -159,7 +157,7 @@ sub convert{
     $self->{chem_log}   = {};
     $self->{comp_log}   = {};
     $self->{reac_log}   = {};
-    $self->_use_xref( $metnet, $source_name, $option->{use_chem_ID} ) if $option->{use_chem_xref};
+    $self->_use_xref( $metnet, $source_name, $option->{use_chem_xref}, $option->{use_chem_ID} ) if $option->{use_chem_xref};
     my %reac_info = (); # Reac-centric temporary data structure to prepare the new model
     foreach my $reac_id ( sort $metnet->select_reac_ids( mnet => $source_name ) ){
         my $eq_orig = $metnet->get_reac_equation( $reac_id );
@@ -247,6 +245,7 @@ sub convert{
     my %chem_ok = ();
     my %comp_ok = ();
     foreach my $new_id ( sort keys %reac_info ){
+        warn Dumper $reac_info{$new_id};
         $metnet2->add_reac_add_enzy(
             $dest_name,
             $new_id,
