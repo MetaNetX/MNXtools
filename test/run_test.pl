@@ -56,12 +56,11 @@ foreach my $test_id ( sort { $test_info{$a}{rank} <=> $test_info{$b}{rank} } key
     }
     my @cmd = (
         'TEST_NAME=' . $test_id,
-        'SOFT='  . '../..',
-        'TMP='   . $ENV{TMP},
-        'MNET='   . $ENV{MNET},
-        'NCORE=' . $ENV{NCORE},
+        'TMP='   . $ENV{'TMP'},
+        'MNET='   . $ENV{'MNET'},
+        'NCORE=' . $ENV{'NCORE'},
     );
-    push @cmd, $ENV{INIT} if $ENV{INIT};
+    push @cmd, $ENV{'INIT'}  if $ENV{'INIT'};
     push @cmd, $test_info{$test_id}{cmd};
     my $t0 = time();
     warn "\n";
