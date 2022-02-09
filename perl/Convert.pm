@@ -245,7 +245,6 @@ sub convert{
     my %chem_ok = ();
     my %comp_ok = ();
     foreach my $new_id ( sort keys %reac_info ){
-        warn Dumper $reac_info{$new_id};
         $metnet2->add_reac_add_enzy(
             $dest_name,
             $new_id,
