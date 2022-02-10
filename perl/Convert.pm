@@ -195,7 +195,7 @@ sub convert{
                 push @{$self->{reac_log}{$reac_id}{status}}, '- code: REAC_MAP_UNKNOWN';
             }
             else{
-                push @{$self->{reac_log}{$reac_id}{status}}, '- code: REAC_MAP_OTHER';
+                push @{$self->{reac_log}{$reac_id}{status}}, '- code: REAC_MAP_OK';
             }
         }
         if( ! exists $reac_info{$new_id} ){
