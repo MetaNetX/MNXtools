@@ -2,6 +2,7 @@
 
 export TMP=/tmp/MNXtools_test/$USER/tests/$$ # scratch dir
 mkdir -p $TMP
+chmod a+wrx $TMP
 #NOTE to use binaries and cache from the container:
 # export DEFAULT_PATH=/usr/local/MNXtools
 # export OS_PATH='docker run --name mnxtools --mount type=bind,source=/tmp/MNXtools_test,target=/tmp/MNXtools_test --rm -i -t sibswiss/mnxtools'
