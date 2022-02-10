@@ -58,7 +58,7 @@ foreach my $test_id ( sort { $test_info{$a}{rank} <=> $test_info{$b}{rank} } key
         'TEST_NAME=' . $test_id,
         'TMP='   . $ENV{'TMP'},
         'MNET='   . $ENV{'MNET'},
-        'NCORE=' . $ENV{'NCORE'},
+#        'NCORE=' . $ENV{'NCORE'},
     );
     push @cmd, $ENV{'INIT'}  if $ENV{'INIT'};
     push @cmd, $test_info{$test_id}{cmd};
