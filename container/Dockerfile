@@ -100,3 +100,5 @@ RUN SBML_to_MetaNetX.pl -h || true
 
 HEALTHCHECK CMD SBML_to_MetaNetX.pl -h || exit 1
 
+CMD ["mnxtools_help"]
+
