@@ -96,9 +96,9 @@ ENV LC_ALL="C"
 
 
 # TEST
-RUN SBML_to_MetaNetX.pl -h || true
+RUN /usr/local/bin/mnxtools_help || true
 
-HEALTHCHECK CMD SBML_to_MetaNetX.pl -h || exit 1
+HEALTHCHECK CMD /usr/local/bin/mnxtools_help || exit 1
 
-CMD ["mnxtools_help"]
+CMD ["/usr/local/bin/mnxtools_help"]
 
