@@ -29,6 +29,9 @@ docker inspect  mnxtools:$MNXTOOLS_VERSION
 # Show running containers
 docker ps
 
+# Scan vulnerabilities
+docker scan mnxtools:$MNXTOOLS_VERSION
+
 
 # Run bash in the Docker image
 docker run --name mnxtools --rm -i -t mnxtools:$MNXTOOLS_VERSION bash
