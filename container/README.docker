@@ -30,7 +30,7 @@ docker inspect  mnxtools:$MNXTOOLS_VERSION
 docker ps
 
 # Scan vulnerabilities
-docker scan mnxtools:$MNXTOOLS_VERSION
+docker scan --file Dockerfile --exclude-base  mnxtools:$MNXTOOLS_VERSION
 
 
 # Run bash in the Docker image
