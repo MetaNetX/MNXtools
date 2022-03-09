@@ -35,6 +35,6 @@ docker scan --file Dockerfile --exclude-base  mnxtools:$MNXTOOLS_VERSION
 
 # Run bash in the Docker image
 docker run --rm -i -t mnxtools:$MNXTOOLS_VERSION bash
-	# Mounting/binding a local repository (,readonly can be added to force readonly mounting)
-	--mount type=bind,source=/software,target=/software
+    # Mounting/binding a local repository (,readonly can be added to force readonly mounting)
+    --mount type=bind,source=/software,target=/software
 

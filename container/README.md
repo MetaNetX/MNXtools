@@ -18,7 +18,7 @@ docker run --mount type=bind,source=$BINDING_PATH,target=/mybinding --rm -i -t s
 
 
 
-```mnxtools_help``` lists the available **MNXtools commands**:
+```help``` lists the available **MNXtools commands**:
 ```bash
 SBML_to_MetaNetX.pl  [options] -sbml <SBML file to convert to MetaNetX TSV format> -outdir <dir>
 convert_mnet.pl      [options] <indir> <outdir>

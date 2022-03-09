@@ -14,11 +14,20 @@ or to simplify the command line
     MNXTOOLS <command>
 
 
+We recommend starting with the command
 
-Available **MNXtools commands**:
+    MNXTOOLS all_tests
+
+that features most routines of this container
+
+
+Available MNXtools commands (just launch the command for more help):
 
 help                 Print out this file
 version              Print out version of this container, and of the MNXref namespace
-bash                 Run an interactive Bash shell in the container
-SBML_to_MetaNetX.pl  Convert SBML to MetaNetX format
-convert_mnet.pl      Map to MNXref
+doc                  Give access to internal documentations (e.g. MetaNetX TSV format)
+all_tests            Run all tests in the $BINDING_PATH/all_tests/ sub-directory
+SBML_to_TSV.pl       From SBML to the MetaNetX TSV format
+convert_mnet.pl      Convert/Map to MNXref (from/to MetaNetX TSV format)
+bash                 Run an interactive Bash shell in the container (for debugging purpose)
+
