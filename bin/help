@@ -1,6 +1,7 @@
 #!/bin/sh
 
-DIR=`which $0 | sed -e 's@[^/]*$@@'`
+WHICH=`which $0`
+DIR=`readlink -f $WHICH | sed -e 's@[^/]*$@@'`
 cat $DIR/../container/mnxtools_help.txt
 
 exit 0
