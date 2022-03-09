@@ -1,0 +1,7 @@
+#!/bin/sh
+
+echo "MNXtools version: $MNXTOOLS_VERSION"
+echo "MNXref version:   $MNXREF_VERSION"
+
+exit 0
+

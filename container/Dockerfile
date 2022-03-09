@@ -93,12 +93,12 @@ ENV HOME=/home/${USER}
 WORKDIR ${HOME}
 ##Rest of Dockerfile with this user
 ENV LC_ALL="C"
+ENV MNXTOOLS_VERSION=$MNXTOOLS_VERSION
+ENV MNXREF_VERSION=$MNXREF_VERSION
 
 
 # TEST
-RUN /usr/local/bin/mnxtools_help || true
+RUN /usr/local/bin/SBML_to_MetaNetX.pl || true
 
-HEALTHCHECK CMD /usr/local/bin/mnxtools_help || exit 1
-
-CMD ["/usr/local/bin/mnxtools_help"]
+CMD ["/usr/local/bin/help"]
 

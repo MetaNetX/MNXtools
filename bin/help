@@ -1,0 +1,6 @@
+#!/bin/sh
+
+cat ../container/mnxtools_help.txt
+
+exit 0
+
