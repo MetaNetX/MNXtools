@@ -1,0 +1,39 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use diagnostics;
+
+use FindBin qw( $RealBin );
+use lib "$RealBin/../perl";
+
+my $arg = $ARGV[0]  || help();
+
+
+if ( $arg eq 'help' || $arg eq 'h' ){
+    help();
+}
+elsif ( $arg eq 'yaml' ){
+    system("cat $RealBin/../doc/convert_manual.md");
+    exit 0;
+}
+else {
+    warn "\n\tInvalid argument\n\n";
+    exit 1;
+}
+
+exit 0;
+
+sub help {
+    my $cmd = $0;
+    $cmd =~ s{^.*/}{};
+
+    print "\n\t$cmd <argument>
+
+\targuments:
+\tyaml        Help about convert codes found in convert_log.yaml
+\thelp        Display this message
+\n";
+    exit 0;
+}
+

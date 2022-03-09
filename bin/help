@@ -1,6 +1,7 @@
 #!/bin/sh
 
-cat ../container/mnxtools_help.txt
+DIR=`which $0 | sed -e 's@[^/]*$@@'`
+cat $DIR/../container/mnxtools_help.txt
 
 exit 0
 
