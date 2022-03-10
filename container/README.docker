@@ -13,7 +13,6 @@
 # Build Docker image
 export MNXTOOLS_VERSION=0.0.4
 export MNXREF_VERSION=4.3
-cd container/
 docker build -t mnxtools:$MNXTOOLS_VERSION --no-cache=true --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') --build-arg MNXREF_VERSION=$MNXREF_VERSION --build-arg MNXTOOLS_VERSION=$MNXTOOLS_VERSION  -f Dockerfile . # 2>&1 >MNXtools.Dockerfile.log
 
 # List Docker local images (imported or built)
