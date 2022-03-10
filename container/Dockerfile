@@ -98,7 +98,7 @@ ENV MNXREF_VERSION=$MNXREF_VERSION
 
 
 # TEST
-RUN /usr/local/bin/SBML_to_MetaNetX.pl || true
+RUN /usr/local/bin/SBML_to_TSV.pl || true
 
 CMD ["/usr/local/bin/help"]
 

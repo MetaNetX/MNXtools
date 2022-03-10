@@ -1,7 +1,7 @@
 #!/bin/sh
 
 export DEFAULT_PATH=/usr/local/MNXtools
-export OS_PATH='docker run --mount type=bind,source=/tmp/MNXtools_test,target=/tmp/MNXtools_test --rm -i -t sibswiss/mnxtools'
+#export OS_PATH='docker run --mount type=bind,source=/tmp/MNXtools_test,target=/tmp/MNXtools_test --rm -i -t sibswiss/mnxtools'
 $DEFAULT_PATH/test/ALLTESTS.sh
 
 exit 0
