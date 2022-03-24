@@ -13,6 +13,9 @@
 # Build Docker image
 export MNXTOOLS_VERSION=0.0.5
 export MNXREF_VERSION=4.4
+## run tests before building the container
+rsync -av /db/MetaNetX/metanetx.org/prod/cooked/chemistry/ns/ChemSpace.bindump ../cache/
+../test/ALLTESTS.sh
 docker build -t mnxtools:$MNXTOOLS_VERSION --no-cache=true --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') --build-arg MNXREF_VERSION=$MNXREF_VERSION --build-arg MNXTOOLS_VERSION=$MNXTOOLS_VERSION  -f Dockerfile . # 2>&1 >MNXtools.Dockerfile.log
 
 # List Docker local images (imported or built)
