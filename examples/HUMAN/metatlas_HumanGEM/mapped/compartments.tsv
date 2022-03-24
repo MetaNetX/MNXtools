@@ -1,0 +1,12 @@
+#MetaNetX/TSV/compartments.tsv 1.1
+#ID	name	source	xrefs
+BOUNDARY	model boundary	BOUNDARY	mnx:BOUNDARY
+MNXC11	endoplasmic reticulum	r	go:0005783
+MNXC13	peroxisome	x	go:0005777
+MNXC15	Golgi apparatus	g	go:0005794
+MNXC17	lysosome	l	go:0005764
+MNXC2	extracellular region	e	go:0005576
+MNXC3	cytoplasm	c	go:0005737
+MNXC4	mitochondrion	m	go:0005739
+MNXC5	mitochondrial membrane	i	go:0031966
+MNXC6	nucleus	n	go:0005634

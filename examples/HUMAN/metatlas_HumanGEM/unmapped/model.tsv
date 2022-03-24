@@ -1,0 +1,9 @@
+#MetaNetX/TSV/model.tsv 1.1
+#property	value
+ID	metatlas_HumanGEM
+Description	blankName
+LB	-1000
+UB	1000
+Source ID	HumanGEM
+Processed Date	2022/02/09
+Taxid	9606
