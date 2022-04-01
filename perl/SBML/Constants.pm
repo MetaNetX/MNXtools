@@ -58,16 +58,18 @@ our $MetaNetX_peptide_filename     = 'peptides.tsv';
 
 # SBML
 ##Default bounds
-our $MIN_BOUND_VAL = -1000;
-our $MAX_BOUND_VAL =  1000;
-our $MIN_BOUND_ID  = 'cobra_default_lb';
-our $MAX_BOUND_ID  = 'cobra_default_ub';
+our $MIN_BOUND_VAL  = -1000;
+our $MAX_BOUND_VAL  =  1000;
+our $ZERO_BOUND_VAL =  0;
+our $MIN_BOUND_ID   = 'cobra_default_lb';
+our $MAX_BOUND_ID   = 'cobra_default_ub';
+our $ZERO_BOUND_ID  = 'cobra_0_bound';
 
 ##Default SBML version and level
 our $SBML_level   = 3; # Possible values: 1.1 2.1 2.2 2.3 2.4 2.5 3.1 3.2
 our $SBML_version = 1;
 ##Default FBC version
-our $FBC_version  = 2;
+our $FBC_version  = 2; # Possible values: 1 2
 ##SBO
 our $SBO_FLUXBALANCEFRMW = 624; # eq SBO:0000624
 our $SBO_FLUXDEFAULT     = 626;

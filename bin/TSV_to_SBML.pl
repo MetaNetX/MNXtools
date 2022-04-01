@@ -125,11 +125,22 @@ if ( $TSV_directory ){
     }
 
     my ($LB, $UB) = ($Constants::MIN_BOUND_VAL, $Constants::MAX_BOUND_VAL);
-    if ( $MetNet->get_LU_bounds($mnet_id) ){
-        ($LB, $UB) = $MetNet->get_LU_bounds($mnet_id);
+    my $other_bounds;
+    if ( $MetNet->get_reac_bounds($mnet_id) ){
+        my ($LB_all, $UB_all);
+        ($LB_all, $UB_all, $LB, $UB) = $MetNet->get_reac_bounds($mnet_id);
+        push @{ $other_bounds }, uniq sort grep { $_ != $LB && $_ != $UB } (values %$LB_all, values %$UB_all);
     }
-#TODO for all (uniq) parameter values of the model, or only min/max???
-    for my $B ( [$LB, $Constants::MIN_BOUND_ID, 'default'], [$UB, $Constants::MAX_BOUND_ID, 'default'] ){
+    my $all_bounds;
+    push @{ $all_bounds }, [$LB, $Constants::MIN_BOUND_ID, 'default'];
+    push @{ $all_bounds }, [$UB, $Constants::MAX_BOUND_ID, 'default'];
+    my $extra_bound_count = 0;
+    for my $other_bound ( @{ $other_bounds } ){
+        my $id  = $other_bound == $Constants::ZERO_BOUND_VAL ? $Constants::ZERO_BOUND_ID : 'extrabound'.++$extra_bound_count;
+        my $sbo = $other_bound == $Constants::ZERO_BOUND_VAL ? 'default' : '';
+        push @{ $all_bounds }, [$other_bound, $id, $sbo];
+    }
+    for my $B ( @$all_bounds ){
         my $param = $SBML_model->createParameter();
         $param->setId($B->[1]);
         $param->setValue($B->[0]);
