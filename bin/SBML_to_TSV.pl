@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-# Convert SBML format to MetaNetX TSV files format, and back
+# Convert SBML format to MetaNetX TSV files format
 
 use strict;
 use warnings;
