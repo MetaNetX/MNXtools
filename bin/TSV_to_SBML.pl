@@ -89,7 +89,7 @@ if ( $TSV_directory ){
     if ( $use_notes ){
         my $notes = '';
         for my $info ( $MetNet->get_mnet_info($mnet_id) ){
-            $notes .= '<html:p>'.$info->[0].': '.$info->[1].'</html:p>';
+            $notes .= '<html:p>'.$info->[0].': '.$info->[1].'</html:p>'  if ( $info->[1] );
         }
         if ( $MetNet->get_LU_bounds($mnet_id) ){
             my ($LB, $UB) = $MetNet->get_LU_bounds($mnet_id);
