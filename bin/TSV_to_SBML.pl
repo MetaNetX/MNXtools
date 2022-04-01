@@ -39,7 +39,7 @@ GetOptions ('debug'          => \$debug,
             'help|H|?'       => sub { help(0); },
             'version|V'      => sub { print "$soft_name\n$Constants::copyright\nVersion: $VERSION\n"; },
             'tsv|metanetx=s' => \$TSV_directory,
-            'notes|n'        => \$use_notes,
+            'notes|n!'       => \$use_notes,
             'check!'         => \$check_SBML,
             'validate'       => sub {$validate_SBML = 1; $check_SBML = 1; },
            )
