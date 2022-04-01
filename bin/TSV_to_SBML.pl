@@ -178,6 +178,8 @@ sub help {
     print <<"EOF";
 $Constants::copyright
 Version: $VERSION
+$soft_name converts MetaNetX TSV files to SBML (by default SBML $Constants::SBML_level.$Constants::SBML_version - FBCv$Constants::FBC_version)
+
 $soft_name [options] -tsv <TSV repository with MetaNetX TSV files to convert to SBML>
 
          -tsv|t    <dir>   TSV repository with MetaNetX TSV files to convert to SBML
