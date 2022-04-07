@@ -12,6 +12,7 @@ use File::Basename;
 use Getopt::Long;
 use List::Util qw( uniq );
 use LibSBML;
+use Sort::Naturally;
 use FindBin qw( $RealBin );
 use lib "$RealBin/../perl";
 use lib "$RealBin/../perl/SBML";
@@ -155,7 +156,38 @@ if ( $TSV_directory ){
     }
 
 
-#TODO <listOfCompartments>
+    # <listOfCompartments>
+    for my $comp_id ( uniq nsort $MetNet->select_comp_ids() ){
+        my $comp = $SBML_model->createCompartment();
+        $comp->setId($comp_id);
+        $comp->setConstant(1); # True
+        my ($comp_name, $comp_xref) = $MetNet->get_comp_info($comp_id);
+        $comp->setName($comp_name);
+        $comp->setSBOTerm( $comp_id eq $Constants::boundary_comp_id ? $Constants::boundary_comp_sbo : $Constants::default_comp_sbo );
+        #notes
+        if ( $use_notes ){
+            my $notes = '';
+            if ( $MetNet->get_comp_source($mnet_id, $comp_id) ){
+                $notes .= '<html:p>SOURCE: '.$MetNet->get_comp_source($mnet_id, $comp_id).'</html:p>';
+            }
+            if ( $comp_xref ){
+                $notes .= '<html:p>REFERENCE: '.$comp_xref.'</html:p>';
+            }
+            $comp->setNotes($notes)  if ( $notes );
+        }
+        #TODO annotations: fix is/isRelatedTo and different identifiers.org...
+        if ( $comp_xref ){
+            my $CV = new LibSBML::CVTerm();
+            $CV->setQualifierType($LibSBML::BIOLOGICAL_QUALIFIER);
+            $CV->setBiologicalQualifierType($LibSBML::BQB_IS);
+            $CV->addResource($Constants::identifiers_go.$comp_xref);
+            $comp->addCVTerm($CV);
+            #$comp->setAnnotation($CV);
+            #$comp->appendAnnotation();
+        }
+    }
+
+
 #TODO <listOfSpecies>
 #TODO <listOfReactions>
 #TODO <fbc:listOfObjectives>  -> <fbc:listOfFluxObjectives>

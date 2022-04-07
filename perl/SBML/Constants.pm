@@ -77,6 +77,9 @@ our $SBO_FLUX            = 625;
 ##Identifiers
 my $identifier = 'https://identifiers.org/';
 our $identifiers_taxid = $identifier.'taxonomy:';
+our $identifiers_mnxc  = $identifier.'metanetx.compartment:';
+our $identifiers_go    = $identifier.''; #expect e.g. GO:0006915
+our $identifiers_biggc = $identifier.'bigg.compartment:';
 ##Unit
 our $unit = 'mmol_per_gDW_per_hr';
 
@@ -86,6 +89,7 @@ our $unit = 'mmol_per_gDW_per_hr';
 our $boundary_comp_id     = 'BOUNDARY';
 our $boundary_comp_name   = 'model boundary';
 our $boundary_comp_sbo    = 'SBO:0000289';
+our $default_comp_sbo     = 'SBO:0000290';
 
 our $transport_reac_sbo   = 'SBO:0000185';
 
