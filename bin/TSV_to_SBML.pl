@@ -176,7 +176,7 @@ if ( $TSV_directory ){
             }
             $comp->setNotes($notes)  if ( $notes );
         }
-        #TODO annotations: fix is/isRelatedTo and different identifiers.org...
+        #TODO annotations: fix is/isRelatedTo and different identifiers.org... when we will have all mapped xrefs
         if ( $comp_xref ){
             if ( !$comp->isSetMetaId() ){
                 $comp->setMetaId( $comp->getId() );
@@ -184,8 +184,18 @@ if ( $TSV_directory ){
             my $CV = new LibSBML::CVTerm();
             $CV->setQualifierType($LibSBML::BIOLOGICAL_QUALIFIER);
             $CV->setBiologicalQualifierType($LibSBML::BQB_IS);
-            $CV->addResource($Constants::identifiers_go.$comp_xref);
-            $comp->addCVTerm($CV);
+            if ( $comp_xref =~ /^go:\d+$/i ){
+                $CV->addResource($Constants::identifiers_go.uc($comp_xref));
+                $comp->addCVTerm($CV);
+            }
+            elsif ( $comp_xref =~ /^bigg:(..?)$/i ){
+                $CV->addResource($Constants::identifiers_biggc.$1);
+                $comp->addCVTerm($CV);
+            }
+            elsif ( $comp_xref =~ /^mnx:(.+)$/i ){
+                $CV->addResource($Constants::identifiers_mnxc.$1);
+                $comp->addCVTerm($CV);
+            }
         }
     }
 
