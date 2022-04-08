@@ -177,6 +177,7 @@ if ( $TSV_directory ){
             $comp->setNotes($notes)  if ( $notes );
         }
         #TODO annotations: fix is/isRelatedTo and different identifiers.org... when we will have all mapped xrefs
+        #TODO add other possible xref sources (e.g., CCO, ...)
         if ( $comp_xref ){
             if ( !$comp->isSetMetaId() ){
                 $comp->setMetaId( $comp->getId() );
@@ -200,7 +201,23 @@ if ( $TSV_directory ){
     }
 
 
-#TODO <listOfSpecies>
+    # <listOfSpecies>
+    for my $chem_id ( uniq nsort $MetNet->select_chem_ids() ){
+        my $chem = $SBML_model->createSpecies();
+        $chem->setId($chem_id);
+        #beta-D-fructose C6H12O6 180.06339 0 chebi:28645;CHEBI:28645;bigg.metabolite:fru;biggM:M_fru;biggM:fru;chebi:10373;chebi:22766;chebi:42560;kegg.compound:C02336;...
+        my ($chem_name, $chem_formula, $chem_mass, $chem_charge, $chem_xref) = $MetNet->get_chem_info($chem_id);
+        $chem->setName($chem_name);
+        $chem->setHasOnlySubstanceUnits(0); #false
+        $chem->setConstant(0);              #false
+        my $chem_fbc = $chem->getPlugin('fbc');
+        $chem_fbc->setCharge($chem_charge)            if ( $chem_charge  ne '' );
+        $chem_fbc->setChemicalFormula($chem_formula)  if ( $chem_formula ne '' );
+#TODO id@comp !
+#TODO boundaryCondition="false" compartment="MNXC3" id="MNXM01__64__MNXC3", notes, metaid/annotations
+    }
+
+
 #TODO <listOfReactions>
 #TODO <fbc:listOfObjectives>  -> <fbc:listOfFluxObjectives>
 #TODO <fbc:listOfGeneProducts>
