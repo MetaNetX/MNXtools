@@ -107,8 +107,8 @@ if ( $TSV_directory ){
         $CV->setBiologicalQualifierType($LibSBML::BQB_HAS_TAXON);
         $CV->addResource($Constants::identifiers_taxid.$taxid);
         $SBML_model->addCVTerm($CV);
-        #$SBML_model->setAnnotation($CV);
-        #$SBML_model->appendAnnotation();
+        $SBML_model->setAnnotation($CV);
+        $SBML_model->appendAnnotation();
 #FIXME swig issue that does not make setAnnotation available???
     }
 
