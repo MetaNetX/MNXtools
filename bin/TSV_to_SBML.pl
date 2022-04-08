@@ -85,7 +85,6 @@ if ( $TSV_directory ){
     }
     #fbc model SBO
     $SBML_model->setSBOTerm($Constants::SBO_FLUXBALANCEFRMW);
-    #TODO metaid???
     #notes
     if ( $use_notes ){
         my $notes = '';
@@ -102,14 +101,16 @@ if ( $TSV_directory ){
     #annotations
     my ($taxid) = map { $_->[1] } grep { $_->[0] =~ /Taxid/ } $MetNet->get_mnet_info($mnet_id);
     if ( $taxid && $taxid =~ /^\d+$/ ){
+        if ( !$SBML_model->isSetMetaId() ){
+            #NOTE its vital to set a metaId first, otherwise the cvterms can't be added
+            #NOTE Annotations can only be added to elements, that have a metaId set
+            $SBML_model->setMetaId( $SBML_model->getId() );
+        }
         my $CV = new LibSBML::CVTerm();
         $CV->setQualifierType($LibSBML::BIOLOGICAL_QUALIFIER);
         $CV->setBiologicalQualifierType($LibSBML::BQB_HAS_TAXON);
         $CV->addResource($Constants::identifiers_taxid.$taxid);
         $SBML_model->addCVTerm($CV);
-        $SBML_model->setAnnotation($CV);
-        $SBML_model->appendAnnotation();
-#FIXME swig issue that does not make setAnnotation available???
     }
 
 
@@ -177,13 +178,14 @@ if ( $TSV_directory ){
         }
         #TODO annotations: fix is/isRelatedTo and different identifiers.org...
         if ( $comp_xref ){
+            if ( !$comp->isSetMetaId() ){
+                $comp->setMetaId( $comp->getId() );
+            }
             my $CV = new LibSBML::CVTerm();
             $CV->setQualifierType($LibSBML::BIOLOGICAL_QUALIFIER);
             $CV->setBiologicalQualifierType($LibSBML::BQB_IS);
             $CV->addResource($Constants::identifiers_go.$comp_xref);
             $comp->addCVTerm($CV);
-            #$comp->setAnnotation($CV);
-            #$comp->appendAnnotation();
         }
     }
 
