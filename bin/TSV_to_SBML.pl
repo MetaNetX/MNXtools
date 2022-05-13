@@ -61,6 +61,7 @@ if ( $TSV_directory ){
 
     # Create SBML document
 #FIXME SBML 3.1 FBC 2 only now!
+#FIXME id must be SBML compliant: do not contain ':', ...
     my $SBML_ns = new LibSBML::SBMLNamespaces($Constants::SBML_level, $Constants::SBML_version);
     $SBML_ns->addPackageNamespace('fbc', $Constants::FBC_version)   if ( $SBML_ns->getLevel() >= 3 );
     #Create an empty SBML document with additional XML namespace for XML notes
@@ -159,8 +160,10 @@ if ( $TSV_directory ){
 
     # <listOfCompartments>
     for my $comp_id ( uniq nsort $MetNet->select_comp_ids() ){
+        my $comp_id_fixed = $comp_id;
+        $comp_id_fixed =~ s{^UNK:}{};
         my $comp = $SBML_model->createCompartment();
-        $comp->setId($comp_id);
+        $comp->setId($comp_id_fixed);
         $comp->setConstant(1); # True
         my ($comp_name, $comp_xref) = $MetNet->get_comp_info($comp_id);
         $comp->setName($comp_name);
@@ -203,8 +206,10 @@ if ( $TSV_directory ){
 
     # <listOfSpecies>
     for my $chem_id ( uniq nsort $MetNet->select_chem_ids() ){
+        my $chem_id_fixed = $chem_id;
+        $chem_id_fixed =~ s{^UNK:}{};
         my $chem = $SBML_model->createSpecies();
-        $chem->setId($chem_id);
+        $chem->setId($chem_id_fixed);
         #beta-D-fructose C6H12O6 180.06339 0 chebi:28645;CHEBI:28645;bigg.metabolite:fru;biggM:M_fru;biggM:fru;chebi:10373;chebi:22766;chebi:42560;kegg.compound:C02336;...
         my ($chem_name, $chem_formula, $chem_mass, $chem_charge, $chem_xref) = $MetNet->get_chem_info($chem_id);
         $chem->setName($chem_name);
@@ -215,6 +220,7 @@ if ( $TSV_directory ){
         $chem_fbc->setChemicalFormula($chem_formula)  if ( $chem_formula ne '' );
 #TODO id@comp !
 #TODO boundaryCondition="false" compartment="MNXC3" id="MNXM01__64__MNXC3", notes, metaid/annotations
+#TODO inchikey are missing as xref
     }
 
 
@@ -223,6 +229,8 @@ if ( $TSV_directory ){
 #TODO <fbc:listOfGeneProducts>
 
 
+    # Check model
+    SBML::check_SBML($SBML_doc, $check_SBML, $validate_SBML);
     # Write SBML
     my $SBML_writer = new LibSBML::SBMLWriter();
     $SBML_writer->setProgramName($soft_name);
