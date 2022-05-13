@@ -91,6 +91,8 @@ our $boundary_comp_name   = 'model boundary';
 our $boundary_comp_sbo    = 'SBO:0000289';
 our $default_comp_sbo     = 'SBO:0000290';
 
+our $default_chem_sbo     = 'SBO:0000247';
+
 our $transport_reac_sbo   = 'SBO:0000185';
 
 our $biomass_chem_id      = 'BIOMASS';

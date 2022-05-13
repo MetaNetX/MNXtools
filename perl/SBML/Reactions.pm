@@ -521,5 +521,18 @@ sub find_growth_reaction {
     return;
 }
 
+sub parse_reac_side {
+    my ($side) = @_;
+
+    my @side;
+    for my $coef_species ( split(/ +\+ +/, $side) ){
+        my ($coef, $species) = split(/ /,  $coef_species, 2);
+        my ($chem, $comp)    = split(/\@/, $species,      2);
+        push @side, [$coef, $chem, $comp];
+    }
+
+    return \@side;
+}
+
 1;
 
