@@ -161,23 +161,23 @@ if ( $TSV_directory ){
 #TODO allow a model to be kegg-oriented for example:
 #     without conflicts the id will be kegg ids
 
+#FIXME from reac list, list chem and comp AND then warn if defined in reac but not in chem/comp TSVs!
+    # <listOfReactions>
+    my (%reac_chem, %reac_comp);#TODO
+    for my $reac_id ( uniq nsort $MetNet->select_reac_ids() ){
+        Reactions::create_SBML_reaction($MetNet, $mnet_id, $SBML_model, $use_notes, $reac_id);
+    }
+
+
     # <listOfCompartments>
     for my $comp_id ( uniq nsort $MetNet->select_comp_ids() ){
-        Compartments::create_SBML_compartment($MetNet, $mnet_id, $SBML_model, $use_notes, $comp_id);
+#        Compartments::create_SBML_compartment($MetNet, $mnet_id, $SBML_model, $use_notes, $comp_id);
     }
 
 
     # <listOfSpecies>
     for my $chem_id ( uniq nsort $MetNet->select_chem_ids() ){
 #        Chemicals::create_SBML_chemical($MetNet, $mnet_id, $SBML_model, $use_notes, $chem_id);
-    }
-
-
-#FIXME from reac list, list chem and comp AND then warn if defined in reac but not in chem/comp TSVs!
-    # <listOfReactions>
-    my (%reac_chem, %reac_comp);#TODO
-    for my $reac_id ( uniq nsort $MetNet->select_reac_ids() ){
-#        Reactions::create_SBML_reaction($MetNet, $mnet_id, $SBML_model, $use_notes, $reac_id);
     }
 
 

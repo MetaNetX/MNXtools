@@ -551,6 +551,13 @@ sub create_SBML_reaction {
     # Parse equation
     my ($reac_left, $reac_right) = split(/ +<\?> +/, $reac_equation);
     for my $reactant ( @{ Reactions::parse_reac_side($reac_left) } ){
+        my ($chem_id, $comp_id) = ($reactant->[1], $reactant->[2]);
+        if ( ! $SBML_model->getCompartment( $comp_id ) ){
+            Compartments::create_SBML_compartment($MetNet, $mnet_id, $SBML_model, $use_notes, $comp_id);
+        }
+        if ( ! $SBML_model->getSpecies( $chem_id ) ){
+            Chemicals::create_SBML_chemical($MetNet, $mnet_id, $SBML_model, $use_notes, $chem_id);
+        }
         my $react = $reac->createReactant();
         #TODO need to be added through a species ref !
         #$react->addReactant("$reactant->[1]\@$reactant->[2]", $reactant->[0]);
