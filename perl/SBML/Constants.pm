@@ -58,16 +58,18 @@ our $MetaNetX_peptide_filename     = 'peptides.tsv';
 
 # SBML
 ##Default bounds
-our $MIN_BOUND_VAL = -1000;
-our $MAX_BOUND_VAL =  1000;
-our $MIN_BOUND_ID  = 'cobra_default_lb';
-our $MAX_BOUND_ID  = 'cobra_default_ub';
+our $MIN_BOUND_VAL  = -1000;
+our $MAX_BOUND_VAL  =  1000;
+our $ZERO_BOUND_VAL =  0;
+our $MIN_BOUND_ID   = 'cobra_default_lb';
+our $MAX_BOUND_ID   = 'cobra_default_ub';
+our $ZERO_BOUND_ID  = 'cobra_0_bound';
 
 ##Default SBML version and level
 our $SBML_level   = 3; # Possible values: 1.1 2.1 2.2 2.3 2.4 2.5 3.1 3.2
 our $SBML_version = 1;
 ##Default FBC version
-our $FBC_version  = 2;
+our $FBC_version  = 2; # Possible values: 1 2
 ##SBO
 our $SBO_FLUXBALANCEFRMW = 624; # eq SBO:0000624
 our $SBO_FLUXDEFAULT     = 626;
@@ -75,6 +77,9 @@ our $SBO_FLUX            = 625;
 ##Identifiers
 my $identifier = 'https://identifiers.org/';
 our $identifiers_taxid = $identifier.'taxonomy:';
+our $identifiers_mnxc  = $identifier.'metanetx.compartment:';
+our $identifiers_go    = $identifier.''; #expect e.g. GO:0006915
+our $identifiers_biggc = $identifier.'bigg.compartment:';
 ##Unit
 our $unit = 'mmol_per_gDW_per_hr';
 
@@ -84,6 +89,9 @@ our $unit = 'mmol_per_gDW_per_hr';
 our $boundary_comp_id     = 'BOUNDARY';
 our $boundary_comp_name   = 'model boundary';
 our $boundary_comp_sbo    = 'SBO:0000289';
+our $default_comp_sbo     = 'SBO:0000290';
+
+our $default_chem_sbo     = 'SBO:0000247';
 
 our $transport_reac_sbo   = 'SBO:0000185';
 

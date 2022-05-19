@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-# Convert SBML format to MetaNetX TSV files format, and back
+# Convert SBML format to MetaNetX TSV files format
 
 use strict;
 use warnings;
@@ -224,6 +224,8 @@ sub help {
     print <<"EOF";
 $Constants::copyright
 Version: $VERSION
+$soft_name converts an SBML file to the MetaNetX TSV format
+
 $soft_name [options] -sbml <SBML file to convert to MetaNetX TSV format> -outdir <dir>
 
          -sbml|s   <file>  SBML file to convert to MetaNetX TSV format

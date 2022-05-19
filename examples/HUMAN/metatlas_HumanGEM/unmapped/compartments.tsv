@@ -1,0 +1,12 @@
+#MetaNetX/TSV/compartments.tsv 1.1
+#ID	name	source	xrefs
+BOUNDARY	model boundary	BOUNDARY	
+c	Cytosol	c	
+e	Extracellular	e	
+g	Golgi apparatus	g	
+i	Inner mitochondria	i	
+l	Lysosome	l	
+m	Mitochondria	m	
+n	Nucleus	n	
+r	Endoplasmic reticulum	r	
+x	Peroxisome	x	

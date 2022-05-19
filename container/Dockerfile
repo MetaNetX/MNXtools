@@ -32,7 +32,7 @@ ENV USER=metanetx
 RUN echo '# OS update' \
 	&& export DEBIAN_FRONTEND=noninteractive \
 	&& apt-get update  -y \
-	&& apt-get install -y --no-install-recommends perl libperl-dev libipc-run-perl libsort-naturally-perl libmodule-runtime-perl liblog-log4perl-perl libdigest-crc-perl libtest-simple-perl libmath-bigint-perl wget cmake make libexpat1-dev swig libyaml-dev libbz2-dev zlib1g-dev liblzma-dev check gcc g++ gfortran python3 libexpat1 libbz2-1.0 zlib1g liblzma5 parallel patchelf gnupg apt-utils ca-certificates libterm-readline-gnu-perl readline-common software-properties-common dirmngr git \
+	&& apt-get install -y --no-install-recommends perl libperl-dev libipc-run-perl libsort-naturally-perl libmodule-runtime-perl liblog-log4perl-perl libdigest-crc-perl libtest-simple-perl libmath-bigint-perl wget cmake make libexpat1-dev swig libyaml-dev libbz2-dev zlib1g-dev liblzma-dev check gcc g++ gfortran python3 libexpat1 libbz2-1.0 zlib1g liblzma5 parallel patchelf gnupg apt-utils ca-certificates libterm-readline-gnu-perl readline-common software-properties-common dirmngr git vim nano \
 	&&        echo '# Install R (in a non-interactive way)' \
 	&& echo '# See https://cran.r-project.org/bin/linux/ubuntu/' \
 	&& echo '# Signature of Ubuntu archives on CRAN' \
