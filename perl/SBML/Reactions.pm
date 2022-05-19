@@ -534,5 +534,37 @@ sub parse_reac_side {
     return \@side;
 }
 
+
+sub create_SBML_reaction {
+    my ($MetNet, $mnet_id, $SBML_model, $use_notes, $reac_id) = @_;
+
+    my $reac_id_fixed = $reac_id;
+    $reac_id_fixed =~ s{^UNK:}{};#FIXME should do it better, and more general
+    my $reac = $SBML_model->createReaction();
+    $reac->setId($reac_id_fixed);
+    #ID           equation                               source    mnxr_ID    classifs    pathways    xrefs
+    #mnxr02c2b    1 MNXM1@MNXC2 <==> 1 MNXM1@BOUNDARY    EX_h_e    MNXR02                             mnx:MNXR02;MNXR02;bigg.reaction:EX_h_e;...
+    my $reac_equation = $MetNet->get_reac_equation($reac_id);
+    my $reac_source   = eval {$MetNet->get_reac_source($reac_id)} || ''; #NOTE for our own reactions, no source in the model
+    my $reac_mnxr     = $MetNet->get_reac_mnxr($reac_id);
+    my ($reac_classifs, $reac_pathways, $reac_xrefs) = $MetNet->get_reac_info($reac_id);
+    # Parse equation
+    my ($reac_left, $reac_right) = split(/ +<\?> +/, $reac_equation);
+    for my $reactant ( @{ Reactions::parse_reac_side($reac_left) } ){
+        my $react = $reac->createReactant();
+        #TODO need to be added through a species ref !
+        #$react->addReactant("$reactant->[1]\@$reactant->[2]", $reactant->[0]);
+    }
+    my @lefts  = @{ Reactions::parse_reac_side($reac_left) };
+    my @rights = @{ Reactions::parse_reac_side($reac_right) };
+    #warn "[$reac_left] [$reac_right] [", join(':', map { "$_->[0] $_->[1] $_->[2]" } @lefts), "]\n";
+#TODO get reaction direction: get_reac_dir($reac_id);
+#TODO are growth reactions there?
+#TODO metaid="MAR03905" sboTerm="SBO:0000176" reversible="false" fast="false" fbc:lowerFluxBound="FB2N0" fbc:upperFluxBound="FB3N1000"
+#TODO list of reactants/products(/modifiers)
+
+    return;
+}
+
 1;
 

@@ -77,5 +77,54 @@ sub remove_compartment {
     return;
 }
 
+
+sub create_SBML_compartment {
+    my ($MetNet, $mnet_id, $SBML_model, $use_notes, $comp_id) = @_;
+
+    my $comp_id_fixed = $comp_id;
+    $comp_id_fixed =~ s{^UNK:}{};
+    my $comp = $SBML_model->createCompartment();
+    $comp->setId($comp_id_fixed);
+    $comp->setConstant(1); # True
+    my ($comp_name, $comp_xrefs) = $MetNet->get_comp_info($comp_id);
+    $comp->setName($comp_name);
+    $comp->setSBOTerm( $comp_id eq $Constants::boundary_comp_id ? $Constants::boundary_comp_sbo : $Constants::default_comp_sbo );
+    #notes
+    if ( $use_notes ){
+        my $notes = '';
+        if ( $MetNet->get_comp_source($mnet_id, $comp_id) ){
+            $notes .= '<html:p>SOURCE: '.$MetNet->get_comp_source($mnet_id, $comp_id).'</html:p>';
+        }
+        if ( $comp_xrefs ){
+            $notes .= '<html:p>REFERENCE: '.$comp_xrefs.'</html:p>';
+        }
+        $comp->setNotes($notes)  if ( $notes );
+    }
+    #TODO annotations: fix is/isRelatedTo and different identifiers.org... when we will have all mapped xrefs
+    #TODO add other possible xref sources (e.g., CCO, ...)
+    if ( $comp_xrefs ){
+        if ( !$comp->isSetMetaId() ){
+            $comp->setMetaId( $comp->getId() );
+        }
+        my $CV = new LibSBML::CVTerm();
+        $CV->setQualifierType($LibSBML::BIOLOGICAL_QUALIFIER);
+        $CV->setBiologicalQualifierType($LibSBML::BQB_IS);
+        if ( $comp_xrefs =~ /^go:\d+$/i ){
+            $CV->addResource($Constants::identifiers_go.uc($comp_xrefs));
+            $comp->addCVTerm($CV);
+        }
+        elsif ( $comp_xrefs =~ /^bigg:(..?)$/i ){
+            $CV->addResource($Constants::identifiers_biggc.$1);
+            $comp->addCVTerm($CV);
+        }
+        elsif ( $comp_xrefs =~ /^mnx:(.+)$/i ){
+            $CV->addResource($Constants::identifiers_mnxc.$1);
+            $comp->addCVTerm($CV);
+        }
+    }
+
+    return;
+}
+
 1;
 

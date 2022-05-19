@@ -158,70 +158,18 @@ if ( $TSV_directory ){
     }
 
 
+#TODO allow a model to be kegg-oriented for example:
+#     without conflicts the id will be kegg ids
+
     # <listOfCompartments>
     for my $comp_id ( uniq nsort $MetNet->select_comp_ids() ){
-        my $comp_id_fixed = $comp_id;
-        $comp_id_fixed =~ s{^UNK:}{};
-        my $comp = $SBML_model->createCompartment();
-        $comp->setId($comp_id_fixed);
-        $comp->setConstant(1); # True
-        my ($comp_name, $comp_xrefs) = $MetNet->get_comp_info($comp_id);
-        $comp->setName($comp_name);
-        $comp->setSBOTerm( $comp_id eq $Constants::boundary_comp_id ? $Constants::boundary_comp_sbo : $Constants::default_comp_sbo );
-        #notes
-        if ( $use_notes ){
-            my $notes = '';
-            if ( $MetNet->get_comp_source($mnet_id, $comp_id) ){
-                $notes .= '<html:p>SOURCE: '.$MetNet->get_comp_source($mnet_id, $comp_id).'</html:p>';
-            }
-            if ( $comp_xrefs ){
-                $notes .= '<html:p>REFERENCE: '.$comp_xrefs.'</html:p>';
-            }
-            $comp->setNotes($notes)  if ( $notes );
-        }
-        #TODO annotations: fix is/isRelatedTo and different identifiers.org... when we will have all mapped xrefs
-        #TODO add other possible xref sources (e.g., CCO, ...)
-        if ( $comp_xrefs ){
-            if ( !$comp->isSetMetaId() ){
-                $comp->setMetaId( $comp->getId() );
-            }
-            my $CV = new LibSBML::CVTerm();
-            $CV->setQualifierType($LibSBML::BIOLOGICAL_QUALIFIER);
-            $CV->setBiologicalQualifierType($LibSBML::BQB_IS);
-            if ( $comp_xrefs =~ /^go:\d+$/i ){
-                $CV->addResource($Constants::identifiers_go.uc($comp_xrefs));
-                $comp->addCVTerm($CV);
-            }
-            elsif ( $comp_xrefs =~ /^bigg:(..?)$/i ){
-                $CV->addResource($Constants::identifiers_biggc.$1);
-                $comp->addCVTerm($CV);
-            }
-            elsif ( $comp_xrefs =~ /^mnx:(.+)$/i ){
-                $CV->addResource($Constants::identifiers_mnxc.$1);
-                $comp->addCVTerm($CV);
-            }
-        }
+        Compartments::create_SBML_compartment($MetNet, $mnet_id, $SBML_model, $use_notes, $comp_id);
     }
 
 
     # <listOfSpecies>
     for my $chem_id ( uniq nsort $MetNet->select_chem_ids() ){
-        my $chem_id_fixed = $chem_id;
-        $chem_id_fixed =~ s{^UNK:}{};
-        my $chem = $SBML_model->createSpecies();
-        $chem->setId($chem_id_fixed);
-        #beta-D-fructose C6H12O6 180.06339 0 chebi:28645;CHEBI:28645;bigg.metabolite:fru;biggM:M_fru;biggM:fru;chebi:10373;chebi:22766;chebi:42560;kegg.compound:C02336;...
-        my ($chem_name, $chem_formula, $chem_mass, $chem_charge, $chem_xrefs) = $MetNet->get_chem_info($chem_id);
-        $chem->setName($chem_name);
-        $chem->setHasOnlySubstanceUnits(0); #false
-        $chem->setConstant(0);              #false
-        $chem->setSBOTerm( $Constants::default_chem_sbo );
-        my $chem_fbc = $chem->getPlugin('fbc');
-        $chem_fbc->setCharge($chem_charge)            if ( $chem_charge  ne '' );
-        $chem_fbc->setChemicalFormula($chem_formula)  if ( $chem_formula ne '' );
-#TODO  id@comp !
-#TODO  boundaryCondition="false" compartment="MNXC3" id="MNXM01__64__MNXC3", notes, metaid/annotations
-#TODO inchikey are missing as xref
+#        Chemicals::create_SBML_chemical($MetNet, $mnet_id, $SBML_model, $use_notes, $chem_id);
     }
 
 
@@ -229,30 +177,7 @@ if ( $TSV_directory ){
     # <listOfReactions>
     my (%reac_chem, %reac_comp);#TODO
     for my $reac_id ( uniq nsort $MetNet->select_reac_ids() ){
-        my $reac_id_fixed = $reac_id;
-        $reac_id_fixed =~ s{^UNK:}{};#FIXME should do it better, and more general
-        my $reac = $SBML_model->createReaction();
-        $reac->setId($reac_id_fixed);
-        #ID           equation                               source    mnxr_ID    classifs    pathways    xrefs
-        #mnxr02c2b    1 MNXM1@MNXC2 <==> 1 MNXM1@BOUNDARY    EX_h_e    MNXR02                             mnx:MNXR02;MNXR02;bigg.reaction:EX_h_e;...
-        my $reac_equation = $MetNet->get_reac_equation($reac_id);
-        my $reac_source   = eval {$MetNet->get_reac_source($reac_id)} || ''; #NOTE for our own reactions, no source in the model
-        my $reac_mnxr     = $MetNet->get_reac_mnxr($reac_id);
-        my ($reac_classifs, $reac_pathways, $reac_xrefs) = $MetNet->get_reac_info($reac_id);
-        # Parse equation
-        my ($reac_left, $reac_right) = split(/ +<\?> +/, $reac_equation);
-        for my $reactant ( @{ Reactions::parse_reac_side($reac_left) } ){
-            my $react = $reac->createReactant();
-#TODO need to be added through a species ref !
-            #$react->addReactant("$reactant->[1]\@$reactant->[2]", $reactant->[0]);
-        }
-        my @lefts  = @{ Reactions::parse_reac_side($reac_left) };
-        my @rights = @{ Reactions::parse_reac_side($reac_right) };
-        #warn "[$reac_left] [$reac_right] [", join(':', map { "$_->[0] $_->[1] $_->[2]" } @lefts), "]\n";
-#TODO get reaction direction: get_reac_dir($reac_id);
-#TODO are growth reactions there?
-#TODO metaid="MAR03905" sboTerm="SBO:0000176" reversible="false" fast="false" fbc:lowerFluxBound="FB2N0" fbc:upperFluxBound="FB3N1000"
-#TODO list of reactants/products(/modifiers)
+#        Reactions::create_SBML_reaction($MetNet, $mnet_id, $SBML_model, $use_notes, $reac_id);
     }
 
 
