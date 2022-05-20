@@ -253,20 +253,22 @@ sub create_SBML_chemical {
     my ($MetNet, $mnet_id, $SBML_model, $use_notes, $chem_id) = @_;
 
     my $chem_id_fixed = $chem_id;
+    my $comp_id = '';
+    ($chem_id, $comp_id) = $chem_id =~ /^(.+?)__64__(.+?)$/;
     $chem_id_fixed =~ s{^UNK:}{};
     my $chem = $SBML_model->createSpecies();
     $chem->setId($chem_id_fixed);
     #beta-D-fructose C6H12O6 180.06339 0 chebi:28645;CHEBI:28645;bigg.metabolite:fru;biggM:M_fru;biggM:fru;chebi:10373;chebi:22766;chebi:42560;kegg.compound:C02336;...
     my ($chem_name, $chem_formula, $chem_mass, $chem_charge, $chem_xrefs) = $MetNet->get_chem_info($chem_id);
     $chem->setName($chem_name);
+    $chem->setCompartment($comp_id);
     $chem->setHasOnlySubstanceUnits(0); #false
     $chem->setConstant(0);              #false
-    $chem->setSBOTerm( $Constants::default_chem_sbo );
+    $chem->setSBOTerm( $chem_id eq $Constants::biomass_chem_id ? $Constants::biomass_chem_sbo : $Constants::default_chem_sbo );
     my $chem_fbc = $chem->getPlugin('fbc');
     $chem_fbc->setCharge($chem_charge)            if ( $chem_charge  ne '' );
     $chem_fbc->setChemicalFormula($chem_formula)  if ( $chem_formula ne '' );
-#TODO  id@comp !
-#TODO  boundaryCondition="false" compartment="MNXC3" id="MNXM01__64__MNXC3", notes, metaid/annotations
+#TODO boundaryCondition="false" notes metaid/annotations
 #TODO inchikey are missing as xref
 
     return;

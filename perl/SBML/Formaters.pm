@@ -54,6 +54,20 @@ sub protect_char {
 }
 
 
+sub protect_SBML_id {
+    my ($string) = @_;
+
+    $string =~ s{\-}{__45__}g;
+    $string =~ s{\@}{__64__}g;
+    $string =~ s{\+}{__43__}g;
+    $string =~ s{\[}{__91__}g;
+    $string =~ s{\]}{__93__}g;
+    #TODO Add others
+
+    return $string;
+}
+
+
 sub format_Compartment {
     my ($compartment_Sid) = @_;
 
