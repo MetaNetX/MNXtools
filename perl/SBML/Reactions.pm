@@ -553,28 +553,32 @@ sub create_SBML_reaction {
 #FIXME could we have SBML modifiers in our TSV files?
     for my $reactant ( @{ Reactions::parse_reac_side($reac_left) } ){
         my ($chem_id, $comp_id) = ($reactant->[1], $reactant->[2]);
+        my $chem_id_fixed = $chem_id;
+        $chem_id_fixed =~ s{^UNK:}{};
         if ( ! $SBML_model->getCompartment( Formaters::protect_SBML_id($comp_id) ) ){
             Compartments::create_SBML_compartment($MetNet, $mnet_id, $SBML_model, $use_notes, Formaters::protect_SBML_id($comp_id));
         }
-        if ( ! $SBML_model->getSpecies( Formaters::protect_SBML_id("$chem_id\@$comp_id") ) ){
+        if ( ! $SBML_model->getSpecies( Formaters::protect_SBML_id("$chem_id_fixed\@$comp_id") ) ){
             Chemicals::create_SBML_chemical($MetNet, $mnet_id, $SBML_model, $use_notes, Formaters::protect_SBML_id("$chem_id\@$comp_id"));
         }
         my $react = $reac->createReactant();
-        $react->setSpecies( Formaters::protect_SBML_id("$chem_id\@$comp_id") );
+        $react->setSpecies( Formaters::protect_SBML_id("$chem_id_fixed\@$comp_id") );
         $react->setStoichiometry( $reactant->[0] );#FIXME should it be a negative value for reactant ???
         $react->setConstant(1); #True
         $react->setSBOTerm( $Constants::reactant_sbo );
     }
     for my $product ( @{ Reactions::parse_reac_side($reac_right) } ){
         my ($chem_id, $comp_id) = ($product->[1], $product->[2]);
+        my $chem_id_fixed = $chem_id;
+        $chem_id_fixed =~ s{^UNK:}{};
         if ( ! $SBML_model->getCompartment( Formaters::protect_SBML_id($comp_id) ) ){
             Compartments::create_SBML_compartment($MetNet, $mnet_id, $SBML_model, $use_notes, Formaters::protect_SBML_id($comp_id));
         }
-        if ( ! $SBML_model->getSpecies( Formaters::protect_SBML_id("$chem_id\@$comp_id") ) ){
+        if ( ! $SBML_model->getSpecies( Formaters::protect_SBML_id("$chem_id_fixed\@$comp_id") ) ){
             Chemicals::create_SBML_chemical($MetNet, $mnet_id, $SBML_model, $use_notes, Formaters::protect_SBML_id("$chem_id\@$comp_id"));
         }
         my $prodt = $reac->createProduct();
-        $prodt->setSpecies( Formaters::protect_SBML_id("$chem_id\@$comp_id") );
+        $prodt->setSpecies( Formaters::protect_SBML_id("$chem_id_fixed\@$comp_id") );
         $prodt->setStoichiometry( $product->[0] );
         $prodt->setConstant(1); #True
         $prodt->setSBOTerm( $Constants::product_sbo );

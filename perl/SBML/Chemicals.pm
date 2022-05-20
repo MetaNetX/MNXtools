@@ -269,8 +269,20 @@ sub create_SBML_chemical {
     my $chem_fbc = $chem->getPlugin('fbc');
     $chem_fbc->setCharge($chem_charge)            if ( $chem_charge  ne '' );
     $chem_fbc->setChemicalFormula($chem_formula)  if ( $chem_formula ne '' );
+    my @chem_xrefs = split(';', $chem_xrefs);
     #notes
-#TODO notes metaid/annotations
+    if ( $use_notes ){
+        my $notes = '';
+        $notes .= '<html:p>COMPOUND_ID: '.$chem_id.                                    '</html:p>';
+        $notes .= '<html:p>SOURCE: '.     $MetNet->get_chem_source($mnet_id, $chem_id).'</html:p>'  if ( $MetNet->get_chem_source($mnet_id, $chem_id) );
+        $notes .= '<html:p>FORMULA: '.    $chem_formula.                               '</html:p>'  if ( $chem_formula ne '' );
+        $notes .= '<html:p>MASS: '.       $chem_mass.                                  '</html:p>'  if ( $chem_mass    ne '' );
+        $notes .= '<html:p>CHARGE: '.     $chem_charge.                                '</html:p>'  if ( $chem_charge  ne '' );
+        $notes .= '<html:p>XREFS: '.      $chem_xrefs.                                 '</html:p>'  if ( $chem_xrefs );
+        $notes .= '<html:p>REFERENCE: '.  $chem_xrefs[0].                              '</html:p>'  if ( exists $chem_xrefs[0] );
+        $chem->setNotes($notes)  if ( $notes );
+    }
+#TODO metaid/annotations
 #TODO inchikey are missing as xref
 
     return;
