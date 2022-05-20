@@ -253,6 +253,7 @@ sub create_SBML_chemical {
     my ($MetNet, $mnet_id, $SBML_model, $use_notes, $chem_id) = @_;
 
     my $chem_id_fixed = $chem_id;
+    $chem_id =~ s{__64__.*$}{};
     $chem_id_fixed =~ s{^UNK:}{};
     my $chem = $SBML_model->createSpecies();
     $chem->setId($chem_id_fixed);

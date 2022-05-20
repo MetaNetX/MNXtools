@@ -550,25 +550,31 @@ sub create_SBML_reaction {
     my ($reac_classifs, $reac_pathways, $reac_xrefs) = $MetNet->get_reac_info($reac_id);
     # Parse equation
     my ($reac_left, $reac_right) = split(/ +<\?> +/, $reac_equation);
+#FIXME could we have SBML modifiers in our TSV files?
     for my $reactant ( @{ Reactions::parse_reac_side($reac_left) } ){
         my ($chem_id, $comp_id) = ($reactant->[1], $reactant->[2]);
-        if ( ! $SBML_model->getCompartment( $comp_id ) ){
-            Compartments::create_SBML_compartment($MetNet, $mnet_id, $SBML_model, $use_notes, $comp_id);
+        if ( ! $SBML_model->getCompartment( Formaters::protect_SBML_id($comp_id) ) ){
+            Compartments::create_SBML_compartment($MetNet, $mnet_id, $SBML_model, $use_notes, Formaters::protect_SBML_id($comp_id));
         }
-        if ( ! $SBML_model->getSpecies( $chem_id ) ){
-            Chemicals::create_SBML_chemical($MetNet, $mnet_id, $SBML_model, $use_notes, $chem_id);
+        if ( ! $SBML_model->getSpecies( Formaters::protect_SBML_id("$chem_id\@$comp_id") ) ){
+            Chemicals::create_SBML_chemical($MetNet, $mnet_id, $SBML_model, $use_notes, Formaters::protect_SBML_id("$chem_id\@$comp_id"));
         }
-        my $react = $reac->createReactant();
-        #TODO need to be added through a species ref !
-        #$react->addReactant("$reactant->[1]\@$reactant->[2]", $reactant->[0]);
+        $reac->createReactant();
+        $reac->addReactant($SBML_model->getSpecies( Formaters::protect_SBML_id("$chem_id\@$comp_id") ), $reactant->[0]);
     }
-    my @lefts  = @{ Reactions::parse_reac_side($reac_left) };
-    my @rights = @{ Reactions::parse_reac_side($reac_right) };
-    #warn "[$reac_left] [$reac_right] [", join(':', map { "$_->[0] $_->[1] $_->[2]" } @lefts), "]\n";
+    for my $product ( @{ Reactions::parse_reac_side($reac_right) } ){
+        my ($chem_id, $comp_id) = ($product->[1], $product->[2]);
+        if ( ! $SBML_model->getCompartment( Formaters::protect_SBML_id($comp_id) ) ){
+            Compartments::create_SBML_compartment($MetNet, $mnet_id, $SBML_model, $use_notes, Formaters::protect_SBML_id($comp_id));
+        }
+        if ( ! $SBML_model->getSpecies( Formaters::protect_SBML_id("$chem_id\@$comp_id") ) ){
+            Chemicals::create_SBML_chemical($MetNet, $mnet_id, $SBML_model, $use_notes, Formaters::protect_SBML_id("$chem_id\@$comp_id"));
+        }
+        $reac->createProduct();
+        $reac->addProduct($SBML_model->getSpecies( Formaters::protect_SBML_id("$chem_id\@$comp_id") ), $product->[0]);
+    }
 #TODO get reaction direction: get_reac_dir($reac_id);
-#TODO are growth reactions there?
 #TODO metaid="MAR03905" sboTerm="SBO:0000176" reversible="false" fast="false" fbc:lowerFluxBound="FB2N0" fbc:upperFluxBound="FB3N1000"
-#TODO list of reactants/products(/modifiers)
 
     return;
 }
