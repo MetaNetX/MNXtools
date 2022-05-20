@@ -264,11 +264,13 @@ sub create_SBML_chemical {
     $chem->setCompartment($comp_id);
     $chem->setHasOnlySubstanceUnits(0); #false
     $chem->setConstant(0);              #false
+    $chem->setBoundaryCondition( $comp_id eq $Constants::boundary_comp_id ? 1 : 0 );
     $chem->setSBOTerm( $chem_id eq $Constants::biomass_chem_id ? $Constants::biomass_chem_sbo : $Constants::default_chem_sbo );
     my $chem_fbc = $chem->getPlugin('fbc');
     $chem_fbc->setCharge($chem_charge)            if ( $chem_charge  ne '' );
     $chem_fbc->setChemicalFormula($chem_formula)  if ( $chem_formula ne '' );
-#TODO boundaryCondition="false" notes metaid/annotations
+    #notes
+#TODO notes metaid/annotations
 #TODO inchikey are missing as xref
 
     return;
