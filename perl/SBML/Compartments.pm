@@ -102,7 +102,7 @@ sub create_SBML_compartment {
     }
     #TODO use the prefix from the prefix file
     #TODO annotations: fix is/isRelatedTo and different identifiers.org... when we will have all mapped xrefs
-    #TODO add other possible xref sources (e.g., CCO, ...)
+    #FIXME add other possible xref sources (e.g., CCO, ...)
     if ( $comp_xrefs ){
         if ( !$comp->isSetMetaId() ){
             $comp->setMetaId( $comp->getId() );
