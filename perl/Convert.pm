@@ -359,8 +359,7 @@ sub convert{
     # ------------------------------------------------ #
 
     my @red_proton = eval{ $metnet2->select_spec_ids( mnet => $source_name, chem => 'MNXM01') };
-    if( ! $@ ){ # most likely case is when MNXM01 does not exist
-        #$tb->warn( $@ )  if $@;
+    if( @red_proton > 0 ){ # most likely case is when MNXM01 does not exist
         foreach my $red_proton ( @red_proton ){
             my $blue_proton = $red_proton;
             $blue_proton =~ s/^MNXM01\@/MNXM1\@/;
@@ -368,8 +367,8 @@ sub convert{
             next if $comp eq 'BOUNDARY';
             my( $new_id, $eq_new, $sign, $is_balanced, $msg, $mnxr_id, $str_gen, $sign_gen ) = $self->{ns}->map_equation( "1 $red_proton = 1 $blue_proton" );
             next if exists $reac_info{$new_id};
+            next if $new_id eq 'mnxr01d2'; # mnxr01d1 is enough
             $metnet2->add_reac_add_enzy( $dest_name, $new_id, $eq_new, $mnxr_id, 'SPONTANEOUS', 'NA', 'NA', 'B' );
-            # $metnet2->set_reac_source( $dest_name, $new_id, 'MNXR01' . $comp );
         }
     }
 

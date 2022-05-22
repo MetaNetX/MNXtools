@@ -760,6 +760,9 @@ sub map_equation{
                 elsif( /^MNXC(\d+)$/ ){
                     $reac_id .= 'C' . $1;
                 }
+                elsif( /^MNXD(\d+)$/ ){
+                    $reac_id .= 'D' . $1;
+                }
                 else{
                     $ok = 0;
                 }
@@ -780,7 +783,7 @@ sub map_equation{
         $reac_id = $reac_id[0];
         $num = $reac_id{$reac_id};
     }
-    if( ! $reac_id or 16 < length $reac_id ){
+    if( ! $reac_id or 16 < length $reac_id or $reac_id eq 'mnxr01' ){
         $reac_id = MetNet::compute_reac_id( $str_spec );
     }
     my( $str_gen, $sign_gen, $comp_map ) = @{$eq_map[$num]};
