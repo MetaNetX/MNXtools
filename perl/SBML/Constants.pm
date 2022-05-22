@@ -71,7 +71,7 @@ our $SBML_version = 1;
 ##Default FBC version
 our $FBC_version  = 2; # Possible values: 1 2
 ##SBO
-our $SBO_FLUXBALANCEFRMW = 624; # eq SBO:0000624
+our $SBO_FLUXBALANCEFRMW = 624; # eq SBO:0000624, Flux balance framework, for model using fbc plugin and used for FBA
 our $SBO_FLUXDEFAULT     = 626;
 our $SBO_FLUX            = 625;
 ##Identifiers
@@ -88,18 +88,21 @@ our $unit = 'mmol_per_gDW_per_hr';
 ##Private variables/names
 our $boundary_comp_id     = 'BOUNDARY';
 our $boundary_comp_name   = 'model boundary';
-our $boundary_comp_sbo    = 'SBO:0000289';
+our $boundary_comp_sbo    = 'SBO:0000289'; # Functional compartment (logical or physical)
 our $default_comp_sbo     = 'SBO:0000290';
 
 our $default_chem_sbo     = 'SBO:0000247';
+our $biomass_chem_sbo     = 'SBO:0000649'; #NOTE is most of the time used for ALL growth equation components, not for BIOMASS chemical species itself
 
+our $reactant_sbo         = 'SBO:0000010';
+our $product_sbo          = 'SBO:0000011';
+our $modifier_sbo         = 'SBO:0000019'; # exists also neutral participant SBO:0000594
 our $transport_reac_sbo   = 'SBO:0000185';
 
 our $biomass_chem_id      = 'BIOMASS';
 our $biomass_reac_id      = 'BIOMASS_EXT';
 our @biomass_alias        = qw( biomass M_biomass cpd11416 cpd29751 S_Biomass_biomass Biomass_biomass s_0450 );
 our @are_not_biomass_reac = qw( PRISM_growth_room rxn12877 rxn13038 );
-our $biomass_chem_sbo     = 'SBO:0000649'; #NOTE is most of the time used for ALL growth equation components, not for BIOMASS chemical species itself
 our $biomass_reac_sbo     = 'SBO:0000629';
 
 our $spontaneous_enz      = 'SPONTANEOUS';

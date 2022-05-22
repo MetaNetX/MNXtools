@@ -264,11 +264,48 @@ sub create_SBML_chemical {
     $chem->setCompartment($comp_id);
     $chem->setHasOnlySubstanceUnits(0); #false
     $chem->setConstant(0);              #false
+    $chem->setBoundaryCondition( $comp_id eq $Constants::boundary_comp_id ? 1 : 0 );
     $chem->setSBOTerm( $chem_id eq $Constants::biomass_chem_id ? $Constants::biomass_chem_sbo : $Constants::default_chem_sbo );
     my $chem_fbc = $chem->getPlugin('fbc');
     $chem_fbc->setCharge($chem_charge)            if ( $chem_charge  ne '' );
     $chem_fbc->setChemicalFormula($chem_formula)  if ( $chem_formula ne '' );
-#TODO boundaryCondition="false" notes metaid/annotations
+    my @chem_xrefs = split(';', $chem_xrefs);
+    #notes
+    if ( $use_notes ){
+        my $notes = '';
+        $notes .= '<html:p>COMPOUND_ID: '.$chem_id.                                    '</html:p>';
+        $notes .= '<html:p>SOURCE: '.     $MetNet->get_chem_source($mnet_id, $chem_id).'</html:p>'  if ( $MetNet->get_chem_source($mnet_id, $chem_id) );
+        $notes .= '<html:p>FORMULA: '.    $chem_formula.                               '</html:p>'  if ( $chem_formula ne '' );
+        $notes .= '<html:p>MASS: '.       $chem_mass.                                  '</html:p>'  if ( $chem_mass    ne '' );
+        $notes .= '<html:p>CHARGE: '.     $chem_charge.                                '</html:p>'  if ( $chem_charge  ne '' );
+        $notes .= '<html:p>XREFS: '.      $chem_xrefs.                                 '</html:p>'  if ( $chem_xrefs );
+        $notes .= '<html:p>REFERENCE: '.  $chem_xrefs[0].                              '</html:p>'  if ( exists $chem_xrefs[0] );
+        $chem->setNotes($notes)  if ( $notes );
+    }
+    #annotations
+    if ( $chem_xrefs ){
+        if ( !$chem->isSetMetaId() ){
+            $chem->setMetaId( $chem->getId() );
+        }
+        my $CV = new LibSBML::CVTerm();
+        $CV->setQualifierType($LibSBML::BIOLOGICAL_QUALIFIER);
+        #is(_a) -> reference
+        $CV->setBiologicalQualifierType($LibSBML::BQB_IS);
+        $CV->addResource($chem_xrefs[0]);#$Constants::identifiers_biggc.$1);
+        $chem->addCVTerm($CV);
+        #isRelatedTo -> other xrefs
+        if ( exists $chem_xrefs[1] ){
+            my $CV2 = new LibSBML::CVTerm();
+            $CV2->setQualifierType($LibSBML::BIOLOGICAL_QUALIFIER);
+            $CV2->setBiologicalQualifierType($LibSBML::BQB_IS_HOMOLOG_TO); #BQB_IS_RELATED_TO looks better but deprecated now!
+#TODO skip duplicated ids: biggM:a, bigg.metabolite:a, biggM:M_a
+            for my $xref ( splice(@chem_xrefs, 1) ){
+                $CV2->addResource($xref);
+            }
+            $chem->addCVTerm($CV2);
+        }
+    }
+#TODO use the prefix from the prefix file
 #TODO inchikey are missing as xref
 
     return;
