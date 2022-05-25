@@ -291,21 +291,26 @@ sub create_SBML_chemical {
         $CV->setQualifierType($LibSBML::BIOLOGICAL_QUALIFIER);
         #is(_a) -> reference
         $CV->setBiologicalQualifierType($LibSBML::BQB_IS);
-        $CV->addResource($chem_xrefs[0]);#$Constants::identifiers_biggc.$1);
-        $chem->addCVTerm($CV);
+        my $annotation_ref = Formaters::guess_annotation_link('chem', $chem_xrefs[0]);
+        if ( $annotation_ref ){
+            $CV->addResource($annotation_ref);
+            $chem->addCVTerm($CV);
+        }
         #isRelatedTo -> other xrefs
         if ( exists $chem_xrefs[1] ){
             my $CV2 = new LibSBML::CVTerm();
             $CV2->setQualifierType($LibSBML::BIOLOGICAL_QUALIFIER);
             $CV2->setBiologicalQualifierType($LibSBML::BQB_IS_HOMOLOG_TO); #BQB_IS_RELATED_TO looks better but deprecated now!
-#TODO skip duplicated ids: biggM:a, bigg.metabolite:a, biggM:M_a
+#TODO  skip duplicated ids: biggM:a, bigg.metabolite:a, biggM:M_a
             for my $xref ( splice(@chem_xrefs, 1) ){
-                $CV2->addResource($xref);
+                my $annotation = Formaters::guess_annotation_link('chem', $xref);
+                if ( $annotation ){
+                    $CV2->addResource($annotation);
+                }
             }
             $chem->addCVTerm($CV2);
         }
     }
-#TODO use the prefix from the prefix file
 #TODO inchikey are missing as xref
 
     return;
