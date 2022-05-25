@@ -151,5 +151,45 @@ sub guess_prefix {
     return "$right_prefix:$id";
 }
 
+sub guess_annotation_link {
+    my ($scope, $full_prefix) = @_;
+
+    my ($prefix, $id) = split(/:/, $full_prefix, 2);
+    if ( !$id ){
+        $id     = $prefix;
+        $prefix = 'mnx';
+    }
+
+    if ( $prefix eq 'chebi' ){
+        $prefix = 'CHEBI';
+    }
+    elsif ( $prefix eq 'slm' ){
+        $prefix = 'SLM';
+    }
+    elsif ( $prefix eq 'go' ){
+        $prefix = 'GO';
+    }
+    elsif ( $prefix eq 'cl' ){
+        $prefix = 'CL';
+    }
+
+    if ( $prefix eq 'mnx' ){
+        if ( $scope eq 'comp' ){
+            $prefix = 'metanetx.compartment';
+        }
+        elsif ( $scope eq 'chem' ){
+            $prefix = 'metanetx.chemical';
+        }
+        elsif ( $scope eq 'reac' ){
+            $prefix = 'metanetx.reaction';
+        }
+    }
+
+    my $right_prefix = $Formaters::prefixes->{'prefix2'}->{$prefix} || '';
+
+    return ''  if ( $right_prefix eq '' );
+    return "$right_prefix$id";
+}
+
 1;
 
