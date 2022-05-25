@@ -1090,7 +1090,7 @@ sub write{
     $filename = "$path/stoichiometries.tsv";
     open( STOI, "> $filename")  or confess "Cannot write to file: $filename\n";
     print STOI "#MetaNetX/TSV/stoichiometries.tsv 1.1\n";
-    print STOI "#ID\tdescription\txrefs\tgene_names\n";
+    print STOI "#reac_ID\tspec_ID\tcoef\tchem_ID\tcomp_ID\n";
     close STOI;
     open( STOI, "| sort - >> $filename")  or confess "Cannot append to file: $filename\n";
     my %seen = ();
