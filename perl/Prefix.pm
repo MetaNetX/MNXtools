@@ -58,6 +58,21 @@ my %prefix_data =(
         scope => 'other',
         value => 'https://rdf.metanetx.org/schema/',    # for predicates and special symbols like BIOMASS, PMF or SPONTANEOUS
     },
+    ### Structural formats ###
+#    SMILES => {
+#        scope => 'chem',
+#        value => ???,
+#    },
+    inchi => {
+        scope => 'chem',
+        value => 'https://identifiers.org/inchi:',
+        ident => 'inchi',
+    },
+    inchikey => {
+        scope => 'chem',
+        value => 'https://identifiers.org/inchikey:',
+        ident => 'inchikey',
+    },
     ### BiGG ###
     biggM => {
         scope => 'chem',
@@ -295,11 +310,13 @@ sub new{
             $self->{prefix2}{$prefix_data{$prefix}{ident}} = $IRI;
             $self->{same_as}{$prefix} = $prefix_data{$prefix}{ident};
             $self->{'fromSBML'}{$prefix_data{$prefix}{'scope'}}{$prefix_data{$prefix}{'ident'}} = $prefix;
+            $self->{'toSBML'}{$prefix_data{$prefix}{'scope'}}{$prefix}                          = $prefix_data{$prefix}{'ident'};
         }
         if( exists $prefix_data{$prefix}{depr} ){
             foreach( @{$prefix_data{$prefix}{depr}} ){
                 push @{$self->{depr}{$prefix_data{$prefix}{scope}}{$_}}, $prefix;
-                $self->{'fromSBML'}{$prefix_data{$prefix}{'scope'}}{$_} = $prefix;
+                $self->{'fromSBML'}{$prefix_data{$prefix}{'scope'}}{$_}    = $prefix;
+                $self->{'toSBML'}{$prefix_data{$prefix}{'scope'}}{$prefix} = $_;
             }
         }
     }
