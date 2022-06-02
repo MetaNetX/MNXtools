@@ -551,42 +551,34 @@ sub create_SBML_reaction {
     # Parse equation
     my ($reac_left, $reac_right) = split(/ +<\?> +/, $reac_equation);
 #FIXME could we have SBML modifiers in our TSV files?
-    for my $reactant ( @{ Reactions::parse_reac_side($reac_left) } ){
-        my ($chem_id, $comp_id) = ($reactant->[1], $reactant->[2]);
-        my $chem_id_fixed = $chem_id;
-        $chem_id_fixed =~ s{^UNK:}{};
-        if ( ! $SBML_model->getCompartment( Formaters::protect_SBML_id($comp_id) ) ){
-            Compartments::create_SBML_compartment($MetNet, $mnet_id, $SBML_model, $use_notes, Formaters::protect_SBML_id($comp_id));
-        }
-        if ( ! $SBML_model->getSpecies( Formaters::protect_SBML_id("$chem_id_fixed\@$comp_id") ) ){
-            Chemicals::create_SBML_chemical($MetNet, $mnet_id, $SBML_model, $use_notes, Formaters::protect_SBML_id("$chem_id\@$comp_id"));
-        }
-        my $react = $reac->createReactant();
-        $react->setSpecies( Formaters::protect_SBML_id("$chem_id_fixed\@$comp_id") );
-        $react->setStoichiometry( $reactant->[0] );#FIXME should it be a negative value for reactant ???
-        $react->setConstant(1); #True
-        $react->setSBOTerm( $Constants::reactant_sbo );
-    }
-    for my $product ( @{ Reactions::parse_reac_side($reac_right) } ){
-        my ($chem_id, $comp_id) = ($product->[1], $product->[2]);
-        my $chem_id_fixed = $chem_id;
-        $chem_id_fixed =~ s{^UNK:}{};
-        if ( ! $SBML_model->getCompartment( Formaters::protect_SBML_id($comp_id) ) ){
-            Compartments::create_SBML_compartment($MetNet, $mnet_id, $SBML_model, $use_notes, Formaters::protect_SBML_id($comp_id));
-        }
-        if ( ! $SBML_model->getSpecies( Formaters::protect_SBML_id("$chem_id_fixed\@$comp_id") ) ){
-            Chemicals::create_SBML_chemical($MetNet, $mnet_id, $SBML_model, $use_notes, Formaters::protect_SBML_id("$chem_id\@$comp_id"));
-        }
-        my $prodt = $reac->createProduct();
-        $prodt->setSpecies( Formaters::protect_SBML_id("$chem_id_fixed\@$comp_id") );
-        $prodt->setStoichiometry( $product->[0] );
-        $prodt->setConstant(1); #True
-        $prodt->setSBOTerm( $Constants::product_sbo );
-    }
+    create_reac_elems($reac_left, 'reactant', $SBML_model, $MetNet, $mnet_id, $use_notes, $reac);
+    create_reac_elems($reac_right, 'product', $SBML_model, $MetNet, $mnet_id, $use_notes, $reac);
+    # Add reaction other attributes
 #TODO get reaction direction: get_reac_dir($reac_id);
 #TODO metaid="MAR03905" sboTerm="SBO:0000176" reversible="false" fast="false" fbc:lowerFluxBound="FB2N0" fbc:upperFluxBound="FB3N1000"
 
     return;
+}
+
+sub create_reac_elems {
+    my ($reac_side, $side, $SBML_model, $MetNet, $mnet_id, $use_notes, $reac) = @_;
+
+    for my $reac_elem ( @{ Reactions::parse_reac_side($reac_side) } ){
+        my ($chem_id, $comp_id) = ($reac_elem->[1], $reac_elem->[2]);
+        my $chem_id_fixed = $chem_id;
+        $chem_id_fixed =~ s{^UNK:}{};
+        if ( ! $SBML_model->getCompartment( Formaters::protect_SBML_id($comp_id) ) ){
+            Compartments::create_SBML_compartment($MetNet, $mnet_id, $SBML_model, $use_notes, Formaters::protect_SBML_id($comp_id));
+        }
+        if ( ! $SBML_model->getSpecies( Formaters::protect_SBML_id("$chem_id_fixed\@$comp_id") ) ){
+            Chemicals::create_SBML_chemical($MetNet, $mnet_id, $SBML_model, $use_notes, Formaters::protect_SBML_id("$chem_id\@$comp_id"));
+        }
+        my $elem = $side eq 'reactant' ? $reac->createReactant() : $reac->createProduct();
+        $elem->setSpecies( Formaters::protect_SBML_id("$chem_id_fixed\@$comp_id") );
+        $elem->setStoichiometry( $reac_elem->[0] );#FIXME should it be a negative value for reactant ???
+        $elem->setConstant(1); #True
+        $elem->setSBOTerm( $side eq 'reactant' ? $Constants::reactant_sbo : $Constants::product_sbo );
+    }
 }
 
 1;
