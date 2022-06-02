@@ -110,8 +110,11 @@ if ( $TSV_directory ){
         my $CV = new LibSBML::CVTerm();
         $CV->setQualifierType($LibSBML::BIOLOGICAL_QUALIFIER);
         $CV->setBiologicalQualifierType($LibSBML::BQB_HAS_TAXON);
-        $CV->addResource($Constants::identifiers_taxid.$taxid);
-        $SBML_model->addCVTerm($CV);
+        my $annotation = Formaters::guess_annotation_link('other', "taxon:$taxid");
+        if ( $annotation ){
+            $CV->addResource($annotation);
+            $SBML_model->addCVTerm($CV);
+        }
     }
 
 

@@ -12,6 +12,8 @@ use Prefix;
 
 
 our $prefixes = Prefix->new();
+#use Data::Dumper;
+#warn Dumper $prefixes;
 
 sub convert_to_Sid {
     my ($id) = @_;
@@ -160,35 +162,22 @@ sub guess_annotation_link {
         $prefix = 'mnx';
     }
 
-    if ( $prefix eq 'chebi' ){
-        $prefix = 'CHEBI';
-    }
-    elsif ( $prefix eq 'slm' ){
-        $prefix = 'SLM';
-    }
-    elsif ( $prefix eq 'go' ){
-        $prefix = 'GO';
-    }
-    elsif ( $prefix eq 'cl' ){
-        $prefix = 'CL';
-    }
-
     if ( $prefix eq 'mnx' ){
         if ( $scope eq 'comp' ){
-            $prefix = 'metanetx.compartment';
+            $prefix = 'comp';
         }
         elsif ( $scope eq 'chem' ){
-            $prefix = 'metanetx.chemical';
+            $prefix = 'chem';
         }
         elsif ( $scope eq 'reac' ){
-            $prefix = 'metanetx.reaction';
+            $prefix = 'reac';
         }
     }
 
-    my $right_prefix = $Formaters::prefixes->{'prefix2'}->{$prefix} || '';
+    my $right_prefix = $Formaters::prefixes->{'toSBML'}->{$scope}->{$prefix} || '';
 
     return ''  if ( $right_prefix eq '' );
-    return "$right_prefix$id";
+    return "$Constants::identifier$right_prefix:$id";
 }
 
 1;
