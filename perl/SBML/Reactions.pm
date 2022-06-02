@@ -554,8 +554,9 @@ sub create_SBML_reaction {
     create_reac_elems($reac_left, 'reactant', $SBML_model, $MetNet, $mnet_id, $use_notes, $reac);
     create_reac_elems($reac_right, 'product', $SBML_model, $MetNet, $mnet_id, $use_notes, $reac);
     # Add reaction other attributes
+    $reac->setFast(0); # False
 #TODO get reaction direction: get_reac_dir($reac_id);
-#TODO metaid="MAR03905" sboTerm="SBO:0000176" reversible="false" fast="false" fbc:lowerFluxBound="FB2N0" fbc:upperFluxBound="FB3N1000"
+#TODO metaid="MAR03905" sboTerm="SBO:0000176" reversible="false" fbc:lowerFluxBound="FB2N0" fbc:upperFluxBound="FB3N1000"
 
     return;
 }
