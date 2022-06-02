@@ -301,8 +301,8 @@ sub create_SBML_chemical {
             my $CV2 = new LibSBML::CVTerm();
             $CV2->setQualifierType($LibSBML::BIOLOGICAL_QUALIFIER);
             $CV2->setBiologicalQualifierType($LibSBML::BQB_IS_HOMOLOG_TO); #BQB_IS_RELATED_TO looks better but deprecated now!
-#TODO  skip duplicated ids: biggM:a, bigg.metabolite:a, biggM:M_a
-            for my $xref ( splice(@chem_xrefs, 1) ){
+            #NOTE SBML looks to keep only uniq annotations, so remove identical URIs
+            for my $xref ( grep { !/:M_/ } splice(@chem_xrefs, 1) ){
                 my $annotation = Formaters::guess_annotation_link('chem', $xref);
                 if ( $annotation ){
                     $CV2->addResource($annotation);
