@@ -545,7 +545,7 @@ sub create_SBML_reaction {
     #ID           equation                               source    mnxr_ID    classifs    pathways    xrefs
     #mnxr02c2b    1 MNXM1@MNXC2 <==> 1 MNXM1@BOUNDARY    EX_h_e    MNXR02                             mnx:MNXR02;MNXR02;bigg.reaction:EX_h_e;...
     my $reac_equation = $MetNet->get_reac_equation($reac_id);
-    my $reac_source   = eval {$MetNet->get_reac_source($reac_id)} || ''; #NOTE for our own reactions, no source in the model
+    my $reac_source   = eval {$MetNet->get_reac_source($mnet_id, $reac_id)} || ''; #NOTE for our own reactions, no source in the model
     my $reac_mnxr     = $MetNet->get_reac_mnxr($reac_id);
     my ($reac_classifs, $reac_pathways, $reac_xrefs) = $MetNet->get_reac_info($reac_id);
     # Parse equation
@@ -555,8 +555,27 @@ sub create_SBML_reaction {
     create_reac_elems($reac_right, 'product', $SBML_model, $MetNet, $mnet_id, $use_notes, $reac);
     # Add reaction other attributes
     $reac->setFast(0); # False
+#TODO $MetNet->get_reac_bounds($reac_id);
+#    if ( eval {$MetNet->get_reac_bounds($reac_id)} || 0 ){
+#        warn "[$reac_id] ".$MetNet->get_reac_bounds($reac_id)."\n";
+#    }
 #TODO get reaction direction: get_reac_dir($reac_id);
 #TODO metaid="MAR03905" sboTerm="SBO:0000176" reversible="false" fbc:lowerFluxBound="FB2N0" fbc:upperFluxBound="FB3N1000"
+    my @reac_xrefs = split(';', $reac_xrefs);
+    #notes
+    if ( $use_notes ){
+        my $notes = '';
+        #TODO <html:p>GENE ASSOCIATION: (FUMA_ECOLI) or (FUMB_ECOLI) or (FUMC_ECOLI)</html:p><html:p>PROP BC-b: bidi</html:p><html:p>PROP BC-p: asso</html:p><html:p>PROP BC-t: enzy</html:p>
+        #FIXME why when mnxr in xrefs there is no REACTION, and vice versa???
+        $notes .= '<html:p>SOURCE: '.         $reac_source.   '</html:p>'  if ( $reac_source );
+        $notes .= '<html:p>REFERENCE: '.      $reac_xrefs[0]. '</html:p>'  if ( exists $reac_xrefs[0] );
+        $notes .= '<html:p>REACTION: '.       $reac_mnxr.     '</html:p>'  if ( $reac_mnxr && $reac_mnxr ne 'NA' );
+        $notes .= '<html:p>CLASSIFICATION: '. $reac_classifs. '</html:p>'  if ( $reac_classifs );
+        $notes .= '<html:p>PATHWAYS: '.       $reac_pathways. '</html:p>'  if ( $reac_pathways );
+        $notes .= '<html:p>XREFS: '.          $reac_xrefs.    '</html:p>'  if ( $reac_xrefs );
+        $reac->setNotes($notes)  if ( $notes );
+    }
+    #annotations
 
     return;
 }
