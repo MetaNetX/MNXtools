@@ -576,6 +576,34 @@ sub create_SBML_reaction {
         $reac->setNotes($notes)  if ( $notes );
     }
     #annotations
+    if ( $reac_xrefs ){
+        if ( !$reac->isSetMetaId() ){
+            $reac->setMetaId( $reac->getId() );
+        }
+        my $CV = new LibSBML::CVTerm();
+        $CV->setQualifierType($LibSBML::BIOLOGICAL_QUALIFIER);
+        #is(_a) -> reference
+        $CV->setBiologicalQualifierType($LibSBML::BQB_IS);
+        my $annotation_ref = Formaters::guess_annotation_link('reac', $reac_xrefs[0]);
+        if ( $annotation_ref ){
+            $CV->addResource($annotation_ref);
+            $reac->addCVTerm($CV);
+        }
+        #isRelatedTo -> other xrefs
+        if ( exists $reac_xrefs[1] ){
+            my $CV2 = new LibSBML::CVTerm();
+            $CV2->setQualifierType($LibSBML::BIOLOGICAL_QUALIFIER);
+            $CV2->setBiologicalQualifierType($LibSBML::BQB_IS_HOMOLOG_TO); #BQB_IS_RELATED_TO looks better but deprecated now!
+            #NOTE SBML looks to keep only uniq annotations, so remove identical URIs
+            for my $xref ( grep { !/:R_/ } splice(@reac_xrefs, 1) ){
+                my $annotation = Formaters::guess_annotation_link('reac', $xref);
+                if ( $annotation ){
+                    $CV2->addResource($annotation);
+                }
+            }
+            $reac->addCVTerm($CV2);
+        }
+    }
 
     return;
 }
