@@ -173,6 +173,13 @@ sub guess_annotation_link {
             $prefix = 'reac';
         }
     }
+    if ( $prefix eq 'kegg' && $scope eq 'chem' ){
+        $prefix = $id =~ /^C/ ? 'keggC'
+                : $id =~ /^D/ ? 'keggD'
+                : $id =~ /^G/ ? 'keggG'
+                : $id =~ /^E/ ? 'keggE'
+                : 'keggC';
+    }
 
     my $right_prefix = $Formaters::prefixes->{'toSBML'}->{$scope}->{$prefix} || '';
 

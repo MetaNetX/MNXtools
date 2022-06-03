@@ -102,6 +102,7 @@ my %prefix_data =(
     hmdb => {
         scope => 'chem',
         value => 'https://identifiers.org/hmdb:',
+        ident => 'hmdb',
     },
     # KEGG (the orignial IRI are not very consistent!)
     keggC => {
@@ -315,8 +316,8 @@ sub new{
         if( exists $prefix_data{$prefix}{depr} ){
             foreach( @{$prefix_data{$prefix}{depr}} ){
                 push @{$self->{depr}{$prefix_data{$prefix}{scope}}{$_}}, $prefix;
-                $self->{'fromSBML'}{$prefix_data{$prefix}{'scope'}}{$_}    = $prefix;
-                $self->{'toSBML'}{$prefix_data{$prefix}{'scope'}}{$prefix} = $_;
+                $self->{'fromSBML'}{$prefix_data{$prefix}{'scope'}}{$_} = $prefix;
+                $self->{'toSBML'}{ $prefix_data{$prefix}{'scope'} }{$_} = $prefix_data{$prefix}{'ident'};
             }
         }
     }

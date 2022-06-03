@@ -560,7 +560,7 @@ sub create_SBML_reaction {
 #        warn "[$reac_id] ".$MetNet->get_reac_bounds($reac_id)."\n";
 #    }
 #TODO get reaction direction: get_reac_dir($reac_id);
-#TODO metaid="MAR03905" sboTerm="SBO:0000176" reversible="false" fbc:lowerFluxBound="FB2N0" fbc:upperFluxBound="FB3N1000"
+#TODO sboTerm="SBO:0000176" reversible="false" fbc:lowerFluxBound="FB2N0" fbc:upperFluxBound="FB3N1000"
     my @reac_xrefs = split(';', $reac_xrefs);
     #notes
     if ( $use_notes ){
