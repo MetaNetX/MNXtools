@@ -306,7 +306,7 @@ sub new{
     my $self = bless {}, $package;
     foreach my $prefix ( sort keys %prefix_data ){
         $self->{prefix}{$prefix} = $prefix_data{$prefix}{value};
-        if( exists $prefix_data{$prefix}{ident} ){
+        if( exists $prefix_data{$prefix}{ident} and $prefix_data{$prefix}{ident} ne $prefix ){
             my $IRI = 'https://identifiers.org/' . $prefix_data{$prefix}{ident} . ':';
             $self->{prefix2}{$prefix_data{$prefix}{ident}} = $IRI;
             $self->{same_as}{$prefix} = $prefix_data{$prefix}{ident};
