@@ -168,7 +168,7 @@ if ( $TSV_directory ){
     # <listOfReactions>
     my (%reac_chem, %reac_comp);#TODO
     for my $reac_id ( uniq nsort $MetNet->select_reac_ids() ){
-        Reactions::create_SBML_reaction($MetNet, $mnet_id, $SBML_model, $use_notes, $reac_id);
+        Reactions::create_SBML_reaction($MetNet, $mnet_id, $SBML_model, $use_notes, $reac_id, $all_bounds);
     }
 
 

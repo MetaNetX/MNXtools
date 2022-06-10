@@ -536,7 +536,7 @@ sub parse_reac_side {
 
 
 sub create_SBML_reaction {
-    my ($MetNet, $mnet_id, $SBML_model, $use_notes, $reac_id) = @_;
+    my ($MetNet, $mnet_id, $SBML_model, $use_notes, $reac_id, $all_bounds) = @_;
 
     my $reac_id_fixed = $reac_id;
     $reac_id_fixed =~ s{^UNK:}{};#FIXME should do it better, and more general
@@ -555,17 +555,19 @@ sub create_SBML_reaction {
     create_reac_elems($reac_right, 'product', $SBML_model, $MetNet, $mnet_id, $use_notes, $reac);
     # Add reaction other attributes
     $reac->setFast(0); # False
-#TODO $MetNet->get_reac_bounds($reac_id);
-#    if ( eval {$MetNet->get_reac_bounds($reac_id)} || 0 ){
-#        warn "[$reac_id] ".$MetNet->get_reac_bounds($reac_id)."\n";
-#    }
-#TODO get reaction direction: get_reac_dir($reac_id);
-#TODO sboTerm="SBO:0000176" reversible="false" fbc:lowerFluxBound="FB2N0" fbc:upperFluxBound="FB3N1000"
+    #NOTE in reac TSV a single reaction may have several bounds!!! So use this merging
+    my ($complex, $LB, $UB, $dir) = $MetNet->merge_enzy_info( $MetNet->get_enzy_info($mnet_id, $reac_id) );
+    my @LB_id = map { $_->[1] } grep { $_->[0] eq $LB } @$all_bounds;
+    my @UB_id = map { $_->[1] } grep { $_->[0] eq $UB } @$all_bounds;
+    warn "[$complex, $LB, @LB_id, $UB, @UB_id, $dir, $reac_id]\n";
+#FIXME max and min bounds look to have NA as value!!!
+#TODO  sboTerm="SBO:0000176" reversible="false" fbc:lowerFluxBound="FB2N0" fbc:upperFluxBound="FB3N1000"
     my @reac_xrefs = split(';', $reac_xrefs);
     #notes
     if ( $use_notes ){
         my $notes = '';
-        #TODO <html:p>GENE ASSOCIATION: (FUMA_ECOLI) or (FUMB_ECOLI) or (FUMC_ECOLI)</html:p><html:p>PROP BC-b: bidi</html:p><html:p>PROP BC-p: asso</html:p><html:p>PROP BC-t: enzy</html:p>
+        #NOTE Properties are not put in notes because too dependent of a model snapshot
+        #TODO <html:p>GENE ASSOCIATION: (FUMA_ECOLI) or (FUMB_ECOLI) or (FUMC_ECOLI)</html:p>  // may be SPONTANEOUS
         #FIXME why when mnxr in xrefs there is no REACTION, and vice versa???
         $notes .= '<html:p>SOURCE: '.         $reac_source.   '</html:p>'  if ( $reac_source );
         $notes .= '<html:p>REFERENCE: '.      $reac_xrefs[0]. '</html:p>'  if ( exists $reac_xrefs[0] );
