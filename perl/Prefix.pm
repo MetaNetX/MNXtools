@@ -92,6 +92,21 @@ my %prefix_data =(
         ident => 'bigg.reaction',
         depr  => [ 'bigg' ],
     },
+    ### VMH ###
+    vmhmetabolite => {
+        scope => 'chem',
+        value => 'https://identifiers.org/vmhmetabolite:',
+        ident => 'vmhmetabolite',
+    },
+    vmhreaction => {
+        scope => 'reac',
+        value => 'https://identifiers.org/vmhreaction:',
+        ident => 'vmhreaction'
+    },
+#    vmhcompartment => {
+#        scope => 'comp',
+#        value => 'http://bigg.ucsd.edu/compartments/',
+#    },
     ### ChEBI (NB: for MetaNetX, CHEBI[:_] is not part of the identifier )
     chebi => {
         scope => 'chem',
@@ -158,7 +173,7 @@ my %prefix_data =(
         value => 'https://envipath.org/package/',
         ident  => 'envipath',
     },
-    ### LPID MAPS ###
+    ### LIPIDMAPS ###
     lipidmapsM => {
         scope => 'chem',
         value => 'http://www.lipidmaps.org/data/LMSDRecord.php?LMID=',
@@ -207,7 +222,7 @@ my %prefix_data =(
         ident => 'sabiork.reaction',
         depr  => [ 'sabiork' ],
     },
-    ### Swiss Lipids
+    ### SwissLipids
     slm => {
         scope => 'chem',
         value => 'https://www.swisslipids.org/#/entity/SLM:',
