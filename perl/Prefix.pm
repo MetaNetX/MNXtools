@@ -325,6 +325,8 @@ sub new{
             my $IRI = 'https://identifiers.org/' . $prefix_data{$prefix}{ident} . ':';
             $self->{prefix2}{$prefix_data{$prefix}{ident}} = $IRI;
             $self->{same_as}{$prefix} = $prefix_data{$prefix}{ident};
+        }
+        if( exists $prefix_data{$prefix}{ident} ){
             $self->{'fromSBML'}{$prefix_data{$prefix}{'scope'}}{$prefix_data{$prefix}{'ident'}} = $prefix;
             $self->{'toSBML'}{$prefix_data{$prefix}{'scope'}}{$prefix}                          = $prefix_data{$prefix}{'ident'};
         }
