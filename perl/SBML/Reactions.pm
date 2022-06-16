@@ -559,16 +559,27 @@ sub create_SBML_reaction {
     my ($complex, $LB, $UB, $dir) = $MetNet->merge_enzy_info( $MetNet->get_enzy_info($mnet_id, $reac_id) );
     my @LB_id = map { $_->[1] } grep { $_->[0] eq $LB } @$all_bounds;
     my @UB_id = map { $_->[1] } grep { $_->[0] eq $UB } @$all_bounds;
-    warn "[$complex, $LB, @LB_id, $UB, @UB_id, $dir, $reac_id]\n";
-#FIXME max and min bounds look to have NA as value!!!
-#TODO  sboTerm="SBO:0000176" reversible="false" fbc:lowerFluxBound="FB2N0" fbc:upperFluxBound="FB3N1000"
+    #NOTE min and max bounds are coded as NA because MetNet can deal with multiple models at the same time
+    #     and those models may have different min/max. So LB NA always refers to the minimal bound in the set of
+    #     models. UB NA always refers to the maximal bound in the set of models.
+    if ( $LB eq 'NA' ){
+        $LB_id[0] = $Constants::MIN_BOUND_ID;
+    }
+    if ( $UB eq 'NA' ){
+        $UB_id[0] = $Constants::MAX_BOUND_ID;
+    }
+    my $reac_fbc = $reac->getPlugin('fbc');
+    $reac_fbc->setLowerFluxBound($LB_id[0])  if ( $LB_id[0] ne '' );
+    $reac_fbc->setUpperFluxBound($UB_id[0])  if ( $UB_id[0] ne '' );
+#TODO sboTerm="SBO:0000176" reversible="false"
     my @reac_xrefs = split(';', $reac_xrefs);
     #notes
     if ( $use_notes ){
         my $notes = '';
         #NOTE Properties are not put in notes because too dependent of a model snapshot
-        #TODO <html:p>GENE ASSOCIATION: (FUMA_ECOLI) or (FUMB_ECOLI) or (FUMC_ECOLI)</html:p>  // may be SPONTANEOUS
-        #FIXME why when mnxr in xrefs there is no REACTION, and vice versa???
+        #TODO  <html:p>GENE ASSOCIATION: (FUMA_ECOLI) or (FUMB_ECOLI) or (FUMC_ECOLI)</html:p>  // may be SPONTANEOUS
+        #TODO Add LB/UB in notes also for SBMLv2? Which names to use?
+        #FIXME  why when mnxr in xrefs there is no REACTION, and vice versa???
         $notes .= '<html:p>SOURCE: '.         $reac_source.   '</html:p>'  if ( $reac_source );
         $notes .= '<html:p>REFERENCE: '.      $reac_xrefs[0]. '</html:p>'  if ( exists $reac_xrefs[0] );
         $notes .= '<html:p>REACTION: '.       $reac_mnxr.     '</html:p>'  if ( $reac_mnxr && $reac_mnxr ne 'NA' );
