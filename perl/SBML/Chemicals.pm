@@ -275,9 +275,9 @@ sub create_SBML_chemical {
         my $notes = '';
         $notes .= '<html:p>COMPOUND_ID: '.$chem_id.                                    '</html:p>';
         $notes .= '<html:p>SOURCE: '.     $MetNet->get_chem_source($mnet_id, $chem_id).'</html:p>'  if ( $MetNet->get_chem_source($mnet_id, $chem_id) );
-        $notes .= '<html:p>FORMULA: '.    $chem_formula.                               '</html:p>'  if ( $chem_formula ne '' );
+#        $notes .= '<html:p>FORMULA: '.    $chem_formula.                               '</html:p>'  if ( $chem_formula ne '' ); #TODO exists in SBML3, so only for SBML2 if do not exist
         $notes .= '<html:p>MASS: '.       $chem_mass.                                  '</html:p>'  if ( $chem_mass    ne '' );
-        $notes .= '<html:p>CHARGE: '.     $chem_charge.                                '</html:p>'  if ( $chem_charge  ne '' );
+#        $notes .= '<html:p>CHARGE: '.     $chem_charge.                                '</html:p>'  if ( $chem_charge  ne '' ); #TODO exists in SBML3, so only for SBML2 if do not exist
         $notes .= '<html:p>XREFS: '.      $chem_xrefs.                                 '</html:p>'  if ( $chem_xrefs );
         $notes .= '<html:p>REFERENCE: '.  $chem_xrefs[0].                              '</html:p>'  if ( exists $chem_xrefs[0] );
         $chem->setNotes($notes)  if ( $notes );

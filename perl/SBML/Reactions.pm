@@ -571,15 +571,15 @@ sub create_SBML_reaction {
     my $reac_fbc = $reac->getPlugin('fbc');
     $reac_fbc->setLowerFluxBound($LB_id[0])  if ( $LB_id[0] ne '' );
     $reac_fbc->setUpperFluxBound($UB_id[0])  if ( $UB_id[0] ne '' );
-#TODO sboTerm="SBO:0000176" reversible="false"
+#TODO  sboTerm="SBO:0000176" reversible="false"
     my @reac_xrefs = split(';', $reac_xrefs);
     #notes
     if ( $use_notes ){
         my $notes = '';
         #NOTE Properties are not put in notes because too dependent of a model snapshot
-        #TODO  <html:p>GENE ASSOCIATION: (FUMA_ECOLI) or (FUMB_ECOLI) or (FUMC_ECOLI)</html:p>  // may be SPONTANEOUS
-        #TODO Add LB/UB in notes also for SBMLv2? Which names to use?
-        #FIXME  why when mnxr in xrefs there is no REACTION, and vice versa???
+        #TODO <html:p>GENE ASSOCIATION: (FUMA_ECOLI) or (FUMB_ECOLI) or (FUMC_ECOLI)</html:p>  // may be SPONTANEOUS
+        #TODO Add LB/UB in notes also for SBMLv2? Which names to use? Does it exist in SBML2?
+        #FIXME why when mnxr in xrefs there is no REACTION, and vice versa???
         $notes .= '<html:p>SOURCE: '.         $reac_source.   '</html:p>'  if ( $reac_source );
         $notes .= '<html:p>REFERENCE: '.      $reac_xrefs[0]. '</html:p>'  if ( exists $reac_xrefs[0] );
         $notes .= '<html:p>REACTION: '.       $reac_mnxr.     '</html:p>'  if ( $reac_mnxr && $reac_mnxr ne 'NA' );
