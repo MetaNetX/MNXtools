@@ -28,9 +28,9 @@ my $tb = Toolbox->new();
 
 my $usage = "$0 [options] <indir> <outdir>
 
-<in-dir>  directory with a mnet in MetaNetX format 
-<out-dir> directory to write the mapped mnet the yaml mapping report  
-          Nota bene: the content of <out-dir> is erased!
+<indir>   directory with a mnet in MetaNetX TSV format 
+<outdir>  directory to write the mapped mnet and the yaml mapping 
+          report. Nota Bene: the content of <outdir> is erased!
 
 options:
 
@@ -41,8 +41,8 @@ options:
     -p <dir>      path to dir with id_map and peptide.tsv files
     -L            use late merge data
 
-    # The default is to map chem from their ID. This default can 
-    # be altered by one of the two options:
+    # The default is to map chem from their ID, which correspond to the 
+    # SBML identifiers. This default can be altered by one of the two options:
 
     -x <regexp>   ignores ID and use chem xref for mapping 
                   (use '.' as regexp to mean all xrefs)

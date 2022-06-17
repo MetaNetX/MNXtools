@@ -305,6 +305,9 @@ sub new{
     }
     return $self;
 }
+sub get_prefix_data{
+    return \%prefix_data;
+}
 
 sub get_turtle_prefixes{
     my $self = shift;

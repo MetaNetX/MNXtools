@@ -8,13 +8,6 @@ use Digest::CRC;
 use Carp;
 use Data::Dumper;
 
-# Classes than inherit from Prop and Analysis will be dynamically
-# loaded by use_module(). This is actually saving quite a lot of
-# use clauses here, and ensure some portability of this module.
-use Module::Runtime qw( use_module );
-use Prop;
-use Analysis;
-
 sub compute_reac_id{ # A class method
     my( $equation, $prefix) = @_;
     $prefix = 'reac' unless $prefix;
@@ -168,56 +161,7 @@ sub load{ # load a singe mnet from disk
         }
         close FILE;
     }
-
-    $filename = $path . '/properties.tsv';
-    if( 0 ){ # -r $filename ){ # FIXME: debug and implement later
-        my %prop_data = ();
-        my %prop_type = ();
-        my %prop_desc = ();
-        open(FILE, $filename )  or confess "Cannot read from file: $filename\n";
-        while( <FILE> ){
-            next  if /^\#/;
-            chop;
-            my( $scope, $name, $key, $value ) = split /\t/;
-            if( $scope eq 'prop' ){
-                if( $key eq 'type' ){
-                    confess "Invalid prop type: $value\n" unless $value  =~ /^(enum|num|str)$/;
-                    $prop_type{$name} = $value;
-                }
-                elsif( $key eq 'desc' ){
-                    $prop_desc{$name} = $value;
-                }
-            }
-            else{
-                my $num = $scope eq 'pept' ? $self->_get_pept_num( $key )
-                        : $scope eq 'spec' ? $self->_get_spec_num( $key )
-                        : $scope eq 'reac' ? $self->_get_reac_num( $key )
-                        : $scope eq 'chem' ? $self->_get_chem_num( $key )
-                        : $scope eq 'comp' ? $self->_get_comp_num( $key )
-                        : confess "Invalid scope: $scope\n";
-                $prop_data{$scope}{$name}{$num} = $value;
-            }
-        }
-        close FILE;
-        my @prop = ();
-        foreach my $scope ( keys %prop_data ){
-            foreach my $name ( keys %{$prop_data{$scope}} ){
-                if( $prop_type{$name} eq 'enum' ){
-                    use_module( 'EnumProp' );
-                    push @prop, EnumProp->new( $name, $desc, $scope, $prop_data{$scope}{$name} );
-                }
-                elsif( $prop_type{$name} eq 'num' ){
-                    use_module( 'NumProp' );
-                    push @prop, NumProp->new( $name, $desc, $scope, $prop_data{$scope}{$name} );
-                }
-                else{ # $type eq 'str'
-                    use_module( 'StrProp' );
-                    push @prop, StrProp->new( $name, $desc, $scope, $prop_data{$scope}{$name} );
-                }
-            }
-        }
-        $self->anal_store( $mnet_id, Analysis->new( 'load' )->set_props( \@prop ));
-    }
+    
     return $old_mnet_id; # even if the name has been changed => this permit to save the original name
 }
 sub mnet_store{ # Direct call is DEPRECATED and this method must become private
@@ -242,14 +186,11 @@ sub mnet_store{ # Direct call is DEPRECATED and this method must become private
         comp        => {},
         enzy        => {},
         pept        => {},
-        anal        => [],
         chem_source => {},
         comp_source => {},
         reac_source => {},
         LB          => 0,
         UB          => 0,
-        prop        => {},
-        new_prop    => 1,   # to keep track of changes in ???
     };
     $self->{mnet}{$mnet_num}{stamp} = time();
     return $mnet_num;
@@ -831,94 +772,6 @@ sub add_reac_add_enzy{
 }
 
 # -------------------------------------------------------- #
-# Property-related methods
-# -------------------------------------------------------- #
-sub find_prop{
-    my( $self, $mnet_id, $prop_id ) = @_;
-    foreach my $anal_id ( $self->get_anal_ids( $mnet_id )){
-        my $anal = $self->get_anal( $mnet_id, $anal_id );
-        use_module( ref $anal);
-        foreach my $prop ( $anal->get_props() ){
-            use_module( ref $prop);
-            return $prop if $prop->get_id() eq $prop_id;
-        }
-    }
-    confess "Cannot retrieve prop: $prop_id\n";
-}
-
-# -------------------------------------------------------- #
-# Analysis-related methods
-# -------------------------------------------------------- #
-sub anal_store{
-    my( $self, $mnet_id, $anal ) = @_;
-    my $mnet_num = $self->_get_mnet_num( $mnet_id );
-    push @{$self->{mnet}{$mnet_num}{anal}}, $anal;
-}
-sub get_anal_ids{
-    my( $self, $mnet_id ) = @_;
-    my $mnet_num = $self->_get_mnet_num( $mnet_id );
-    my @anal_id = ();
-    foreach my $anal ( @{$self->{mnet}{$mnet_num}{anal}} ){
-        use_module( ref $anal );
-        push @anal_id, $anal->get_id();
-    }
-    return @anal_id;
-}
-sub get_anal{ # return undef if $anal_id does not exist
-    my( $self, $mnet_id, $anal_id ) = @_;
-    my $mnet_num = $self->_get_mnet_num( $mnet_id );
-    foreach( @{$self->{mnet}{$mnet_num}{anal}} ){
-        return $_  if $_->get_id() eq $anal_id;
-    }
-    return undef;
-}
-sub prop_write{
-    my( $self, $path, $mnet_id ) = @_;
-    my $mnet_num = $self->_get_mnet_num( $mnet_id );
-    my $filename = "$path/properties.tsv";
-    open(PROPS,"| sort > $filename")  or confess "Cannot write to file: $filename\n";
-    my %seen;
-    foreach my $anal_id ( $self->get_anal_ids( $mnet_id )){
-        my $anal =  $self->get_anal( $mnet_id, $anal_id );
-        use_module( ref $anal );
-        foreach my $prop ( $anal->get_props() ){
-            unless( $seen{$anal_id} ){
-                $seen{$anal_id} = 1;
-            }
-            use_module( ref $prop );
-            my $prop_id = $prop->get_id();
-            unless( $seen{$prop_id} ){
-                print PROPS join("\t", 'prop', $prop_id, 'desc',  $prop->get_desc() ) . "\n";
-                print PROPS join("\t", 'prop', $prop_id, 'scope', $prop->get_type() ) . "\n";
-                print PROPS join("\t", 'prop', $prop_id, 'type', ( $prop->is_num() ? 'number' : 'enum' )) . "\n";
-                $seen{$prop_id} = 1;
-            }
-        }
-    }
-    close PROPS;
-    open(PROPS,"| sort >> $filename")  or confess "Cannot append to file: $filename\n";
-    foreach my $anal_id ( $self->get_anal_ids( $mnet_id )){
-        my $anal =  $self->get_anal( $mnet_id, $anal_id );
-        foreach my $prop ( $anal->get_props() ){
-            my $prop_id = $prop->get_id();
-            my %data = %{$prop->get_data_ref()};
-            my $type = $prop->get_type();
-            foreach( keys %data ){
-                print PROPS join( "\t", $type, $self->{$type}{$_}{id}, $prop_id, $data{$_} ) , "\n";
-            }
-        }
-    }
-    close PROPS;
-    $self->{mnet}{$mnet_num}{new_prop} = 0;
-}
-sub has_prop_changed{
-    return 1; # DEBUG
-    my($self,$mnet_id) = @_;
-    my $mnet_num = $self->_get_mnet_num( $mnet_id );
-    return $self->{mnet}{$mnet_num}{new_prop};
-}
-
-# -------------------------------------------------------- #
 # How to delete a single model
 # -------------------------------------------------------- #
 
@@ -1090,7 +943,7 @@ sub write{
     $filename = "$path/stoichiometries.tsv";
     open( STOI, "> $filename")  or confess "Cannot write to file: $filename\n";
     print STOI "#MetaNetX/TSV/stoichiometries.tsv 1.1\n";
-    print STOI "#reac_ID\tspec_ID\tcoef\tchem_ID\tcomp_ID\n";
+    print STOI "#ID\tdescription\txrefs\tgene_names\n";
     close STOI;
     open( STOI, "| sort - >> $filename")  or confess "Cannot append to file: $filename\n";
     my %seen = ();
@@ -1187,7 +1040,6 @@ sub write{
     close ENZY;
     close PEPT;
     close STOI;
-    $self->prop_write( $path, $mnet_id );
 }
 sub _parse_model_entry{ # Internal cooking !
     my( $self, $entry ) = @_;
