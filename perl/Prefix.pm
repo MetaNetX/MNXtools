@@ -58,6 +58,21 @@ my %prefix_data =(
         scope => 'other',
         value => 'https://rdf.metanetx.org/schema/',    # for predicates and special symbols like BIOMASS, PMF or SPONTANEOUS
     },
+    ### Structural formats ###
+#    SMILES => {
+#        scope => 'chem',
+#        value => ???,
+#    },
+    inchi => {
+        scope => 'chem',
+        value => 'https://identifiers.org/inchi:',
+        ident => 'inchi',
+    },
+    inchikey => {
+        scope => 'chem',
+        value => 'https://identifiers.org/inchikey:',
+        ident => 'inchikey',
+    },
     ### BiGG ###
     biggM => {
         scope => 'chem',
@@ -77,6 +92,21 @@ my %prefix_data =(
         ident => 'bigg.reaction',
         depr  => [ 'bigg' ],
     },
+    ### VMH ###
+    vmhmetabolite => {
+        scope => 'chem',
+        value => 'https://identifiers.org/vmhmetabolite:',
+        ident => 'vmhmetabolite',
+    },
+    vmhreaction => {
+        scope => 'reac',
+        value => 'https://identifiers.org/vmhreaction:',
+        ident => 'vmhreaction'
+    },
+#    vmhcompartment => {
+#        scope => 'comp',
+#        value => 'http://bigg.ucsd.edu/compartments/',
+#    },
     ### ChEBI (NB: for MetaNetX, CHEBI[:_] is not part of the identifier )
     chebi => {
         scope => 'chem',
@@ -87,6 +117,7 @@ my %prefix_data =(
     hmdb => {
         scope => 'chem',
         value => 'https://identifiers.org/hmdb:',
+        ident => 'hmdb',
     },
     # KEGG (the orignial IRI are not very consistent!)
     keggC => {
@@ -142,7 +173,7 @@ my %prefix_data =(
         value => 'https://envipath.org/package/',
         ident  => 'envipath',
     },
-    ### LPID MAPS ###
+    ### LIPIDMAPS ###
     lipidmapsM => {
         scope => 'chem',
         value => 'http://www.lipidmaps.org/data/LMSDRecord.php?LMID=',
@@ -191,7 +222,7 @@ my %prefix_data =(
         ident => 'sabiork.reaction',
         depr  => [ 'sabiork' ],
     },
-    ### Swiss Lipids
+    ### SwissLipids
     slm => {
         scope => 'chem',
         value => 'https://www.swisslipids.org/#/entity/SLM:',
@@ -290,16 +321,20 @@ sub new{
     my $self = bless {}, $package;
     foreach my $prefix ( sort keys %prefix_data ){
         $self->{prefix}{$prefix} = $prefix_data{$prefix}{value};
-        if( exists $prefix_data{$prefix}{ident} ){
+        if( exists $prefix_data{$prefix}{ident} and $prefix_data{$prefix}{ident} ne $prefix ){
             my $IRI = 'https://identifiers.org/' . $prefix_data{$prefix}{ident} . ':';
             $self->{prefix2}{$prefix_data{$prefix}{ident}} = $IRI;
             $self->{same_as}{$prefix} = $prefix_data{$prefix}{ident};
+        }
+        if( exists $prefix_data{$prefix}{ident} ){
             $self->{'fromSBML'}{$prefix_data{$prefix}{'scope'}}{$prefix_data{$prefix}{'ident'}} = $prefix;
+            $self->{'toSBML'}{$prefix_data{$prefix}{'scope'}}{$prefix}                          = $prefix_data{$prefix}{'ident'};
         }
         if( exists $prefix_data{$prefix}{depr} ){
             foreach( @{$prefix_data{$prefix}{depr}} ){
                 push @{$self->{depr}{$prefix_data{$prefix}{scope}}{$_}}, $prefix;
                 $self->{'fromSBML'}{$prefix_data{$prefix}{'scope'}}{$_} = $prefix;
+                $self->{'toSBML'}{ $prefix_data{$prefix}{'scope'} }{$_} = $prefix_data{$prefix}{'ident'};
             }
         }
     }

@@ -275,9 +275,9 @@ sub create_SBML_chemical {
         my $notes = '';
         $notes .= '<html:p>COMPOUND_ID: '.$chem_id.                                    '</html:p>';
         $notes .= '<html:p>SOURCE: '.     $MetNet->get_chem_source($mnet_id, $chem_id).'</html:p>'  if ( $MetNet->get_chem_source($mnet_id, $chem_id) );
-        $notes .= '<html:p>FORMULA: '.    $chem_formula.                               '</html:p>'  if ( $chem_formula ne '' );
+#        $notes .= '<html:p>FORMULA: '.    $chem_formula.                               '</html:p>'  if ( $chem_formula ne '' ); #TODO exists in SBML3, so only for SBML2 if do not exist
         $notes .= '<html:p>MASS: '.       $chem_mass.                                  '</html:p>'  if ( $chem_mass    ne '' );
-        $notes .= '<html:p>CHARGE: '.     $chem_charge.                                '</html:p>'  if ( $chem_charge  ne '' );
+#        $notes .= '<html:p>CHARGE: '.     $chem_charge.                                '</html:p>'  if ( $chem_charge  ne '' ); #TODO exists in SBML3, so only for SBML2 if do not exist
         $notes .= '<html:p>XREFS: '.      $chem_xrefs.                                 '</html:p>'  if ( $chem_xrefs );
         $notes .= '<html:p>REFERENCE: '.  $chem_xrefs[0].                              '</html:p>'  if ( exists $chem_xrefs[0] );
         $chem->setNotes($notes)  if ( $notes );
@@ -291,21 +291,26 @@ sub create_SBML_chemical {
         $CV->setQualifierType($LibSBML::BIOLOGICAL_QUALIFIER);
         #is(_a) -> reference
         $CV->setBiologicalQualifierType($LibSBML::BQB_IS);
-        $CV->addResource($chem_xrefs[0]);#$Constants::identifiers_biggc.$1);
-        $chem->addCVTerm($CV);
+        my $annotation_ref = Formaters::guess_annotation_link('chem', $chem_xrefs[0]);
+        if ( $annotation_ref ){
+            $CV->addResource($annotation_ref);
+            $chem->addCVTerm($CV);
+        }
         #isRelatedTo -> other xrefs
         if ( exists $chem_xrefs[1] ){
             my $CV2 = new LibSBML::CVTerm();
             $CV2->setQualifierType($LibSBML::BIOLOGICAL_QUALIFIER);
             $CV2->setBiologicalQualifierType($LibSBML::BQB_IS_HOMOLOG_TO); #BQB_IS_RELATED_TO looks better but deprecated now!
-#TODO skip duplicated ids: biggM:a, bigg.metabolite:a, biggM:M_a
-            for my $xref ( splice(@chem_xrefs, 1) ){
-                $CV2->addResource($xref);
+            #NOTE SBML looks to keep only uniq annotations, so remove identical URIs
+            for my $xref ( grep { !/:M_/ } splice(@chem_xrefs, 1) ){
+                my $annotation = Formaters::guess_annotation_link('chem', $xref);
+                if ( $annotation ){
+                    $CV2->addResource($annotation);
+                }
             }
             $chem->addCVTerm($CV2);
         }
     }
-#TODO use the prefix from the prefix file
 #TODO inchikey are missing as xref
 
     return;

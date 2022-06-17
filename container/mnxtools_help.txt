@@ -28,6 +28,6 @@ version              Print out version of this container, and of the MNXref name
 doc                  Give access to internal documentations (e.g. MetaNetX TSV format)
 all_tests            Run all tests in the $BINDING_PATH/all_tests/ sub-directory
 SBML_to_TSV.pl       From SBML to the MetaNetX TSV format
-convert_mnet.pl      Convert/Map to MNXref (from/to MetaNetX TSV format)
+map_mnet.pl          Convert/Map to MNXref (from/to MetaNetX TSV format)
 bash                 Run an interactive Bash shell in the container (for debugging purpose)
 

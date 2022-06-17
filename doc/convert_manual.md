@@ -1,6 +1,6 @@
 # Status codes (conversion to MNXref)
 
-The yaml report produced by `convert_mnet.pl` is organized around the identifiers of the source model. This permits its utilisation as a diagnostic tool, without considering further the mapped model.
+The yaml report produced by `map_mnet.pl` is organized around the identifiers of the source model. This permits its utilisation as a diagnostic tool, without considering further the mapped model.
 
 The main report sections are `chem:`/`comp:`/`reac:`. They provides the source `ID_src:` and the destination `ID_dst:` identifiers and a `status` list made of one or several codes which meaning is explained below. Some of these codes come with additional attributes.
 

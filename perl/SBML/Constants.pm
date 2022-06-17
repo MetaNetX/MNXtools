@@ -75,7 +75,7 @@ our $SBO_FLUXBALANCEFRMW = 624; # eq SBO:0000624, Flux balance framework, for mo
 our $SBO_FLUXDEFAULT     = 626;
 our $SBO_FLUX            = 625;
 ##Identifiers
-my $identifier = 'https://identifiers.org/';
+our $identifier = 'https://identifiers.org/';
 our $identifiers_taxid = $identifier.'taxonomy:';
 our $identifiers_mnxc  = $identifier.'metanetx.compartment:';
 our $identifiers_go    = $identifier.''; #expect e.g. GO:0006915

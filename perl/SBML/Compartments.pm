@@ -100,7 +100,6 @@ sub create_SBML_compartment {
         }
         $comp->setNotes($notes)  if ( $notes );
     }
-    #TODO use the prefix from the prefix file
     #TODO annotations: fix is/isRelatedTo and different identifiers.org... when we will have all mapped xrefs
     #FIXME add other possible xref sources (e.g., CCO, ...)
     if ( $comp_xrefs ){
@@ -110,16 +109,10 @@ sub create_SBML_compartment {
         my $CV = new LibSBML::CVTerm();
         $CV->setQualifierType($LibSBML::BIOLOGICAL_QUALIFIER);
         $CV->setBiologicalQualifierType($LibSBML::BQB_IS);
-        if ( $comp_xrefs =~ /^go:\d+$/i ){
-            $CV->addResource($Constants::identifiers_go.uc($comp_xrefs));
-            $comp->addCVTerm($CV);
-        }
-        elsif ( $comp_xrefs =~ /^bigg:(..?)$/i ){
-            $CV->addResource($Constants::identifiers_biggc.$1);
-            $comp->addCVTerm($CV);
-        }
-        elsif ( $comp_xrefs =~ /^mnx:(.+)$/i ){
-            $CV->addResource($Constants::identifiers_mnxc.$1);
+
+        my $annotation = Formaters::guess_annotation_link('comp', $comp_xrefs);
+        if ( $annotation ){
+            $CV->addResource($annotation);
             $comp->addCVTerm($CV);
         }
     }
