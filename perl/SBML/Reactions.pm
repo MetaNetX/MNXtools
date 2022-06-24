@@ -572,7 +572,22 @@ sub create_SBML_reaction {
     $reac_fbc->setLowerFluxBound($LB_id[0])  if ( $LB_id[0] ne '' );
     $reac_fbc->setUpperFluxBound($UB_id[0])  if ( $UB_id[0] ne '' );
     $reac->setReversible( $dir eq 'B' ? 1 : 0 ); #NOTE or with  cobra_reaction.lower_bound < 0  ???
-#TODO  sboTerm="SBO:0000176"
+    # sboTerm
+    if ( $reac_equation =~ / $Constants::biomass_chem_id\@/ && $reac_equation !~ / $Constants::biomass_chem_id\@$Constants::boundary_comp_id/ ){
+        $reac->setSBOTerm($Constants::biomass_reac_sbo);
+    }
+    elsif ( $reac_equation =~ /\@$Constants::boundary_comp_id/ ){
+        $reac->setSBOTerm($Constants::exchange_reac_sbo);
+    }
+#    elsif ( #TODO has more than one compartment ){
+#        $reac->setSBOTerm($Constants::transport_reac_sbo);
+#    }
+    elsif ( $complex eq $Constants::spontaneous_enz ){
+        $reac->setSBOTerm($Constants::spontaneous_reac_sbo);
+    }
+    else {
+        $reac->setSBOTerm($Constants::reac_sbo); #NOTE or SBO process as before???
+    }
     my @reac_xrefs = split(';', $reac_xrefs);
     #notes
     if ( $use_notes ){
@@ -622,7 +637,7 @@ sub create_SBML_reaction {
             $reac->addCVTerm($CV2);
         }
     }
-    #TODO  SBML3 GENE ASSOCIATION: (FUMA_ECOLI) or (FUMB_ECOLI) or (FUMC_ECOLI)</html:p>  // may be SPONTANEOUS
+    #TODO SBML3 GENE ASSOCIATION: (FUMA_ECOLI) or (FUMB_ECOLI) or (FUMC_ECOLI)</html:p>  // may be SPONTANEOUS
 
     return;
 }
