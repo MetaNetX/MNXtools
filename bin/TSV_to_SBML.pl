@@ -164,7 +164,7 @@ if ( $TSV_directory ){
 #TODO allow a model to be kegg-oriented for example:
 #     without conflicts the id will be kegg ids
 
-#FIXME from reac list, list chem and comp AND then warn if defined in reac but not in chem/comp TSVs!
+#FIXME from reac list, list chem and comp (and geneproducts) AND then warn if defined in reac but not in chem/comp TSVs!
     # <listOfReactions>
     my (%reac_chem, %reac_comp);#TODO
     for my $reac_id ( uniq nsort $MetNet->select_reac_ids() ){
