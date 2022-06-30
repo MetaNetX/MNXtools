@@ -30,7 +30,8 @@ my $usage = "$0 [options] <indir> <outdir>
 
 <indir>   directory with a mnet in MetaNetX TSV format 
 <outdir>  directory to write the mapped mnet and the yaml mapping 
-          report. Nota Bene: the content of <outdir> is erased!
+          report. 
+          Nota Bene: the content of <outdir> is completely nerased!
 
 options:
 
@@ -39,30 +40,45 @@ options:
     -V <dumpfile> read namespace cache file
                   (/usr/local/MNXtools/cache/ChemSpace.bindump by default)
     -p <dir>      path to dir with id_map and peptide.tsv files
-    -L            use late merge data
+    
+    # -L            use late merge data
 
-    # The default is to map chem from their ID, which correspond to the 
-    # SBML identifiers. This default can be altered by one of the two options:
+    -c <list>     a comma/slash separated list of prefixes that specify which 
+                  metabolite cross-references should be considered. 
+                  Comma separated list are evaluated alltogether thus possibly 
+                  generating conflicts.
+                  Slash separated list are evaluated successively, thus 
+                  possibly generating discrepency 
+                  
+                  In addition the following keywords are defined:
 
-    -x <regexp>   ignores ID and use chem xref for mapping 
-                  (use '.' as regexp to mean all xrefs)
-    -X <regexp>   considers ID and in addition use chem ref 
-                  (use '.' as regexp to mean all xrefs)
+                  ID    Utilize the chemichal identifer (e.g. the SBML identifer)
+                  XREFS Utilize all cross references (not recommened)
+
+                  For example:
+                  
+                  -c ID                (this is the default when -c is not set)
+                  -c ID,XREF           (use all information available, possibly generating many conflicts)
+                  -c chebi/kegg/ID     (it should speak for itself)         
+                  -c chebi,slm/ID      (ditto)
 
     -y <regexp>   use pept xref for mapping 
-                  ('.' means all, all by default)
-    -G            use generic compartment
+                  ('.' means all which is the defaultby default)
+    -G            produce reaction with MetaNetX generic compartments.
+                  Destroy the connectivity of compartimentalized models.
 ";
 
 my %opt;  # GLOBAL: to store the options
-Getopt::Std::getopts( 'hV:p:Lx:y:G', \%opt ); # FIXME: implement -D options
+Getopt::Std::getopts( 'hV:p:Gc:', \%opt );
 if( $opt{h} or @ARGV != 2 ){
     print "$usage\n";
     exit 1;
 }
-$opt{V} = '/usr/local/MNXtools/cache/ChemSpace.bindump' unless $opt{V};
 
+$opt{V} = '/usr/local/MNXtools/cache/ChemSpace.bindump' unless $opt{V};
 $tb->die( 'Option -V <*.bindump> is mandatory!' ) unless $opt{V};
+$opt{c} = 'ID' unless $opt{c};
+
 my( $unmapped_dir, $mapped_dir ) = @ARGV;
 foreach( $unmapped_dir, $mapped_dir ){
     $tb->die( "Dir does not exists: $_" )  unless -d $_;
@@ -103,7 +119,7 @@ my $metnet     = MetNet->new();
 $tb->report( 'load GSMN', $unmapped_dir );
 my $model_name = $metnet->load( $unmapped_dir );
 my $metnet2 = MetNet->new();
-$convertor->convert( $metnet, $model_name, $metnet2, $model_name, $option );
+$convertor->convert( $metnet, $model_name, $metnet2, $model_name, $opt{c}, $option );
 $tb->report( 'write GSMN', $mapped_dir );
 $metnet2->write( $mapped_dir, $model_name );
 my $yaml = $tb->open( "> $mapped_dir/convert_log.yaml" );

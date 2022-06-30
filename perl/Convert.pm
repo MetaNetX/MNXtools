@@ -12,15 +12,16 @@ use lib "$RealBin/../util";
 use Toolbox;
 my $tb = Toolbox->new();
 
+use Prefix;
 use MetNet;
 use LinkGroup;
 
 sub new{
-    my( $package, $chem_space, $gene_space, $prefix_space ) = @_;
+    my( $package, $chem_space, $gene_space ) = @_;
     my $self = {
         ns           => $chem_space,
         gene_space   => $gene_space,
-        prefix_space => $prefix_space,
+        prefix_space => Prefix->new(),
         log4yaml   => [],
         chem_log   => {}, # helper data structure to build the log
         comp_log   => {}, # ditto
@@ -39,17 +40,21 @@ sub set_comp_premap{
     $self->{option}{comp_premap} = $comp_premap;
 }
 sub _use_xref{
-    my( $self, $metnet, $source_name, $filter, $use_chem_id ) = @_;
+    my( $self, $metnet, $source_name, $xref_regexp, $use_chem_id ) = @_;
     my %chem_map = ();
     my %xref_unk = ();
-    my $regexp = $filter ? qr{$filter} : qr{.};
+    my %chem_seen = ();
+    $chem_seen{$self->{chem_dict}{$_}} = 1 foreach keys %{$self->{chem_dict}}; # already attributed
     foreach my $chem_old ( sort $metnet->select_chem_ids( mnet => $source_name )){
+        next if exists $self->{chem_dict}{$chem_old}; # already assigned 
         my $source_old = $metnet->get_chem_source( $source_name, $chem_old ) || $chem_old;
         my( $desc, $formula, $mass, $charge, $xref ) =  $metnet->get_chem_info( $chem_old );
         my @chem_unk = ();
         my @chem_id = $use_chem_id ? ( $chem_old ) : ();
-        foreach( split /;/, $xref ){
-            push @chem_id, $_ if /$regexp/; 
+        if( defined $xref_regexp ){
+            foreach( split /;/, $xref ){
+                push @chem_id, $_ if $_ =~ $xref_regexp; 
+            }
         }
         foreach my $chem_id ( @chem_id ){
             my ( $chem_new, $msg ) = $self->{ns}->map_chem( $chem_id );
@@ -81,13 +86,31 @@ sub _use_xref{
             $val{$_} = 1 foreach keys %{$cluster->{$chem_old}};
         }
         my @chem_new = keys %val;
-        if( @chem_new == 1 ){ # unambiguous one-to-one or many-to-one mapping
+        my $ok = 1;
+        foreach( @chem_new ){
+            $ok = 0 if exists $chem_seen{$_}
+        }
+        if( ! $ok ){
+            foreach my $chem_old ( @chem_old ){
+                $self->{chem_dict}{$chem_old} = 'UNK:' . $chem_old;
+                push @{$self->{chem_log}{$chem_old}{status}},'- code: CHEM_XREF_DISCREPANCY', "  mappings:";
+                foreach my $chem_new ( sort keys %{$chem_map{$chem_old}} ){
+                    my %prop = $self->{ns}->get_chem_prop( $chem_new );
+                    foreach my $xref ( sort @{$chem_map{$chem_old}{$chem_new}} ){
+                        push @{$self->{chem_log}{$chem_old}{status}}, "    $xref: $chem_new # " . $prop{name};
+                    }
+                }
+            }       
+        }
+        elsif( @chem_new == 1 ){ # unambiguous one-to-one or many-to-one mapping
              foreach my $chem_old ( @chem_old ){
                 $self->{chem_dict}{$chem_old} = $chem_new[0];
                 my %prop = $self->{ns}->get_chem_prop( $chem_new[0] );
-                push @{$self->{chem_log}{$chem_old}{status}},'- code: CHEM_XREF_OK', "  mappings:";
-                foreach my $xref ( sort @{$chem_map{$chem_old}{$chem_new[0]}} ){
-                    push @{$self->{chem_log}{$chem_old}{status}}, "    $xref: $chem_new[0] # " . $prop{name};
+                if( defined $xref_regexp ){ # else do not report
+                    push @{$self->{chem_log}{$chem_old}{status}},'- code: CHEM_XREF_OK', "  mappings:";
+                    foreach my $xref ( sort @{$chem_map{$chem_old}{$chem_new[0]}} ){
+                        push @{$self->{chem_log}{$chem_old}{status}}, "    $xref: $chem_new[0] # " . $prop{name};
+                    }
                 }
             }
         }
@@ -147,8 +170,41 @@ sub _premap_map_equation{
     chop $new_eq_str; # remove trailing ' '
     return $self->{ns}->map_equation( $new_eq_str );
 }
+sub _interpret_chem_map_rule{
+    my $chem_map_rule = shift;
+    $chem_map_rule =~ s/[^\w,\.\-\/]//; # security
+    return ( '', 1 ) unless $chem_map_rule; # ( no xref, use ID ) by default
+    my @rule = ();
+    foreach my $rule ( split /\//, $chem_map_rule ){
+        my @xref     = ();
+        my $use_xref = 0;
+        my $use_id   = 0; # false
+        foreach( split ',', $rule ){
+            if( /^ID$/ ){
+                 $use_id = 1;
+            }
+            elsif( /^XREF$/ ){
+                $use_xref = 1;
+            }
+            else{
+                push @xref, $_; 
+            }
+        }
+        if( $use_xref ){
+            push @rule, [ qr/./, $use_id ];
+        }
+        elsif( @xref ){
+            my $str = '^(' . join ( '|', @xref ) . ')';
+            push @rule, [ qr/$str/, $use_id ];
+        }
+        else{
+            push @rule, [ undef, $use_id ];
+        }
+    }
+    return @rule;
+}
 sub convert{
-    my( $self, $metnet, $source_name, $metnet2, $dest_name, $option ) = @_;
+    my( $self, $metnet, $source_name, $metnet2, $dest_name, $chem_map_rule, $option ) = @_;
     foreach( sort keys %$option ){
         $tb->die( "Invalid option key: $_" ) unless /^prefix|use_chem_ID|use_chem_xref|generic_comp$/;
     }
@@ -157,7 +213,8 @@ sub convert{
     $self->{chem_log}   = {};
     $self->{comp_log}   = {};
     $self->{reac_log}   = {};
-    $self->_use_xref( $metnet, $source_name, $option->{use_chem_xref}, $option->{use_chem_ID} ) if $option->{use_chem_xref};
+    my @chem_map_rule = _interpret_chem_map_rule( $chem_map_rule );
+    $self->_use_xref( $metnet, $source_name, @{$_} ) foreach @chem_map_rule;
     my %reac_info = (); # Reac-centric temporary data structure to prepare the new model
     foreach my $reac_id ( sort $metnet->select_reac_ids( mnet => $source_name ) ){
         my $eq_orig = $metnet->get_reac_equation( $reac_id );

@@ -1366,7 +1366,7 @@ sub get_chem_info{ # return the same list of five arguments as MetNet->get_chem_
     if( exists $self->{chem_prop}{$chem_id}{InChIKey} ){
         my $inchikey = $self->{chem_prop}{$chem_id}{InChIKey};
         $inchikey =~ s/^InChIKey=//;
-        push @xref, 'inchikey:' . $inchikey;
+        push @xref, 'inchikey:' . $inchikey if $inchikey;
     }
     return (
         $self->{chem_prop}{$chem_id}{name},

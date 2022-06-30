@@ -22,6 +22,12 @@ The following code are produced:
 * It may happen that this code is reported associated with a single associated cross-ref! In that case there exits another identifier in the model with multiple conflicting cross-refs, including the one reported here. 
 * _Suggested model improvement_: select which cross-ref is the best one, keep it and move the others elsewhere (in comments, for example) to avoid recreating this conflict later.
 
+** CHEM_XREF_DISCREPANCY **
+
+* This code is only produced when cross-refs are exploited in a successive assignment rule (i.e. after '/')
+* The considered cors-ref(s) mapped to identifier already assigned to in a previous assignment cycle.
+* _Suggested model improvement_: select which cross-ref is the best one (i.e. the one assigned in the previous cycle to avoid recreating this conflict later.
+
 **CHEM_XREF_AMBIGUOUS**
 
 * This code is only produced when cross-refs are exploited.
