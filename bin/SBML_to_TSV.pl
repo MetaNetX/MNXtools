@@ -121,6 +121,7 @@ if ( $SBML_input ){
         my $peptide = $Peptides::peptides->{$source};
         $MetNet->set_pept_info($source, $peptide->{'name'}, join(';', uniq sort @{ $peptide->{'xrefs'} }), $peptide->{'label'});
     }
+#TODO check prefixes e.g. should return chebi: and not CHEBI:
 #    print Dumper $Chemicals::chemicals;
     for my $source ( keys %$Chemicals::chemicals ){
         unless ( exists $MetNet->{'look'}{'chem'}{$source} ){

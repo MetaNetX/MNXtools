@@ -572,21 +572,40 @@ sub create_SBML_reaction {
     $reac_fbc->setLowerFluxBound($LB_id[0])  if ( $LB_id[0] ne '' );
     $reac_fbc->setUpperFluxBound($UB_id[0])  if ( $UB_id[0] ne '' );
     $reac->setReversible( $dir eq 'B' ? 1 : 0 ); #NOTE or with  cobra_reaction.lower_bound < 0  ???
-#TODO sboTerm="SBO:0000176"
+    # sboTerm
+    if ( $reac_equation =~ / $Constants::biomass_chem_id\@/ && $reac_equation !~ / $Constants::biomass_chem_id\@$Constants::boundary_comp_id/ ){
+        $reac->setSBOTerm($Constants::biomass_reac_sbo);
+    }
+    elsif ( $reac_equation =~ /\@$Constants::boundary_comp_id/ ){
+        $reac->setSBOTerm($Constants::exchange_reac_sbo);
+    }
+#    elsif ( #TODO has more than one compartment ){
+#        $reac->setSBOTerm($Constants::transport_reac_sbo);
+#    }
+    elsif ( $complex eq $Constants::spontaneous_enz ){
+        $reac->setSBOTerm($Constants::spontaneous_reac_sbo);
+    }
+    else {
+        $reac->setSBOTerm($Constants::reac_sbo); #NOTE or SBO process as before???
+    }
     my @reac_xrefs = split(';', $reac_xrefs);
     #notes
     if ( $use_notes ){
         my $notes = '';
+        #NOTE Transform b0462+b0463+b3035;b0463+b2470+b3035
+        my $complexes = '('.$complex.')';
+        $complexes =~ s{;}{) or (}g;
+        $complexes =~ s{\+}{ and }g;
         #NOTE Properties are not put in notes because too dependent of a model snapshot
-        #TODO  <html:p>GENE ASSOCIATION: (FUMA_ECOLI) or (FUMB_ECOLI) or (FUMC_ECOLI)</html:p>  // may be SPONTANEOUS
         #TODO Add LB/UB in notes also for SBMLv2? Which names to use? Does it exist in SBML2?
-        #FIXME  why when mnxr in xrefs there is no REACTION, and vice versa???
-        $notes .= '<html:p>SOURCE: '.         $reac_source.   '</html:p>'  if ( $reac_source );
-        $notes .= '<html:p>REFERENCE: '.      $reac_xrefs[0]. '</html:p>'  if ( exists $reac_xrefs[0] );
-        $notes .= '<html:p>REACTION: '.       $reac_mnxr.     '</html:p>'  if ( $reac_mnxr && $reac_mnxr ne 'NA' );
-        $notes .= '<html:p>CLASSIFICATION: '. $reac_classifs. '</html:p>'  if ( $reac_classifs );
-        $notes .= '<html:p>PATHWAYS: '.       $reac_pathways. '</html:p>'  if ( $reac_pathways );
-        $notes .= '<html:p>XREFS: '.          $reac_xrefs.    '</html:p>'  if ( $reac_xrefs );
+        #FIXME why when mnxr in xrefs there is no REACTION, and vice versa???
+        $notes .= '<html:p>SOURCE: '.           $reac_source.   '</html:p>'  if ( $reac_source );
+        $notes .= '<html:p>REFERENCE: '.        $reac_xrefs[0]. '</html:p>'  if ( exists $reac_xrefs[0] );
+        $notes .= '<html:p>REACTION: '.         $reac_mnxr.     '</html:p>'  if ( $reac_mnxr && $reac_mnxr ne 'NA' );
+        $notes .= '<html:p>CLASSIFICATION: '.   $reac_classifs. '</html:p>'  if ( $reac_classifs );
+        $notes .= '<html:p>PATHWAYS: '.         $reac_pathways. '</html:p>'  if ( $reac_pathways );
+        $notes .= '<html:p>GENE ASSOCIATION: '. $complexes.     '</html:p>'  if ( $complex );
+        $notes .= '<html:p>XREFS: '.            $reac_xrefs.    '</html:p>'  if ( $reac_xrefs );
         $reac->setNotes($notes)  if ( $notes );
     }
     #annotations
@@ -618,6 +637,7 @@ sub create_SBML_reaction {
             $reac->addCVTerm($CV2);
         }
     }
+    #TODO SBML3 GENE ASSOCIATION: (FUMA_ECOLI) or (FUMB_ECOLI) or (FUMC_ECOLI)</html:p>  // may be SPONTANEOUS
 
     return;
 }

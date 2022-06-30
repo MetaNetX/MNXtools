@@ -97,7 +97,13 @@ our $biomass_chem_sbo     = 'SBO:0000649'; #NOTE is most of the time used for AL
 our $reactant_sbo         = 'SBO:0000010';
 our $product_sbo          = 'SBO:0000011';
 our $modifier_sbo         = 'SBO:0000019'; # exists also neutral participant SBO:0000594
+
+our $reac_sbo             = 'SBO:0000176';
+our $spontaneous_reac_sbo = 'SBO:0000672';
+our $process_reac_sbo     = 'SBO:0000375';
+#our $atpmaintenance_reac_sbo = 'SBO:0000630'; # NOTE How to identify that kind of reaction?
 our $transport_reac_sbo   = 'SBO:0000185';
+our $exchange_reac_sbo    = 'SBO:0000627';
 
 our $biomass_chem_id      = 'BIOMASS';
 our $biomass_reac_id      = 'BIOMASS_EXT';
