@@ -1,0 +1,139 @@
+#MetaNetX/TSV/peptides.tsv 1.1
+#ID	description	xrefs	gene_names
+6PGD_ECOLI	6-phosphogluconate dehydrogenase, decarboxylating (EC 1.1.1.44)	uniprotkb:P00350	gnd;b2029;JW2011
+6PGL_ECOLI	6-phosphogluconolactonase (6-P-gluconolactonase) (Pgl) (EC 3.1.1.31)	uniprotkb:P52697	pgl;ybhE;b0767;JW0750
+ACDH_ECOLI	Acetaldehyde dehydrogenase (EC 1.2.1.10) (Acetaldehyde dehydrogenase [acetylating])	uniprotkb:P77580	mhpF;mhpE;b0351;JW0342
+ACEA_ECOLI	Isocitrate lyase (ICL) (EC 4.1.3.1) (Isocitrase) (Isocitratase)	uniprotkb:P0A9G6	aceA;icl;b4015;JW3975
+ACKA_ECOLI	Acetate kinase (EC 2.7.2.1) (Acetokinase)	uniprotkb:P0A6A3	ackA;ack;b2296;JW2293
+ACNA_ECOLI	Aconitate hydratase A (ACN) (Aconitase) (EC 4.2.1.3) (Iron-responsive protein-like) (IRP-like) (RNA-binding protein) (Stationary phase enzyme)	uniprotkb:P25516	acnA;acn;b1276;JW1268
+ACNB_ECOLI	Aconitate hydratase B (ACN) (Aconitase) (EC 4.2.1.3) ((2R,3S)-2-methylisocitrate dehydratase) ((2S,3R)-3-hydroxybutane-1,2,3-tricarboxylate dehydratase) (2-methyl-cis-aconitate hydratase) (EC 4.2.1.99) (Iron-responsive protein-like) (IRP-like) (RNA-binding protein)	uniprotkb:P36683	acnB;yacI;yacJ;b0118;JW0114
+ADHE_ECOLI	Aldehyde-alcohol dehydrogenase [Includes: Alcohol dehydrogenase (ADH) (EC 1.1.1.1); Acetaldehyde dehydrogenase [acetylating] (ACDH) (EC 1.2.1.10); Pyruvate-formate-lyase deactivase (PFL deactivase)]	uniprotkb:P0A9Q7	adhE;ana;b1241;JW1228
+ADHP_ECOLI	Alcohol dehydrogenase, propanol-preferring (EC 1.1.1.1)	uniprotkb:P39451	adhP;yddN;b1478;JW1474
+ALF1_ECOLI	Fructose-bisphosphate aldolase class 1 (EC 4.1.2.13) (Fructose-bisphosphate aldolase class I) (FBP aldolase)	uniprotkb:P0A991	fbaB;dhnA;b2097;JW5344
+ALF_ECOLI	Fructose-bisphosphate aldolase class 2 (FBP aldolase) (FBPA) (EC 4.1.2.13) (Fructose-1,6-bisphosphate aldolase) (Fructose-bisphosphate aldolase class II)	uniprotkb:P0AB71	fbaA;fba;fda;b2925;JW2892
+AMTB_ECOLI	Ammonium transporter AmtB (Ammonia channel AmtB) (Ammonium channel AmtB)	uniprotkb:P69681	amtB;ybaG;b0451;JW0441
+APPB_ECOLI	Cytochrome bd-II ubiquinol oxidase subunit 2 (EC 7.1.1.3) (Cytochrome bd-II oxidase subunit II)	uniprotkb:P26458	appB;cbdB;cyxB;b0979;JW0961
+APPC_ECOLI	Cytochrome bd-II ubiquinol oxidase subunit 1 (EC 7.1.1.3) (Cytochrome bd-II oxidase subunit I)	uniprotkb:P26459	appC;cbdA;cyxA;b0978;JW0960
+AQPZ_ECOLI	Aquaporin Z (Bacterial nodulin-like intrinsic protein)	uniprotkb:P60844	aqpZ;bniP;b0875;JW0859
+ATP6_ECOLI	ATP synthase subunit a (ATP synthase F0 sector subunit a) (F-ATPase subunit 6)	uniprotkb:P0AB98	atpB;papD;uncB;b3738;JW3716
+ATPA_ECOLI	ATP synthase subunit alpha (EC 7.1.2.2) (ATP synthase F1 sector subunit alpha) (F-ATPase subunit alpha)	uniprotkb:P0ABB0	atpA;papA;uncA;b3734;JW3712
+ATPB_ECOLI	ATP synthase subunit beta (EC 7.1.2.2) (ATP synthase F1 sector subunit beta) (F-ATPase subunit beta)	uniprotkb:P0ABB4	atpD;papB;uncD;b3732;JW3710
+ATPD_ECOLI	ATP synthase subunit delta (ATP synthase F(1) sector subunit delta) (F-type ATPase subunit delta) (F-ATPase subunit delta)	uniprotkb:P0ABA4	atpH;papE;uncH;b3735;JW3713
+ATPE_ECOLI	ATP synthase epsilon chain (ATP synthase F1 sector epsilon subunit) (F-ATPase epsilon subunit)	uniprotkb:P0A6E6	atpC;papG;uncC;b3731;JW3709
+ATPF_ECOLI	ATP synthase subunit b (ATP synthase F(0) sector subunit b) (ATPase subunit I) (F-type ATPase subunit b) (F-ATPase subunit b)	uniprotkb:P0ABA0	atpF;papF;uncF;b3736;JW3714
+ATPG_ECOLI	ATP synthase gamma chain (ATP synthase F1 sector gamma subunit) (F-ATPase gamma subunit)	uniprotkb:P0ABA6	atpG;papC;uncG;b3733;JW3711
+ATPL_ECOLI	ATP synthase subunit c (ATP synthase F(0) sector subunit c) (Dicyclohexylcarbodiimide-binding protein) (F-type ATPase subunit c) (F-ATPase subunit c) (Lipid-binding protein)	uniprotkb:P68699	atpE;papH;uncE;b3737;JW3715
+ATPZ_ECOLI	ATP synthase protein I	uniprotkb:P0ABC0	atpI;uncI;b3739;JW5611
+CAPP_ECOLI	Phosphoenolpyruvate carboxylase (PEPC) (PEPCase) (EC 4.1.1.31)	uniprotkb:P00864	ppc;glu;b3956;JW3928
+CISY_ECOLI	Citrate synthase (EC 2.3.3.16)	uniprotkb:P0ABH7	gltA;gluT;icdB;b0720;JW0710
+CYDA_ECOLI	Cytochrome bd-I ubiquinol oxidase subunit 1 (EC 7.1.1.7) (Cytochrome bd-I oxidase subunit I) (Cytochrome d ubiquinol oxidase subunit I)	uniprotkb:P0ABJ9	cydA;cyd-1;b0733;JW0722
+CYDB_ECOLI	Cytochrome bd-I ubiquinol oxidase subunit 2 (EC 7.1.1.7) (Cytochrome bd-I oxidase subunit II) (Cytochrome d ubiquinol oxidase subunit II)	uniprotkb:P0ABK2	cydB;cyd-2;b0734;JW0723
+DCTA_ECOLI	Aerobic C4-dicarboxylate transport protein	uniprotkb:P0A830	dctA;b3528;JW3496
+DHE4_ECOLI	NADP-specific glutamate dehydrogenase (NADP-GDH) (EC 1.4.1.4)	uniprotkb:P00370	gdhA;b1761;JW1750
+DHSC_ECOLI	Succinate dehydrogenase cytochrome b556 subunit (Cytochrome b-556)	uniprotkb:P69054	sdhC;cybA;b0721;JW0711
+DHSD_ECOLI	Succinate dehydrogenase hydrophobic membrane anchor subunit	uniprotkb:P0AC44	sdhD;b0722;JW0712
+DLDH_ECOLI	Dihydrolipoyl dehydrogenase (EC 1.8.1.4) (Dihydrolipoamide dehydrogenase) (E3 component of pyruvate and 2-oxoglutarate dehydrogenases complexes) (Glycine cleavage system L protein)	uniprotkb:P0A9P0	lpdA;lpd;b0116;JW0112
+DLD_ECOLI	Quinone-dependent D-lactate dehydrogenase (EC 1.1.5.12) ((R)-lactate:quinone 2-oxidoreductase) (D-lactate dehydrogenase) (D-LDH) (Respiratory D-lactate dehydrogenase)	uniprotkb:P06149	dld;b2133;JW2121
+ENO_ECOLI	Enolase (EC 4.2.1.11) (2-phospho-D-glycerate hydro-lyase) (2-phosphoglycerate dehydratase)	uniprotkb:P0A6P9	eno;b2779;JW2750
+EUTD_ECOLI	Phosphate acetyltransferase EutD (EC 2.3.1.8) (Ethanolamine utilization protein EutD)	uniprotkb:P77218	eutD;eutI;ypfA;b2458;JW2442
+F16PA_ECOLI	Fructose-1,6-bisphosphatase class 1 (FBPase class 1) (EC 3.1.3.11) (D-fructose-1,6-bisphosphate 1-phosphohydrolase class 1)	uniprotkb:P0A993	fbp;fdp;b4232;JW4191
+FOCA_ECOLI	Probable formate transporter 1 (Formate channel 1)	uniprotkb:P0AC23	focA;ycaE;b0904;JW0887
+FOCB_ECOLI	Probable formate transporter 2 (Formate channel 2)	uniprotkb:P77733	focB;b2492;JW2477
+FRDA_ECOLI	Fumarate reductase flavoprotein subunit (EC 1.3.5.4) (Quinol-fumarate reductase flavoprotein subunit) (QFR flavoprotein subunit)	uniprotkb:P00363	frdA;b4154;JW4115
+FRDB_ECOLI	Fumarate reductase iron-sulfur subunit (EC 1.3.5.4) (Quinol-fumarate reductase iron-sulfur subunit) (QFR iron-sulfur subunit)	uniprotkb:P0AC47	frdB;b4153;JW4114
+FRDC_ECOLI	Fumarate reductase subunit C (Fumarate reductase 15 kDa hydrophobic protein) (Quinol-fumarate reductase subunit C) (QFR subunit C)	uniprotkb:P0A8Q0	frdC;b4152;JW4113
+FRDD_ECOLI	Fumarate reductase subunit D (Fumarate reductase 13 kDa hydrophobic protein) (Quinol-fumarate reductase subunit D) (QFR subunit D)	uniprotkb:P0A8Q3	frdD;b4151;JW4112
+FRMA_ECOLI	S-(hydroxymethyl)glutathione dehydrogenase (EC 1.1.1.284) (Alcohol dehydrogenase class-3) (EC 1.1.1.1) (Alcohol dehydrogenase class-III) (Glutathione-dependent formaldehyde dehydrogenase) (FALDH) (FDH) (GSH-FDH) (EC 1.1.1.-)	uniprotkb:P25437	frmA;adhC;b0356;JW0347
+FUMA_ECOLI	Fumarate hydratase class I, aerobic (EC 4.2.1.2) (Fumarase A) (Oxaloacetate keto--enol-isomerase) (OAAKE isomerase) (Oxaloacetate tautomerase) (EC 5.3.2.2)	uniprotkb:P0AC33	fumA;b1612;JW1604
+FUMB_ECOLI	Fumarate hydratase class I, anaerobic (EC 4.2.1.2) (D-tartrate dehydratase) (EC 4.2.1.81) (Fumarase B)	uniprotkb:P14407	fumB;b4122;JW4083
+FUMC_ECOLI	Fumarate hydratase class II (Fumarase C) (EC 4.2.1.2) (Aerobic fumarase) (Iron-independent fumarase)	uniprotkb:P05042	fumC;b1611;JW1603
+G3P1_ECOLI	Glyceraldehyde-3-phosphate dehydrogenase A (GAPDH-A) (EC 1.2.1.12) (NAD-dependent glyceraldehyde-3-phosphate dehydrogenase)	uniprotkb:P0A9B2	gapA;b1779;JW1768
+G6PD_ECOLI	Glucose-6-phosphate 1-dehydrogenase (G6PD) (EC 1.1.1.49) [Cleaved into: Extracellular death factor (EDF)]	uniprotkb:P0AC53	zwf;b1852;JW1841
+G6PI_ECOLI	Glucose-6-phosphate isomerase (GPI) (EC 5.3.1.9) (Phosphoglucose isomerase) (PGI) (Phosphohexose isomerase) (PHI)	uniprotkb:P0A6T1	pgi;b4025;JW3985
+GLCA_ECOLI	Glycolate permease GlcA	uniprotkb:Q46839	glcA;yghK;b2975;JW2942
+GLN1B_ECOLI	Glutamine synthetase (GS) (EC 6.3.1.2) (Glutamate--ammonia ligase) (Glutamine synthetase I beta) (GSI beta)	uniprotkb:P0A9C5	glnA;b3870;JW3841
+GLNH_ECOLI	Glutamine-binding periplasmic protein (GlnBP)	uniprotkb:P0AEQ3	glnH;b0811;JW0796
+GLNP_ECOLI	Glutamine transport system permease protein GlnP	uniprotkb:P0AEQ6	glnP;b0810;JW0795
+GLNQ_ECOLI	Glutamine transport ATP-binding protein GlnQ	uniprotkb:P10346	glnQ;b0809;JW0794
+GLPX_ECOLI	Fructose-1,6-bisphosphatase 1 class 2 (FBPase 1 class 2) (EC 3.1.3.11) (D-fructose-1,6-bisphosphate 1-phosphohydrolase 1 class 2)	uniprotkb:P0A9C9	glpX;b3925;JW3896
+GLSA1_ECOLI	Glutaminase 1 (EC 3.5.1.2)	uniprotkb:P77454	glsA1;ybaS;b0485;JW0474
+GLSA2_ECOLI	Glutaminase 2 (EC 3.5.1.2)	uniprotkb:P0A6W0	glsA2;yneH;b1524;JW1517
+GLTB_ECOLI	Glutamate synthase [NADPH] large chain (EC 1.4.1.13) (Glutamate synthase subunit alpha) (GLTS alpha chain) (NADPH-GOGAT)	uniprotkb:P09831	gltB;aspB;b3212;JW3179
+GLTD_ECOLI	Glutamate synthase [NADPH] small chain (EC 1.4.1.13) (Glutamate synthase subunit beta) (GLTS beta chain) (NADPH-GOGAT)	uniprotkb:P09832	gltD;aspB;b3213;JW3180
+GLTP_ECOLI	Proton/glutamate-aspartate symporter (Glutamate-aspartate carrier protein) (Proton-glutamate-aspartate transport protein)	uniprotkb:P21345	gltP;b4077;JW4038
+GPMA_ECOLI	2,3-bisphosphoglycerate-dependent phosphoglycerate mutase (BPG-dependent PGAM) (PGAM) (Phosphoglyceromutase) (dPGM) (EC 5.4.2.11)	uniprotkb:P62707	gpmA;gpm;pgm;pgmA;b0755;JW0738
+GPMB_ECOLI	Probable phosphoglycerate mutase GpmB (EC 5.4.2.-) (PGAM) (Phosphoglyceromutase)	uniprotkb:P0A7A2	gpmB;ytjC;b4395;JW4358
+GPMI_ECOLI	2,3-bisphosphoglycerate-independent phosphoglycerate mutase (BPG-independent PGAM) (Phosphoglyceromutase) (iPGM) (EC 5.4.2.12)	uniprotkb:P37689	gpmI;pgmI;yibO;b3612;JW3587
+GRCA_ECOLI	Autonomous glycyl radical cofactor	uniprotkb:P68066	grcA;yfiD;b2579;JW2563
+GRE1_ECOLI	Probable dehydratase PflD (EC 4.2.1.-)	uniprotkb:P32674	pflD;yijL;b3951;JW3923
+IDH_ECOLI	Isocitrate dehydrogenase [NADP] (IDH) (EC 1.1.1.42) (IDP) (NADP(+)-specific ICDH) (Oxalosuccinate decarboxylase)	uniprotkb:P08200	icd;icdA;icdE;b1136;JW1122
+KAD_ECOLI	Adenylate kinase (AK) (EC 2.7.4.3) (ATP-AMP transphosphorylase) (ATP:AMP phosphotransferase) (Adenylate monophosphate kinase)	uniprotkb:P69441	adk;dnaW;plsA;b0474;JW0463
+KGTP_ECOLI	Alpha-ketoglutarate permease	uniprotkb:P0AEX3	kgtP;witA;b2587;JW2571
+KPYK1_ECOLI	Pyruvate kinase I (EC 2.7.1.40) (PK-1)	uniprotkb:P0AD61	pykF;b1676;JW1666
+KPYK2_ECOLI	Pyruvate kinase II (EC 2.7.1.40) (PK-2)	uniprotkb:P21599	pykA;b1854;JW1843
+LDHD_ECOLI	D-lactate dehydrogenase (D-LDH) (EC 1.1.1.28) (Fermentative lactate dehydrogenase)	uniprotkb:P52643	ldhA;hslI;htpH;b1380;JW1375
+LLDP_ECOLI	L-lactate permease	uniprotkb:P33231	lldP;lctP;b3603;JW3578
+MAO1_ECOLI	NAD-dependent malic enzyme (NAD-ME) (EC 1.1.1.38)	uniprotkb:P26616	maeA;sfcA;b1479;JW5238
+MAO2_ECOLI	NADP-dependent malic enzyme (NADP-ME) (EC 1.1.1.40)	uniprotkb:P76558	maeB;ypfF;b2463;JW2447
+MASY_ECOLI	Malate synthase A (MSA) (EC 2.3.3.9)	uniprotkb:P08997	aceB;mas;b4014;JW3974
+MASZ_ECOLI	Malate synthase G (MSG) (EC 2.3.3.9)	uniprotkb:P37330	glcB;glc;b2976;JW2943
+MDH_ECOLI	Malate dehydrogenase (EC 1.1.1.37)	uniprotkb:P61889	mdh;b3236;JW3205
+NUOA_ECOLI	NADH-quinone oxidoreductase subunit A (EC 7.1.1.-) (NADH dehydrogenase I subunit A) (NDH-1 subunit A) (NUO1)	uniprotkb:P0AFC3	nuoA;b2288;JW2283
+NUOB_ECOLI	NADH-quinone oxidoreductase subunit B (EC 7.1.1.-) (NADH dehydrogenase I subunit B) (NDH-1 subunit B) (NUO2)	uniprotkb:P0AFC7	nuoB;b2287;JW5875
+NUOCD_ECOLI	NADH-quinone oxidoreductase subunit C/D (EC 7.1.1.-) (NADH dehydrogenase I subunit C/D) (NDH-1 subunit C/D) (NUO3/NUO4)	uniprotkb:P33599	nuoC;nuoCD;nuoD;b2286;JW5375
+NUOE_ECOLI	NADH-quinone oxidoreductase subunit E (EC 7.1.1.-) (NADH dehydrogenase I subunit E) (NDH-1 subunit E) (NUO5)	uniprotkb:P0AFD1	nuoE;b2285;JW2280
+NUOF_ECOLI	NADH-quinone oxidoreductase subunit F (EC 7.1.1.-) (NADH dehydrogenase I subunit F) (NDH-1 subunit F) (NUO6)	uniprotkb:P31979	nuoF;b2284;JW2279
+NUOG_ECOLI	NADH-quinone oxidoreductase subunit G (EC 7.1.1.-) (NADH dehydrogenase I subunit G) (NDH-1 subunit G) (NUO7)	uniprotkb:P33602	nuoG;b2283;JW2278
+NUOH_ECOLI	NADH-quinone oxidoreductase subunit H (EC 7.1.1.-) (NADH dehydrogenase I subunit H) (NDH-1 subunit H) (NUO8)	uniprotkb:P0AFD4	nuoH;b2282;JW2277
+NUOI_ECOLI	NADH-quinone oxidoreductase subunit I (EC 7.1.1.-) (NADH dehydrogenase I subunit I) (NDH-1 subunit I) (NUO9)	uniprotkb:P0AFD6	nuoI;b2281;JW2276
+NUOJ_ECOLI	NADH-quinone oxidoreductase subunit J (EC 7.1.1.-) (NADH dehydrogenase I subunit J) (NDH-1 subunit J) (NUO10)	uniprotkb:P0AFE0	nuoJ;b2280;JW2275
+NUOK_ECOLI	NADH-quinone oxidoreductase subunit K (EC 7.1.1.-) (NADH dehydrogenase I subunit K) (NDH-1 subunit K) (NUO11)	uniprotkb:P0AFE4	nuoK;b2279;JW2274
+NUOL_ECOLI	NADH-quinone oxidoreductase subunit L (EC 7.1.1.-) (NADH dehydrogenase I subunit L) (NDH-1 subunit L) (NUO12)	uniprotkb:P33607	nuoL;b2278;JW2273
+NUOM_ECOLI	NADH-quinone oxidoreductase subunit M (EC 7.1.1.-) (NADH dehydrogenase I subunit M) (NDH-1 subunit M) (NUO13)	uniprotkb:P0AFE8	nuoM;b2277;JW2272
+NUON_ECOLI	NADH-quinone oxidoreductase subunit N (EC 7.1.1.-) (NADH dehydrogenase I subunit N) (NDH-1 subunit N) (NUO14)	uniprotkb:P0AFF0	nuoN;b2276;JW2271
+ODO1_ECOLI	2-oxoglutarate dehydrogenase E1 component (EC 1.2.4.2) (Alpha-ketoglutarate dehydrogenase)	uniprotkb:P0AFG3	sucA;b0726;JW0715
+ODO2_ECOLI	Dihydrolipoyllysine-residue succinyltransferase component of 2-oxoglutarate dehydrogenase complex (EC 2.3.1.61) (2-oxoglutarate dehydrogenase complex component E2) (OGDC-E2) (Dihydrolipoamide succinyltransferase component of 2-oxoglutarate dehydrogenase complex)	uniprotkb:P0AFG6	sucB;b0727;JW0716
+ODP1_ECOLI	Pyruvate dehydrogenase E1 component (PDH E1 component) (EC 1.2.4.1)	uniprotkb:P0AFG8	aceE;b0114;JW0110
+ODP2_ECOLI	Dihydrolipoyllysine-residue acetyltransferase component of pyruvate dehydrogenase complex (EC 2.3.1.12) (Dihydrolipoamide acetyltransferase component of pyruvate dehydrogenase complex) (E2)	uniprotkb:P06959	aceF;b0115;JW0111
+PABB_ECOLI	Aminodeoxychorismate synthase component 1 (ADC synthase) (ADCS) (EC 2.6.1.85) (4-amino-4-deoxychorismate synthase component 1)	uniprotkb:P05041	pabB;b1812;JW1801
+PCKA_ECOLI	Phosphoenolpyruvate carboxykinase (ATP) (PCK) (PEP carboxykinase) (PEPCK) (EC 4.1.1.49)	uniprotkb:P22259	pckA;pck;b3403;JW3366
+PFKA_ECOLI	ATP-dependent 6-phosphofructokinase isozyme 1 (ATP-PFK 1) (Phosphofructokinase 1) (EC 2.7.1.11) (6-phosphofructokinase isozyme I) (Phosphohexokinase 1)	uniprotkb:P0A796	pfkA;b3916;JW3887
+PFKB_ECOLI	ATP-dependent 6-phosphofructokinase isozyme 2 (ATP-PFK 2) (Phosphofructokinase 2) (EC 2.7.1.11) (6-phosphofructokinase isozyme II) (Phosphohexokinase 2)	uniprotkb:P06999	pfkB;b1723;JW5280
+PFLA_ECOLI	Pyruvate formate-lyase 1-activating enzyme (EC 1.97.1.4) (Formate-C-acetyltransferase-activating enzyme 1) (PFL-activating enzyme 1)	uniprotkb:P0A9N4	pflA;act;b0902;JW0885
+PFLB_ECOLI	Formate acetyltransferase 1 (EC 2.3.1.54) (Pyruvate formate-lyase 1)	uniprotkb:P09373	pflB;pfl;b0903;JW0886
+PFLC_ECOLI	Pyruvate formate-lyase 2-activating enzyme (EC 1.97.1.4) (Formate-C-acetyltransferase-activating enzyme 2) (PFL-activating enzyme 2)	uniprotkb:P32675	pflC;yijM;b3952;JW3924
+PGK_ECOLI	Phosphoglycerate kinase (EC 2.7.2.3)	uniprotkb:P0A799	pgk;b2926;JW2893
+PITA_ECOLI	Low-affinity inorganic phosphate transporter 1	uniprotkb:P0AFJ7	pitA;pit;b3493;JW3460
+PITB_ECOLI	Probable low-affinity inorganic phosphate transporter 2	uniprotkb:P43676	pitB;b2987;JW2955
+PNTA_ECOLI	NAD(P) transhydrogenase subunit alpha (EC 7.1.1.1) (Nicotinamide nucleotide transhydrogenase subunit alpha) (Pyridine nucleotide transhydrogenase subunit alpha)	uniprotkb:P07001	pntA;b1603;JW1595
+PNTB_ECOLI	NAD(P) transhydrogenase subunit beta (EC 7.1.1.1) (Nicotinamide nucleotide transhydrogenase subunit beta) (Pyridine nucleotide transhydrogenase subunit beta)	uniprotkb:P0AB67	pntB;b1602;JW1594
+PPSA_ECOLI	Phosphoenolpyruvate synthase (PEP synthase) (EC 2.7.9.2) (Pyruvate, water dikinase)	uniprotkb:P23538	ppsA;pps;b1702;JW1692
+PT1_ECOLI	Phosphoenolpyruvate-protein phosphotransferase (EC 2.7.3.9) (Phosphotransferase system, enzyme I)	uniprotkb:P08839	ptsI;b2416;JW2409
+PTA_ECOLI	Phosphate acetyltransferase (EC 2.3.1.8) (Phosphotransacetylase)	uniprotkb:P0A9M8	pta;b2297;JW2294
+PTGA_ECOLI	PTS system glucose-specific EIIA component (EIIA-Glc) (EIII-Glc) (Glucose-specific phosphotransferase enzyme IIA component)	uniprotkb:P69783	crr;gsr;iex;tgs;treD;b2417;JW2410
+PTGCB_ECOLI	PTS system glucose-specific EIICB component (EIICB-Glc) (EII-Glc) [Includes: Glucose permease IIC component (PTS system glucose-specific EIIC component); Glucose-specific phosphotransferase enzyme IIB component (EC 2.7.1.199) (PTS system glucose-specific EIIB component)]	uniprotkb:P69786	ptsG;glcA;umg;b1101;JW1087
+PTHP_ECOLI	Phosphocarrier protein HPr (Histidine-containing protein)	uniprotkb:P0AA04	ptsH;hpr;b2415;JW2408
+PTNAB_ECOLI	PTS system mannose-specific EIIAB component (EC 2.7.1.191) (EIIAB-Man) (EIII-Man) [Includes: Mannose-specific phosphotransferase enzyme IIA component (PTS system mannose-specific EIIA component); Mannose-specific phosphotransferase enzyme IIB component (PTS system mannose-specific EIIB component)]	uniprotkb:P69797	manX;gptB;ptsL;b1817;JW1806
+PTNC_ECOLI	PTS system mannose-specific EIIC component (EII-P-Man) (EIIC-Man) (Mannose permease IIC component)	uniprotkb:P69801	manY;pel;ptsP;b1818;JW1807
+PTND_ECOLI	PTS system mannose-specific EIID component (EII-M-Man) (EIID-Man) (Mannose permease IID component)	uniprotkb:P69805	manZ;gptB;ptsM;b1819;JW1808
+PTOCB_ECOLI	PTS system maltose-specific EIICB component [Includes: Maltose permease IIC component (PTS system maltose-specific EIIC component); Maltose-specific phosphotransferase enzyme IIB component (EC 2.7.1.208) (PTS system maltose-specific EIIB component)]	uniprotkb:P19642	malX;b1621;JW1613
+PURT_ECOLI	Formate-dependent phosphoribosylglycinamide formyltransferase (5'-phosphoribosylglycinamide transformylase 2) (Formate-dependent GAR transformylase) (EC 2.1.2.-) (GAR transformylase 2) (GART 2) (Non-folate glycinamide ribonucleotide transformylase) (Phosphoribosylglycinamide formyltransferase 2)	uniprotkb:P33221	purT;b1849;JW1838
+PUUA_ECOLI	Gamma-glutamylputrescine synthetase PuuA (Gamma-Glu-Put synthetase) (EC 6.3.1.11) (Glutamate--putrescine ligase)	uniprotkb:P78061	puuA;ycjK;b1297;JW5201
+RPE_ECOLI	Ribulose-phosphate 3-epimerase (EC 5.1.3.1) (Pentose-5-phosphate 3-epimerase) (PPE) (R5P3E)	uniprotkb:P0AG07	rpe;dod;yhfD;b3386;JW3349
+RPIA_ECOLI	Ribose-5-phosphate isomerase A (EC 5.3.1.6) (Phosphoriboisomerase A) (PRI)	uniprotkb:P0A7Z0	rpiA;ygfC;b2914;JW5475
+RPIB_ECOLI	Ribose-5-phosphate isomerase B (EC 5.3.1.6) (Phosphoriboisomerase B)	uniprotkb:P37351	rpiB;yjcA;b4090;JW4051
+SDHA_ECOLI	Succinate dehydrogenase flavoprotein subunit (EC 1.3.5.1)	uniprotkb:P0AC41	sdhA;b0723;JW0713
+SDHB_ECOLI	Succinate dehydrogenase iron-sulfur subunit (EC 1.3.5.1)	uniprotkb:P07014	sdhB;b0724;JW0714
+SGCE_ECOLI	Protein SgcE (EC 5.1.3.-)	uniprotkb:P39362	sgcE;yjhK;b4301;JW4263
+STHA_ECOLI	Soluble pyridine nucleotide transhydrogenase (STH) (EC 1.6.1.1) (NAD(P)(+) transhydrogenase [B-specific])	uniprotkb:P27306	sthA;sth;udhA;b3962;JW5551
+SUCC_ECOLI	Succinate--CoA ligase [ADP-forming] subunit beta (EC 6.2.1.5) (Succinyl-CoA synthetase subunit beta) (SCS-beta)	uniprotkb:P0A836	sucC;b0728;JW0717
+SUCD_ECOLI	Succinate--CoA ligase [ADP-forming] subunit alpha (EC 6.2.1.5) (Succinyl-CoA synthetase subunit alpha) (SCS-alpha)	uniprotkb:P0AGE9	sucD;b0729;JW0718
+TALA_ECOLI	Transaldolase A (EC 2.2.1.2)	uniprotkb:P0A867	talA;b2464;JW2448
+TALB_ECOLI	Transaldolase B (EC 2.2.1.2)	uniprotkb:P0A870	talB;yaaK;b0008;JW0007
+TDCD_ECOLI	Propionate kinase (EC 2.7.2.15)	uniprotkb:P11868	tdcD;yhaA;b3115;JW5806
+TDCE_ECOLI	PFL-like enzyme TdcE (Keto-acid formate acetyltransferase) (Keto-acid formate-lyase) (Ketobutyrate formate-lyase) (KFL) (EC 2.3.1.-) (Pyruvate formate-lyase) (PFL) (EC 2.3.1.54)	uniprotkb:P42632	tdcE;yhaS;b3114;JW5522
+TKT1_ECOLI	Transketolase 1 (TK 1) (EC 2.2.1.1)	uniprotkb:P27302	tktA;tkt;b2935;JW5478
+TKT2_ECOLI	Transketolase 2 (TK 2) (EC 2.2.1.1)	uniprotkb:P33570	tktB;b2465;JW2449
+TPIS_ECOLI	Triosephosphate isomerase (TIM) (TPI) (EC 5.3.1.1) (Triose-phosphate isomerase)	uniprotkb:P0A858	tpiA;tpi;b3919;JW3890
+YDJI_ECOLI	Uncharacterized protein YdjI	uniprotkb:P77704	ydjI;b1773;JW1762
+s0001	s0001		s0001

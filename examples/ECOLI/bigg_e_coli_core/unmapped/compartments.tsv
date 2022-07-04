@@ -1,0 +1,5 @@
+#MetaNetX/TSV/compartments.tsv 1.1
+#ID	name	source	xrefs
+BOUNDARY	model boundary	BOUNDARY	
+c	cytosol	c	
+e	extracellular space	e	

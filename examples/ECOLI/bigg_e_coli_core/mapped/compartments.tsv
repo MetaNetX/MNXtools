@@ -1,0 +1,5 @@
+#MetaNetX/TSV/compartments.tsv 1.1
+#ID	name	source	xrefs
+BOUNDARY	model boundary	BOUNDARY	mnx:BOUNDARY
+MNXC2	extracellular region	e	go:0005576
+MNXC3	cytoplasm	c	go:0005737

@@ -1,0 +1,9 @@
+#MetaNetX/TSV/model.tsv 1.1
+#property	value
+ID	bigg_e_coli_core
+Description	
+LB	-1000
+UB	1000
+Source ID	e_coli_core
+Processed Date	2022/02/09
+Taxid	

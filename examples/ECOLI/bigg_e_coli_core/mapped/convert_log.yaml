@@ -1,0 +1,882 @@
+---
+
+
+chem:
+
+
+  - ID_src: BIOMASS # Biomass
+    ID_dst: BIOMASS # BIOMASS
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_13dpg # 3-Phospho-D-glyceroyl phosphate
+    ID_dst: MNXM1108073 # (2R)-3-phospho-glyceroyl phosphate
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_2pg # D-Glycerate 2-phosphate
+    ID_dst: MNXM275 # (2R)-2-phosphoglycerate
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_3pg # 3-Phospho-D-glycerate
+    ID_dst: MNXM727604 # (2R)-3-phosphoglycerate
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_6pgc # 6-Phospho-D-gluconate
+    ID_dst: MNXM734080 # 6-phospho-D-gluconate
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_6pgl # 6-phospho-D-glucono-1,5-lactone
+    ID_dst: MNXM1104491 # 6-phospho-D-glucono-1,5-lactone
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_ac # Acetate
+    ID_dst: MNXM26 # acetate
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_acald # Acetaldehyde
+    ID_dst: MNXM75 # acetaldehyde
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_accoa # Acetyl-CoA
+    ID_dst: MNXM1104266 # acetyl-CoA
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_acon_C # Cis-Aconitate
+    ID_dst: MNXM1092518 # cis-aconitate
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_actp # Acetyl phosphate
+    ID_dst: MNXM280 # acetyl phosphate
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_adp # ADP C10H12N5O10P2
+    ID_dst: MNXM40333 # ADP
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_akg # 2-Oxoglutarate
+    ID_dst: MNXM20 # 2-oxoglutarate
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_amp # AMP C10H12N5O7P
+    ID_dst: MNXM728294 # AMP
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_atp # ATP C10H12N5O13P3
+    ID_dst: MNXM3 # ATP
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_cit # Citrate
+    ID_dst: MNXM1107753 # citrate
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_co2 # CO2 CO2
+    ID_dst: MNXM13 # CO2
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_coa # Coenzyme A
+    ID_dst: MNXM727276 # CoA
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_dhap # Dihydroxyacetone phosphate
+    ID_dst: MNXM77 # dihydroxyacetone phosphate
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_e4p # D-Erythrose 4-phosphate
+    ID_dst: MNXM258 # D-erythrose 4-phosphate
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_etoh # Ethanol
+    ID_dst: MNXM1108092 # ethanol
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_f6p # D-Fructose 6-phosphate
+    ID_dst: MNXM1107898 # beta-D-fructose 6-phosphate
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_fdp # D-Fructose 1,6-bisphosphate
+    ID_dst: MNXM1106095 # beta-D-fructose 1,6-bisphosphate
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_for # Formate
+    ID_dst: MNXM39 # formate
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_fru # D-Fructose
+    ID_dst: MNXM1105810 # beta-D-fructose
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_fum # Fumarate
+    ID_dst: MNXM737340 # fumarate
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_g3p # Glyceraldehyde 3-phosphate
+    ID_dst: MNXM739945 # glyceraldehyde 3-phosphate
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_g6p # D-Glucose 6-phosphate
+    ID_dst: MNXM1105858 # D-glucose 6-phosphate
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_glc__D # D-Glucose
+    ID_dst: MNXM1137670 # D-glucose
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_gln__L # L-Glutamine
+    ID_dst: MNXM37 # L-glutamine
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_glu__L # L-Glutamate
+    ID_dst: MNXM741173 # L-glutamate
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_glx # Glyoxylate
+    ID_dst: MNXM69 # glyoxylate
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_h # H+
+    ID_dst: MNXM1 # H(+)
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_h2o # H2O H2O
+    ID_dst: WATER # H2O
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_icit # Isocitrate
+    ID_dst: MNXM89661 # isocitrate(3-)
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_lac__D # D-Lactate
+    ID_dst: MNXM731834 # (R)-lactate
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_mal__L # L-Malate
+    ID_dst: MNXM1107192 # (S)-malate
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_nad # Nicotinamide adenine dinucleotide
+    ID_dst: MNXM8 # NAD(+)
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_nadh # Nicotinamide adenine dinucleotide - reduced
+    ID_dst: MNXM10 # NADH
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_nadp # Nicotinamide adenine dinucleotide phosphate
+    ID_dst: MNXM5 # NADP(+)
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_nadph # Nicotinamide adenine dinucleotide phosphate - reduced
+    ID_dst: MNXM738702 # NADPH
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_nh4 # Ammonium
+    ID_dst: MNXM729302 # NH4(+)
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_o2 # O2 O2
+    ID_dst: MNXM735438 # O2
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_oaa # Oxaloacetate
+    ID_dst: MNXM46 # oxaloacetate
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_pep # Phosphoenolpyruvate
+    ID_dst: MNXM73 # phosphoenolpyruvate
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_pi # Phosphate
+    ID_dst: MNXM9 # phosphate
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_pyr # Pyruvate
+    ID_dst: MNXM23 # pyruvate
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_q8 # Ubiquinone-8
+    ID_dst: MNXM232 # ubiquinone-8
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_q8h2 # Ubiquinol-8
+    ID_dst: MNXM191 # ubiquinol-8
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_r5p # Alpha-D-Ribose 5-phosphate
+    ID_dst: MNXM1104056 # alpha-D-ribose 5-phosphate
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_ru5p__D # D-Ribulose 5-phosphate
+    ID_dst: MNXM145 # D-ribulose 5-phosphate
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_s7p # Sedoheptulose 7-phosphate
+    ID_dst: MNXM733314 # D-sedoheptulose 7-phosphate
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_succ # Succinate
+    ID_dst: MNXM25 # succinate
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_succoa # Succinyl-CoA
+    ID_dst: MNXM1104774 # succinyl-CoA
+    status:
+      - code: CHEM_MAP_OK
+
+  - ID_src: M_xu5p__D # D-Xylulose 5-phosphate
+    ID_dst: MNXM186 # D-xylulose 5-phosphate
+    status:
+      - code: CHEM_MAP_OK
+
+comp:
+
+  - ID_src: BOUNDARY # model boundary
+    ID_dst: BOUNDARY # model boundary
+    status:
+      - code: COMP_MAP_OK
+
+  - ID_src: c # cytosol
+    ID_dst: MNXC3 # cytoplasm
+    status:
+      - code: COMP_MAP_OK
+
+  - ID_src: e # extracellular space
+    ID_dst: MNXC2 # extracellular region
+    status:
+      - code: COMP_MAP_OK
+
+reac:
+
+  - ID_src: ACALD # 1 M_acald@c + 1 M_coa@c + 1 M_nad@c <?> 1 M_accoa@c + 1 M_h@c + 1 M_nadh@c
+    ID_dst: mnxr190509c3 # 1 MNXM10@MNXC3 + 1 MNXM1104266@MNXC3 + 1 MNXM1@MNXC3 <?> 1 MNXM727276@MNXC3 + 1 MNXM75@MNXC3 + 1 MNXM8@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR190509
+
+  - ID_src: ACALDt # 1 M_acald@e <?> 1 M_acald@c
+    ID_dst: mnxr95212c2c3 # 1 MNXM75@MNXC2 <?> 1 MNXM75@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR95212
+
+  - ID_src: ACKr # 1 M_ac@c + 1 M_atp@c <?> 1 M_actp@c + 1 M_adp@c
+    ID_dst: mnxr95269c3 # 1 MNXM26@MNXC3 + 1 MNXM3@MNXC3 <?> 1 MNXM280@MNXC3 + 1 MNXM40333@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR95269
+
+  - ID_src: ACONTa # 1 M_cit@c <?> 1 M_acon_C@c + 1 M_h2o@c
+    ID_dst: mnxr154367c3 # 1 MNXM1092518@MNXC3 + 1 WATER@MNXC3 <?> 1 MNXM1107753@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR154367
+
+  - ID_src: ACONTb # 1 M_acon_C@c + 1 M_h2o@c <?> 1 M_icit@c
+    ID_dst: mnxr191427c3 # 1 MNXM1092518@MNXC3 + 1 WATER@MNXC3 <?> 1 MNXM89661@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR191427
+
+  - ID_src: ACt2r # 1 M_ac@e + 1 M_h@e <?> 1 M_ac@c + 1 M_h@c
+    ID_dst: mnxr95429c2c3 # 1 MNXM01@MNXC2 + 1 MNXM26@MNXC2 <?> 1 MNXM01@MNXC3 + 1 MNXM26@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR95429
+
+  - ID_src: ADK1 # 1 M_amp@c + 1 M_atp@c <?> 2 M_adp@c
+    ID_dst: mnxr95450c3 # 1 MNXM3@MNXC3 + 1 MNXM728294@MNXC3 <?> 2 MNXM40333@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR95450
+
+  - ID_src: AKGDH # 1 M_akg@c + 1 M_coa@c + 1 M_nad@c <?> 1 M_co2@c + 1 M_nadh@c + 1 M_succoa@c
+    ID_dst: mnxr190634c3 # 1 MNXM10@MNXC3 + 1 MNXM1104774@MNXC3 + 1 MNXM13@MNXC3 <?> 1 MNXM20@MNXC3 + 1 MNXM727276@MNXC3 + 1 MNXM8@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR190634
+
+  - ID_src: AKGt2r # 1 M_akg@e + 1 M_h@e <?> 1 M_akg@c + 1 M_h@c
+    ID_dst: mnxr95661c2c3 # 1 MNXM01@MNXC2 + 1 MNXM20@MNXC2 <?> 1 MNXM01@MNXC3 + 1 MNXM20@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR95661
+
+  - ID_src: ALCD2x # 1 M_etoh@c + 1 M_nad@c <?> 1 M_acald@c + 1 M_h@c + 1 M_nadh@c
+    ID_dst: mnxr95725c3 # 1 MNXM10@MNXC3 + 1 MNXM1@MNXC3 + 1 MNXM75@MNXC3 <?> 1 MNXM1108092@MNXC3 + 1 MNXM8@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR95725
+
+  - ID_src: ATPM # 1 M_atp@c + 1 M_h2o@c <?> 1 M_adp@c + 1 M_h@c + 1 M_pi@c
+    ID_dst: mnxr153054c3 # 1 MNXM1@MNXC3 + 1 MNXM40333@MNXC3 + 1 MNXM9@MNXC3 <?> 1 MNXM3@MNXC3 + 1 WATER@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR153054
+
+  - ID_src: ATPS4r # 1 M_adp@c + 4 M_h@e + 1 M_pi@c <?> 1 M_atp@c + 1 M_h2o@c + 3 M_h@c
+    ID_dst: mnxr153059c2c3 # 4 MNXM01@MNXC2 + 1 MNXM1@MNXC3 + 1 MNXM40333@MNXC3 + 1 MNXM9@MNXC3 <?> 4 MNXM01@MNXC3 + 1 MNXM3@MNXC3 + 1 WATER@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR153059
+
+  - ID_src: BIOMASS_EXT # 1 BIOMASS@c <?> 1 BIOMASS@BOUNDARY
+    ID_dst: mnxr137261c3b # 1 BIOMASS@MNXC3 <?> 1 BIOMASS@BOUNDARY
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR137261
+
+  - ID_src: BIOMASS_Ecoli_core_w_GAM # 1.496 M_3pg@c + 3.7478 M_accoa@c + 59.81 M_atp@c + 0.361 M_e4p@c + 0.0709 M_f6p@c + 0.129 M_g3p@c + 0.205 M_g6p@c + 0.2557 M_gln__L@c + 4.9414 M_glu__L@c + 59.81 M_h2o@c + 3.547 M_nad@c + 13.0279 M_nadph@c + 1.7867 M_oaa@c + 0.5191 M_pep@c + 2.8328 M_pyr@c + 0.8977 M_r5p@c <?> 59.81 M_adp@c + 4.1182 M_akg@c + 3.7478 M_coa@c + 59.81 M_h@c + 3.547 M_nadh@c + 13.0279 M_nadp@c + 59.81 M_pi@c + 1 BIOMASS@c
+    ID_dst: reac24F5E296 # 0.8977 MNXM1104056@MNXC3 + 3.7478 MNXM1104266@MNXC3 + 0.205 MNXM1105858@MNXC3 + 0.0709 MNXM1107898@MNXC3 + 2.8328 MNXM23@MNXC3 + 0.361 MNXM258@MNXC3 + 0.2557 MNXM37@MNXC3 + 59.81 MNXM3@MNXC3 + 1.7867 MNXM46@MNXC3 + 1.496 MNXM727604@MNXC3 + 13.0279 MNXM738702@MNXC3 + 0.129 MNXM739945@MNXC3 + 0.5191 MNXM73@MNXC3 + 4.9414 MNXM741173@MNXC3 + 3.547 MNXM8@MNXC3 + 59.81 WATER@MNXC3 <?> 1 BIOMASS@MNXC3 + 3.547 MNXM10@MNXC3 + 4.1182 MNXM20@MNXC3 + 59.81 MNXM40333@MNXC3 + 13.0279 MNXM5@MNXC3 + 3.7478 MNXM727276@MNXC3 + 59.81 MNXM9@MNXC3
+    status:
+      - code: REAC_MAP_OK
+
+  - ID_src: CO2t # 1 M_co2@e <?> 1 M_co2@c
+    ID_dst: mnxr96810c2c3 # 1 MNXM13@MNXC2 <?> 1 MNXM13@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR96810
+
+  - ID_src: CS # 1 M_accoa@c + 1 M_h2o@c + 1 M_oaa@c <?> 1 M_cit@c + 1 M_coa@c + 1 M_h@c
+    ID_dst: mnxr190844c3 # 1 MNXM1104266@MNXC3 + 1 MNXM46@MNXC3 + 1 WATER@MNXC3 <?> 1 MNXM1107753@MNXC3 + 1 MNXM1@MNXC3 + 1 MNXM727276@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR190844
+
+  - ID_src: CYTBD # 2 M_h@c + 0.5 M_o2@c + 1 M_q8h2@c <?> 1 M_h2o@c + 2 M_h@e + 1 M_q8@c
+    ID_dst: mnxr97031c3c2 # 4 MNXM01@MNXC2 + 2 MNXM232@MNXC3 + 2 WATER@MNXC3 <?> 4 MNXM01@MNXC3 + 2 MNXM191@MNXC3 + 1 MNXM735438@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR97031
+
+  - ID_src: D_LACt2 # 1 M_h@e + 1 M_lac__D@e <?> 1 M_h@c + 1 M_lac__D@c
+    ID_dst: mnxr97838c2c3 # 1 MNXM01@MNXC2 + 1 MNXM731834@MNXC2 <?> 1 MNXM01@MNXC3 + 1 MNXM731834@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR97838
+
+  - ID_src: ENO # 1 M_2pg@c <?> 1 M_h2o@c + 1 M_pep@c
+    ID_dst: mnxr97932c3 # 1 MNXM275@MNXC3 <?> 1 MNXM73@MNXC3 + 1 WATER@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR97932
+
+  - ID_src: ETOHt2r # 1 M_etoh@e + 1 M_h@e <?> 1 M_etoh@c + 1 M_h@c
+    ID_dst: mnxr97981c2c3 # 1 MNXM01@MNXC2 + 1 MNXM1108092@MNXC2 <?> 1 MNXM01@MNXC3 + 1 MNXM1108092@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR97981
+
+  - ID_src: EX_ac_e # 1 M_ac@e <?> 1 M_ac@BOUNDARY
+    ID_dst: mnxr152867c2b # 1 MNXM26@MNXC2 <?> 1 MNXM26@BOUNDARY
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR152867
+
+  - ID_src: EX_acald_e # 1 M_acald@e <?> 1 M_acald@BOUNDARY
+    ID_dst: mnxr95212c2b # 1 MNXM75@MNXC2 <?> 1 MNXM75@BOUNDARY
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR95212
+
+  - ID_src: EX_akg_e # 1 M_akg@e <?> 1 M_akg@BOUNDARY
+    ID_dst: mnxr95663c2b # 1 MNXM20@MNXC2 <?> 1 MNXM20@BOUNDARY
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR95663
+
+  - ID_src: EX_co2_e # 1 M_co2@e <?> 1 M_co2@BOUNDARY
+    ID_dst: mnxr96810c2b # 1 MNXM13@MNXC2 <?> 1 MNXM13@BOUNDARY
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR96810
+
+  - ID_src: EX_etoh_e # 1 M_etoh@e <?> 1 M_etoh@BOUNDARY
+    ID_dst: mnxr97980c2b # 1 MNXM1108092@MNXC2 <?> 1 MNXM1108092@BOUNDARY
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR97980
+
+  - ID_src: EX_for_e # 1 M_for@e <?> 1 M_for@BOUNDARY
+    ID_dst: mnxr99620c2b # 1 MNXM39@MNXC2 <?> 1 MNXM39@BOUNDARY
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR99620
+
+  - ID_src: EX_fru_e # 1 M_fru@e <?> 1 M_fru@BOUNDARY
+    ID_dst: mnxr192550c2b # 1 MNXM1105810@MNXC2 <?> 1 MNXM1105810@BOUNDARY
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR192550
+
+  - ID_src: EX_fum_e # 1 M_fum@e <?> 1 M_fum@BOUNDARY
+    ID_dst: mnxr153631c2b # 1 MNXM737340@MNXC2 <?> 1 MNXM737340@BOUNDARY
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR153631
+
+  - ID_src: EX_glc__D_e # 1 M_glc__D@e <?> 1 M_glc__D@BOUNDARY
+    ID_dst: mnxr195422c2b # 1 MNXM1137670@MNXC2 <?> 1 MNXM1137670@BOUNDARY
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR195422
+
+  - ID_src: EX_gln__L_e # 1 M_gln__L@e <?> 1 M_gln__L@BOUNDARY
+    ID_dst: mnxr100259c2b # 1 MNXM37@MNXC2 <?> 1 MNXM37@BOUNDARY
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR100259
+
+  - ID_src: EX_glu__L_e # 1 M_glu__L@e <?> 1 M_glu__L@BOUNDARY
+    ID_dst: mnxr145089c2b # 1 MNXM741173@MNXC2 <?> 1 MNXM741173@BOUNDARY
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR145089
+
+  - ID_src: EX_h2o_e # 1 M_h2o@e <?> 1 M_h2o@BOUNDARY
+    ID_dst: mnxr98641c2b # 1 WATER@MNXC2 <?> 1 WATER@BOUNDARY
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR98641
+
+  - ID_src: EX_h_e # 1 M_h@e <?> 1 M_h@BOUNDARY
+    ID_dst: mnxr02c2b # 1 MNXM1@MNXC2 <?> 1 MNXM1@BOUNDARY
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR02
+
+  - ID_src: EX_lac__D_e # 1 M_lac__D@e <?> 1 M_lac__D@BOUNDARY
+    ID_dst: mnxr97840c2b # 1 MNXM731834@MNXC2 <?> 1 MNXM731834@BOUNDARY
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR97840
+
+  - ID_src: EX_mal__L_e # 1 M_mal__L@e <?> 1 M_mal__L@BOUNDARY
+    ID_dst: mnxr101367c2b # 1 MNXM1107192@MNXC2 <?> 1 MNXM1107192@BOUNDARY
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR101367
+
+  - ID_src: EX_nh4_e # 1 M_nh4@e <?> 1 M_nh4@BOUNDARY
+    ID_dst: mnxr101950c2b # 1 MNXM729302@MNXC2 <?> 1 MNXM729302@BOUNDARY
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR101950
+
+  - ID_src: EX_o2_e # 1 M_o2@e <?> 1 M_o2@BOUNDARY
+    ID_dst: mnxr102090c2b # 1 MNXM735438@MNXC2 <?> 1 MNXM735438@BOUNDARY
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR102090
+
+  - ID_src: EX_pi_e # 1 M_pi@e <?> 1 M_pi@BOUNDARY
+    ID_dst: mnxr146072c2b # 1 MNXM9@MNXC2 <?> 1 MNXM9@BOUNDARY
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR146072
+
+  - ID_src: EX_pyr_e # 1 M_pyr@e <?> 1 M_pyr@BOUNDARY
+    ID_dst: mnxr103384c2b # 1 MNXM23@MNXC2 <?> 1 MNXM23@BOUNDARY
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR103384
+
+  - ID_src: EX_succ_e # 1 M_succ@e <?> 1 M_succ@BOUNDARY
+    ID_dst: mnxr104619c2b # 1 MNXM25@MNXC2 <?> 1 MNXM25@BOUNDARY
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR104619
+
+  - ID_src: FBA # 1 M_fdp@c <?> 1 M_dhap@c + 1 M_g3p@c
+    ID_dst: mnxr153517c3 # 1 MNXM1106095@MNXC3 + 2 MNXM1@MNXC3 <?> 1 MNXM739945@MNXC3 + 1 MNXM77@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR153517
+
+  - ID_src: FBP # 1 M_fdp@c + 1 M_h2o@c <?> 1 M_f6p@c + 1 M_pi@c
+    ID_dst: mnxr147046c3 # 1 MNXM1106095@MNXC3 + 1 WATER@MNXC3 <?> 1 MNXM1107898@MNXC3 + 1 MNXM9@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR147046
+
+  - ID_src: FORt # 1 M_for@e <?> 1 M_for@c
+    ID_dst: mnxr99620c2c3 # 1 MNXM39@MNXC2 <?> 1 MNXM39@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR99620
+
+  - ID_src: FORt2 # 1 M_for@e + 1 M_h@e <?> 1 M_for@c + 1 M_h@c
+    ID_dst: mnxr99621c2c3 # 1 MNXM01@MNXC2 + 1 MNXM39@MNXC2 <?> 1 MNXM01@MNXC3 + 1 MNXM39@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR99621
+
+  - ID_src: FRD7 # 1 M_fum@c + 1 M_q8h2@c <?> 1 M_q8@c + 1 M_succ@c
+    ID_dst: mnxr99641c3 # 1 MNXM191@MNXC3 + 1 MNXM737340@MNXC3 <?> 1 MNXM232@MNXC3 + 1 MNXM25@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR99641
+      - code: REAC_MNET_MERGE
+        IDs_src:
+          - FRD7
+          - SUCDi
+
+  - ID_src: FRUpts2 # 1 M_fru@e + 1 M_pep@c <?> 1 M_f6p@c + 1 M_pyr@c
+    ID_dst: mnxr182405c2c3 # 1 MNXM1105810@MNXC2 + 1 MNXM73@MNXC3 <?> 1 MNXM1107898@MNXC3 + 1 MNXM23@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR182405
+
+  - ID_src: FUM # 1 M_fum@c + 1 M_h2o@c <?> 1 M_mal__L@c
+    ID_dst: mnxr99705c3 # 1 MNXM1107192@MNXC3 <?> 1 MNXM737340@MNXC3 + 1 WATER@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR99705
+
+  - ID_src: FUMt2_2 # 1 M_fum@e + 2 M_h@e <?> 1 M_fum@c + 2 M_h@c
+    ID_dst: mnxr153630c2c3 # 2 MNXM01@MNXC2 + 1 MNXM737340@MNXC2 <?> 2 MNXM01@MNXC3 + 1 MNXM737340@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR153630
+
+  - ID_src: G6PDH2r # 1 M_g6p@c + 1 M_nadp@c <?> 1 M_6pgl@c + 1 M_h@c + 1 M_nadph@c
+    ID_dst: mnxr192434c3 # 1 MNXM1104491@MNXC3 + 1 MNXM1@MNXC3 + 1 MNXM738702@MNXC3 <?> 1 MNXM1105858@MNXC3 + 1 MNXM5@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR192434
+
+  - ID_src: GAPD # 1 M_g3p@c + 1 M_nad@c + 1 M_pi@c <?> 1 M_13dpg@c + 1 M_h@c + 1 M_nadh@c
+    ID_dst: mnxr144947c3 # 1 MNXM10@MNXC3 + 1 MNXM1108073@MNXC3 + 3 MNXM1@MNXC3 <?> 1 MNXM739945@MNXC3 + 1 MNXM8@MNXC3 + 1 MNXM9@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR144947
+
+  - ID_src: GLCpts # 1 M_glc__D@e + 1 M_pep@c <?> 1 M_g6p@c + 1 M_pyr@c
+    ID_dst: mnxr188131c3c2 # 1 MNXM1105858@MNXC3 + 1 MNXM23@MNXC3 <?> 1 MNXM1137670@MNXC2 + 1 MNXM73@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR188131
+
+  - ID_src: GLNS # 1 M_atp@c + 1 M_glu__L@c + 1 M_nh4@c <?> 1 M_adp@c + 1 M_gln__L@c + 1 M_h@c + 1 M_pi@c
+    ID_dst: mnxr100024c3 # 1 MNXM1@MNXC3 + 1 MNXM37@MNXC3 + 1 MNXM40333@MNXC3 + 1 MNXM9@MNXC3 <?> 1 MNXM3@MNXC3 + 1 MNXM729302@MNXC3 + 1 MNXM741173@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR100024
+
+  - ID_src: GLNabc # 1 M_atp@c + 1 M_gln__L@e + 1 M_h2o@c <?> 1 M_adp@c + 1 M_gln__L@c + 1 M_h@c + 1 M_pi@c
+    ID_dst: mnxr100258c3c2 # 1 MNXM1@MNXC3 + 1 MNXM37@MNXC3 + 1 MNXM40333@MNXC3 + 1 MNXM9@MNXC3 <?> 1 MNXM37@MNXC2 + 1 MNXM3@MNXC3 + 1 WATER@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR100258
+
+  - ID_src: GLUDy # 1 M_glu__L@c + 1 M_h2o@c + 1 M_nadp@c <?> 1 M_akg@c + 1 M_h@c + 1 M_nadph@c + 1 M_nh4@c
+    ID_dst: mnxr100086c3 # 1 MNXM1@MNXC3 + 1 MNXM20@MNXC3 + 1 MNXM729302@MNXC3 + 1 MNXM738702@MNXC3 <?> 1 MNXM5@MNXC3 + 1 MNXM741173@MNXC3 + 1 WATER@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR100086
+
+  - ID_src: GLUN # 1 M_gln__L@c + 1 M_h2o@c <?> 1 M_glu__L@c + 1 M_nh4@c
+    ID_dst: mnxr100030c3 # 1 MNXM37@MNXC3 + 1 WATER@MNXC3 <?> 1 MNXM729302@MNXC3 + 1 MNXM741173@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR100030
+
+  - ID_src: GLUSy # 1 M_akg@c + 1 M_gln__L@c + 1 M_h@c + 1 M_nadph@c <?> 2 M_glu__L@c + 1 M_nadp@c
+    ID_dst: mnxr100291c3 # 1 MNXM1@MNXC3 + 1 MNXM20@MNXC3 + 1 MNXM37@MNXC3 + 1 MNXM738702@MNXC3 <?> 1 MNXM5@MNXC3 + 2 MNXM741173@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR100291
+
+  - ID_src: GLUt2r # 1 M_glu__L@e + 1 M_h@e <?> 1 M_glu__L@c + 1 M_h@c
+    ID_dst: mnxr100300c2c3 # 1 MNXM01@MNXC2 + 1 MNXM741173@MNXC2 <?> 1 MNXM01@MNXC3 + 1 MNXM741173@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR100300
+
+  - ID_src: GND # 1 M_6pgc@c + 1 M_nadp@c <?> 1 M_co2@c + 1 M_nadph@c + 1 M_ru5p__D@c
+    ID_dst: mnxr100389c3 # 1 MNXM13@MNXC3 + 1 MNXM145@MNXC3 + 1 MNXM738702@MNXC3 <?> 1 MNXM5@MNXC3 + 1 MNXM734080@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR100389
+
+  - ID_src: H2Ot # 1 M_h2o@e <?> 1 M_h2o@c
+    ID_dst: mnxr98641c2c3 # 1 WATER@MNXC2 <?> 1 WATER@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR98641
+
+  - ID_src: ICDHyr # 1 M_icit@c + 1 M_nadp@c <?> 1 M_akg@c + 1 M_co2@c + 1 M_nadph@c
+    ID_dst: mnxr191121c3 # 1 MNXM13@MNXC3 + 1 MNXM20@MNXC3 + 1 MNXM738702@MNXC3 <?> 1 MNXM5@MNXC3 + 1 MNXM89661@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR191121
+
+  - ID_src: ICL # 1 M_icit@c <?> 1 M_glx@c + 1 M_succ@c
+    ID_dst: mnxr191123c3 # 1 MNXM25@MNXC3 + 1 MNXM69@MNXC3 <?> 1 MNXM89661@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR191123
+
+  - ID_src: LDH_D # 1 M_lac__D@c + 1 M_nad@c <?> 1 M_h@c + 1 M_nadh@c + 1 M_pyr@c
+    ID_dst: mnxr101037c3 # 1 MNXM10@MNXC3 + 1 MNXM1@MNXC3 + 1 MNXM23@MNXC3 <?> 1 MNXM731834@MNXC3 + 1 MNXM8@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR101037
+
+  - ID_src: MALS # 1 M_accoa@c + 1 M_glx@c + 1 M_h2o@c <?> 1 M_coa@c + 1 M_h@c + 1 M_mal__L@c
+    ID_dst: mnxr188337c3 # 1 MNXM1104266@MNXC3 + 1 MNXM69@MNXC3 + 1 WATER@MNXC3 <?> 1 MNXM1107192@MNXC3 + 1 MNXM1@MNXC3 + 1 MNXM727276@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR188337
+
+  - ID_src: MALt2_2 # 2 M_h@e + 1 M_mal__L@e <?> 2 M_h@c + 1 M_mal__L@c
+    ID_dst: mnxr101370c2c3 # 2 MNXM01@MNXC2 + 1 MNXM1107192@MNXC2 <?> 2 MNXM01@MNXC3 + 1 MNXM1107192@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR101370
+
+  - ID_src: MDH # 1 M_mal__L@c + 1 M_nad@c <?> 1 M_h@c + 1 M_nadh@c + 1 M_oaa@c
+    ID_dst: mnxr101439c3 # 1 MNXM10@MNXC3 + 1 MNXM1@MNXC3 + 1 MNXM46@MNXC3 <?> 1 MNXM1107192@MNXC3 + 1 MNXM8@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR101439
+
+  - ID_src: ME1 # 1 M_mal__L@c + 1 M_nad@c <?> 1 M_co2@c + 1 M_nadh@c + 1 M_pyr@c
+    ID_dst: mnxr101446c3 # 1 MNXM10@MNXC3 + 1 MNXM13@MNXC3 + 1 MNXM23@MNXC3 <?> 1 MNXM1107192@MNXC3 + 1 MNXM8@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR101446
+
+  - ID_src: ME2 # 1 M_mal__L@c + 1 M_nadp@c <?> 1 M_co2@c + 1 M_nadph@c + 1 M_pyr@c
+    ID_dst: mnxr101443c3 # 1 MNXM1107192@MNXC3 + 1 MNXM5@MNXC3 <?> 1 MNXM13@MNXC3 + 1 MNXM23@MNXC3 + 1 MNXM738702@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR101443
+
+  - ID_src: NADH16 # 4 M_h@c + 1 M_nadh@c + 1 M_q8@c <?> 3 M_h@e + 1 M_nad@c + 1 M_q8h2@c
+    ID_dst: mnxr101864c3c2 # 3 MNXM01@MNXC2 + 1 MNXM191@MNXC3 + 1 MNXM8@MNXC3 <?> 3 MNXM01@MNXC3 + 1 MNXM10@MNXC3 + 1 MNXM1@MNXC3 + 1 MNXM232@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR101864
+
+  - ID_src: NADTRHD # 1 M_nad@c + 1 M_nadph@c <?> 1 M_nadh@c + 1 M_nadp@c
+    ID_dst: mnxr101898c3 # 1 MNXM10@MNXC3 + 1 MNXM5@MNXC3 <?> 1 MNXM738702@MNXC3 + 1 MNXM8@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR101898
+
+  - ID_src: NH4t # 1 M_nh4@e <?> 1 M_nh4@c
+    ID_dst: mnxr101950c2c3 # 1 MNXM729302@MNXC2 <?> 1 MNXM729302@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR101950
+
+  - ID_src: O2t # 1 M_o2@e <?> 1 M_o2@c
+    ID_dst: mnxr102090c2c3 # 1 MNXM735438@MNXC2 <?> 1 MNXM735438@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR102090
+
+  - ID_src: PDH # 1 M_coa@c + 1 M_nad@c + 1 M_pyr@c <?> 1 M_accoa@c + 1 M_co2@c + 1 M_nadh@c
+    ID_dst: mnxr188625c3 # 1 MNXM10@MNXC3 + 1 MNXM1104266@MNXC3 + 1 MNXM13@MNXC3 <?> 1 MNXM23@MNXC3 + 1 MNXM727276@MNXC3 + 1 MNXM8@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR188625
+
+  - ID_src: PFK # 1 M_atp@c + 1 M_f6p@c <?> 1 M_adp@c + 1 M_fdp@c + 1 M_h@c
+    ID_dst: mnxr145952c3 # 1 MNXM1106095@MNXC3 + 1 MNXM1@MNXC3 + 1 MNXM40333@MNXC3 <?> 1 MNXM1107898@MNXC3 + 1 MNXM3@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR145952
+
+  - ID_src: PFL # 1 M_coa@c + 1 M_pyr@c <?> 1 M_accoa@c + 1 M_for@c
+    ID_dst: mnxr188637c3 # 1 MNXM1104266@MNXC3 + 1 MNXM39@MNXC3 <?> 1 MNXM23@MNXC3 + 1 MNXM727276@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR188637
+
+  - ID_src: PGI # 1 M_g6p@c <?> 1 M_f6p@c
+    ID_dst: mnxr191975c3 # 1 MNXM1105858@MNXC3 <?> 1 MNXM1107898@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR191975
+
+  - ID_src: PGK # 1 M_3pg@c + 1 M_atp@c <?> 1 M_13dpg@c + 1 M_adp@c
+    ID_dst: mnxr191159c3 # 1 MNXM1108073@MNXC3 + 1 MNXM40333@MNXC3 <?> 1 MNXM3@MNXC3 + 1 MNXM727604@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR191159
+
+  - ID_src: PGL # 1 M_6pgl@c + 1 M_h2o@c <?> 1 M_6pgc@c + 1 M_h@c
+    ID_dst: mnxr188641c3 # 1 MNXM1104491@MNXC3 + 1 WATER@MNXC3 <?> 1 MNXM1@MNXC3 + 1 MNXM734080@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR188641
+
+  - ID_src: PGM # 1 M_2pg@c <?> 1 M_3pg@c
+    ID_dst: mnxr102547c3 # 1 MNXM275@MNXC3 <?> 1 MNXM727604@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR102547
+
+  - ID_src: PIt2r # 1 M_h@e + 1 M_pi@e <?> 1 M_h@c + 1 M_pi@c
+    ID_dst: mnxr102872c2c3 # 1 MNXM01@MNXC2 + 1 MNXM9@MNXC2 <?> 1 MNXM01@MNXC3 + 1 MNXM9@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR102872
+
+  - ID_src: PPC # 1 M_co2@c + 1 M_h2o@c + 1 M_pep@c <?> 1 M_h@c + 1 M_oaa@c + 1 M_pi@c
+    ID_dst: mnxr103096c3 # 1 MNXM13@MNXC3 + 1 MNXM73@MNXC3 + 1 WATER@MNXC3 <?> 1 MNXM1@MNXC3 + 1 MNXM46@MNXC3 + 1 MNXM9@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR103096
+
+  - ID_src: PPCK # 1 M_atp@c + 1 M_oaa@c <?> 1 M_adp@c + 1 M_co2@c + 1 M_pep@c
+    ID_dst: mnxr103099c3 # 1 MNXM13@MNXC3 + 1 MNXM40333@MNXC3 + 1 MNXM73@MNXC3 <?> 1 MNXM3@MNXC3 + 1 MNXM46@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR103099
+
+  - ID_src: PPS # 1 M_atp@c + 1 M_h2o@c + 1 M_pyr@c <?> 1 M_amp@c + 2 M_h@c + 1 M_pep@c + 1 M_pi@c
+    ID_dst: mnxr103140c3 # 2 MNXM1@MNXC3 + 1 MNXM728294@MNXC3 + 1 MNXM73@MNXC3 + 1 MNXM9@MNXC3 <?> 1 MNXM23@MNXC3 + 1 MNXM3@MNXC3 + 1 WATER@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR103140
+
+  - ID_src: PTAr # 1 M_accoa@c + 1 M_pi@c <?> 1 M_actp@c + 1 M_coa@c
+    ID_dst: mnxr188714c3 # 1 MNXM1104266@MNXC3 + 1 MNXM9@MNXC3 <?> 1 MNXM280@MNXC3 + 1 MNXM727276@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR188714
+
+  - ID_src: PYK # 1 M_adp@c + 1 M_h@c + 1 M_pep@c <?> 1 M_atp@c + 1 M_pyr@c
+    ID_dst: mnxr103371c3 # 1 MNXM1@MNXC3 + 1 MNXM40333@MNXC3 + 1 MNXM73@MNXC3 <?> 1 MNXM23@MNXC3 + 1 MNXM3@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR103371
+
+  - ID_src: PYRt2 # 1 M_h@e + 1 M_pyr@e <?> 1 M_h@c + 1 M_pyr@c
+    ID_dst: mnxr103385c2c3 # 1 MNXM01@MNXC2 + 1 MNXM23@MNXC2 <?> 1 MNXM01@MNXC3 + 1 MNXM23@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR103385
+
+  - ID_src: RPE # 1 M_ru5p__D@c <?> 1 M_xu5p__D@c
+    ID_dst: mnxr104083c3 # 1 MNXM145@MNXC3 <?> 1 MNXM186@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR104083
+
+  - ID_src: RPI # 1 M_r5p@c <?> 1 M_ru5p__D@c
+    ID_dst: mnxr189850c3 # 1 MNXM1104056@MNXC3 <?> 1 MNXM145@MNXC3 + 2 MNXM1@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR189850
+
+  - ID_src: SUCCt2_2 # 2 M_h@e + 1 M_succ@e <?> 2 M_h@c + 1 M_succ@c
+    ID_dst: mnxr104620c2c3 # 2 MNXM01@MNXC2 + 1 MNXM25@MNXC2 <?> 2 MNXM01@MNXC3 + 1 MNXM25@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR104620
+
+  - ID_src: SUCCt3 # 1 M_h@e + 1 M_succ@c <?> 1 M_h@c + 1 M_succ@e
+    ID_dst: mnxr104623c2c3 # 1 MNXM01@MNXC2 + 1 MNXM25@MNXC3 <?> 1 MNXM01@MNXC3 + 1 MNXM25@MNXC2
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR104623
+
+  - ID_src: SUCDi # 1 M_q8@c + 1 M_succ@c <?> 1 M_fum@c + 1 M_q8h2@c
+    ID_dst: mnxr99641c3 # 1 MNXM191@MNXC3 + 1 MNXM737340@MNXC3 <?> 1 MNXM232@MNXC3 + 1 MNXM25@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR99641
+      - code: REAC_MNET_MERGE
+        IDs_src:
+          - FRD7
+          - SUCDi
+
+  - ID_src: SUCOAS # 1 M_atp@c + 1 M_coa@c + 1 M_succ@c <?> 1 M_adp@c + 1 M_pi@c + 1 M_succoa@c
+    ID_dst: mnxr188878c3 # 1 MNXM1104774@MNXC3 + 1 MNXM40333@MNXC3 + 1 MNXM9@MNXC3 <?> 1 MNXM25@MNXC3 + 1 MNXM3@MNXC3 + 1 MNXM727276@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR188878
+
+  - ID_src: TALA # 1 M_g3p@c + 1 M_s7p@c <?> 1 M_e4p@c + 1 M_f6p@c
+    ID_dst: mnxr146501c3 # 1 MNXM1107898@MNXC3 + 2 MNXM1@MNXC3 + 1 MNXM258@MNXC3 <?> 1 MNXM733314@MNXC3 + 1 MNXM739945@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR146501
+
+  - ID_src: THD2 # 2 M_h@e + 1 M_nadh@c + 1 M_nadp@c <?> 2 M_h@c + 1 M_nad@c + 1 M_nadph@c
+    ID_dst: mnxr104805c2c3 # 2 MNXM01@MNXC2 + 1 MNXM10@MNXC3 + 1 MNXM5@MNXC3 <?> 2 MNXM01@MNXC3 + 1 MNXM738702@MNXC3 + 1 MNXM8@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR104805
+
+  - ID_src: TKT1 # 1 M_r5p@c + 1 M_xu5p__D@c <?> 1 M_g3p@c + 1 M_s7p@c
+    ID_dst: mnxr104868c3 # 1 MNXM1104056@MNXC3 + 1 MNXM186@MNXC3 <?> 1 MNXM733314@MNXC3 + 1 MNXM739945@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR104868
+
+  - ID_src: TKT2 # 1 M_e4p@c + 1 M_xu5p__D@c <?> 1 M_f6p@c + 1 M_g3p@c
+    ID_dst: mnxr146555c3 # 1 MNXM1107898@MNXC3 + 1 MNXM739945@MNXC3 <?> 1 MNXM186@MNXC3 + 2 MNXM1@MNXC3 + 1 MNXM258@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR146555
+
+  - ID_src: TPI # 1 M_dhap@c <?> 1 M_g3p@c
+    ID_dst: mnxr146573c3 # 2 MNXM1@MNXC3 + 1 MNXM77@MNXC3 <?> 1 MNXM739945@MNXC3
+    status:
+      - code: REAC_MAP_MNXREF
+        mnxr: MNXR146573
