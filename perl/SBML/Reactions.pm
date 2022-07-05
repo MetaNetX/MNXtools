@@ -535,6 +535,7 @@ sub parse_reac_side {
 }
 
 
+
 sub create_SBML_reaction {
     my ($MetNet, $mnet_id, $SBML_model, $use_notes, $reac_id, $all_bounds) = @_;
 
@@ -579,9 +580,9 @@ sub create_SBML_reaction {
     elsif ( $reac_equation =~ /\@$Constants::boundary_comp_id/ ){
         $reac->setSBOTerm($Constants::exchange_reac_sbo);
     }
-#    elsif ( #TODO has more than one compartment ){
-#        $reac->setSBOTerm($Constants::transport_reac_sbo);
-#    }
+    elsif ( 2 <= scalar uniq map { s/^.*?\@//; $_ } grep {/@/} split(/ /, $reac_equation) ){
+        $reac->setSBOTerm($Constants::transport_reac_sbo);
+    }
     elsif ( $complex eq $Constants::spontaneous_enz ){
         $reac->setSBOTerm($Constants::spontaneous_reac_sbo);
     }
@@ -598,7 +599,7 @@ sub create_SBML_reaction {
         $complexes =~ s{\+}{ and }g;
         #NOTE Properties are not put in notes because too dependent of a model snapshot
         #TODO Add LB/UB in notes also for SBMLv2? Which names to use? Does it exist in SBML2?
-        #FIXME why when mnxr in xrefs there is no REACTION, and vice versa???
+        #FIXME  why when mnxr in xrefs there is no REACTION, and vice versa???
         $notes .= '<html:p>SOURCE: '.           $reac_source.   '</html:p>'  if ( $reac_source );
         $notes .= '<html:p>REFERENCE: '.        $reac_xrefs[0]. '</html:p>'  if ( exists $reac_xrefs[0] );
         $notes .= '<html:p>REACTION: '.         $reac_mnxr.     '</html:p>'  if ( $reac_mnxr && $reac_mnxr ne 'NA' );
@@ -637,7 +638,7 @@ sub create_SBML_reaction {
             $reac->addCVTerm($CV2);
         }
     }
-    #TODO SBML3 GENE ASSOCIATION: (FUMA_ECOLI) or (FUMB_ECOLI) or (FUMC_ECOLI)</html:p>  // may be SPONTANEOUS
+    #TODO  SBML3 GENE ASSOCIATION: (FUMA_ECOLI) or (FUMB_ECOLI) or (FUMC_ECOLI)</html:p>  // may be SPONTANEOUS
 
     return;
 }
