@@ -638,7 +638,16 @@ sub create_SBML_reaction {
             $reac->addCVTerm($CV2);
         }
     }
-    #TODO  SBML3 GENE ASSOCIATION: (FUMA_ECOLI) or (FUMB_ECOLI) or (FUMC_ECOLI)</html:p>  // may be SPONTANEOUS
+    #GPR / SBML3 gene association
+    if ( $complex ){
+        my $gpa = $reac_fbc->createGeneProductAssociation();
+        my $complexes = $complex;
+        $complexes =~ s{;}{ OR }g;
+        $complexes =~ s{\+}{ AND }g;
+        #NOTE This is a helper method that allows a user to set the GeneProductAssociation via a string such as "a1 AND b1 OR C2" and have the method work out the correct XML structure.
+        $gpa->setAssociation($complexes, 1);
+#TODO set fbc:label in   <fbc:geneProduct fbc:id="b1102" fbc:label="b1102"/>   IF ANY
+    }
 
     return;
 }
