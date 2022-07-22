@@ -645,7 +645,14 @@ sub create_SBML_reaction {
         $complexes =~ s{;}{ OR }g;
         $complexes =~ s{\+}{ AND }g;
         #NOTE This is a helper method that allows a user to set the GeneProductAssociation via a string such as "a1 AND b1 OR C2" and have the method work out the correct XML structure.
-        $gpa->setAssociation($complexes, 1);
+        my $status = $gpa->setAssociation($complexes, 1);
+        warn ("Issue with GPR [$complex]\n")  if ( $status );
+
+        #setLabel/setName
+        for my $gene ( split(/ *[;\+] */, $complex) ){
+#FIXME how to get the newly inserted GPR via the libSBML API ????
+#            my $gene_id = $gpa->getGeneProduct();
+        }
 #TODO set fbc:label and fbc:name in   <fbc:geneProduct fbc:id="b1102" fbc:label="b1102"/>   ,IF ANY, via the GeneProduct class
 # with the MetNet::get_pept_* methods ???
 # if ( !isSetName() && description ne '' ){ setName(description) }
