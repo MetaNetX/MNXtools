@@ -646,7 +646,10 @@ sub create_SBML_reaction {
         $complexes =~ s{\+}{ AND }g;
         #NOTE This is a helper method that allows a user to set the GeneProductAssociation via a string such as "a1 AND b1 OR C2" and have the method work out the correct XML structure.
         $gpa->setAssociation($complexes, 1);
-#TODO set fbc:label in   <fbc:geneProduct fbc:id="b1102" fbc:label="b1102"/>   IF ANY
+#TODO set fbc:label and fbc:name in   <fbc:geneProduct fbc:id="b1102" fbc:label="b1102"/>   ,IF ANY, via the GeneProduct class
+# with the MetNet::get_pept_* methods ???
+# if ( !isSetName() && description ne '' ){ setName(description) }
+# if ( !isSetLabel() && xrefs ne '' ){ setLabel(xrefs) }
     }
 
     return;
