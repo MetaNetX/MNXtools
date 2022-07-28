@@ -166,7 +166,7 @@ if ( $TSV_directory ){
 
 #FIXME from reac list, list chem and comp (and geneproducts) AND then warn if defined in reac but not in chem/comp TSVs!
     # <listOfReactions>
-    my (%reac_chem, %reac_comp);#TODO
+    my (%reac_chem, %reac_comp, %reac_gpr);#TODO
     for my $reac_id ( uniq nsort $MetNet->select_reac_ids() ){
         Reactions::create_SBML_reaction($MetNet, $mnet_id, $SBML_model, $use_notes, $reac_id, $all_bounds);
     }
@@ -184,8 +184,26 @@ if ( $TSV_directory ){
     }
 
 
+    # <fbc:listOfGeneProducts> setLabel/setName
+    if ( $SBML_ns->getLevel() >= 3 ){
+        my $gpr_fbc = $SBML_model->getPlugin('fbc');
+        if ( $gpr_fbc ){
+            my $gpr = $gpr_fbc->getListOfGeneProducts();
+            for (my $i = 0; $i < $gpr->getNumGeneProducts(); $i++){
+                my $gpr_id = $gpr->get($i)->getId();
+                my ($gpr_desc, $gpr_xrefs, $gpr_gene) = $MetNet->get_pept_info($gpr_id);
+                if ( $gpr_desc ){
+                    $gpr->get($i)->setName($gpr_desc);
+                }
+                if ( $gpr_xrefs ){
+                    $gpr->get($i)->setLabel($gpr_xrefs);
+                }
+            }
+        }
+    }
+
+
 #TODO <fbc:listOfObjectives>  -> <fbc:listOfFluxObjectives>
-#TODO <fbc:listOfGeneProducts>
 
 
     # Check model
