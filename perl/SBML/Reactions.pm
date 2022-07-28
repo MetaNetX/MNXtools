@@ -657,7 +657,10 @@ sub create_SBML_reaction {
         $obj->setId("obj_$reac_id_fixed");
         #FIXME not sure how to link reaction direction and objective type!
         $obj->setType($dir eq 'LR' ? 'maximize' : 'minimize');
-        #TODO listOfFluxObjectives || fbc:activeObjective -- setActiveObjectiveId (the active one only)
+        #TODO fbc:activeObjective -- setActiveObjectiveId (the active one only)
+        my $flux_obj = $obj->createFluxObjective();
+        $flux_obj->setCoefficient(1); #FIXME always 1???
+        $flux_obj->setReaction($reac_id_fixed);
     }
 
     return;
