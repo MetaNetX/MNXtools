@@ -537,7 +537,7 @@ sub parse_reac_side {
 
 
 sub create_SBML_reaction {
-    my ($MetNet, $mnet_id, $SBML_model, $use_notes, $reac_id, $all_bounds) = @_;
+    my ($MetNet, $mnet_id, $SBML_model, $use_notes, $reac_id, $all_bounds, $list_obj) = @_;
 
     my $reac_id_fixed = $reac_id;
     $reac_id_fixed =~ s{^UNK:}{};#FIXME should do it better, and more general
@@ -647,6 +647,17 @@ sub create_SBML_reaction {
         #NOTE This is a helper method that allows a user to set the GeneProductAssociation via a string such as "a1 AND b1 OR C2" and have the method work out the correct XML structure.
         my $status = $gpa->setAssociation($complexes, 1);
         warn ("Issue with GPR [$complex]\n")  if ( $status );
+    }
+
+    #Objectives
+    if ( any { $_ eq $reac_id_fixed } @$list_obj ){
+        warn "[$reac_id_fixed] is OBJ {$dir}\n";
+        my $fbc_obj = $SBML_model->getPlugin('fbc');
+        my $obj = $fbc_obj->createObjective();
+        $obj->setId("obj_$reac_id_fixed");
+        #FIXME not sure how to link reaction direction and objective type!
+        $obj->setType($dir eq 'LR' ? 'maximize' : 'minimize');
+        #TODO listOfFluxObjectives || fbc:activeObjective -- setActiveObjectiveId (the active one only)
     }
 
     return;

@@ -167,8 +167,9 @@ if ( $TSV_directory ){
 #FIXME from reac list, list chem and comp (and geneproducts) AND then warn if defined in reac but not in chem/comp TSVs!
     # <listOfReactions>
     my (%reac_chem, %reac_comp, %reac_gpr);#TODO
+    my @reac_obj = $MetNet->get_growth_reac_ids($mnet_id);
     for my $reac_id ( uniq nsort $MetNet->select_reac_ids() ){
-        Reactions::create_SBML_reaction($MetNet, $mnet_id, $SBML_model, $use_notes, $reac_id, $all_bounds);
+        Reactions::create_SBML_reaction($MetNet, $mnet_id, $SBML_model, $use_notes, $reac_id, $all_bounds, \@reac_obj);
     }
 
 
@@ -201,9 +202,6 @@ if ( $TSV_directory ){
             }
         }
     }
-
-
-#TODO <fbc:listOfObjectives>  -> <fbc:listOfFluxObjectives>
 
 
     # Check model
