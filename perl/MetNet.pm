@@ -161,7 +161,7 @@ sub load{ # load a singe mnet from disk
         }
         close FILE;
     }
-    
+
     return $old_mnet_id; # even if the name has been changed => this permit to save the original name
 }
 sub mnet_store{ # Direct call is DEPRECATED and this method must become private
@@ -555,7 +555,7 @@ sub get_growth_reac_ids{ # return a list of reac ID(s) for the growth equation
         my $source = exists $self->{mnet}{$mnet_num}{reac_source}{$reac_num}
                    ? $self->{mnet}{$mnet_num}{reac_source}{$reac_num}
                    :  '~' . $reac_id; # use '~' because it has ASCII rank 127
-        $buf{$reac_id} = ( $enzy_info[2] eq 'NA' ? 'A' : 'B' ) . ' ' . $source; # Alive / Blockedi then source
+        $buf{$reac_id} = ( $enzy_info[2] eq 'NA' ? 'A' : 'B' ) . ' ' . $source; # Alive / Blocked then source
     }
     my @reac_id = ();
     if( keys %buf ){
