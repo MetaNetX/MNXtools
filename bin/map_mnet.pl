@@ -28,9 +28,9 @@ my $tb = Toolbox->new();
 
 my $usage = "$0 [options] <indir> <outdir>
 
-<indir>   directory with a mnet in MetaNetX TSV format 
-<outdir>  directory to write the mapped mnet and the yaml mapping 
-          report. 
+<indir>   directory with a mnet in MetaNetX TSV format
+<outdir>  directory to write the mapped mnet and the yaml mapping
+          report.
           Nota Bene: the content of <outdir> is completely nerased!
 
 options:
@@ -40,29 +40,29 @@ options:
     -V <dumpfile> read namespace cache file
                   (/usr/local/MNXtools/cache/ChemSpace.bindump by default)
     -p <dir>      path to dir with id_map and peptide.tsv files
-    
+
     # -L            use late merge data
 
-    -c <list>     a comma/slash separated list of prefixes that specify which 
-                  metabolite cross-references should be considered. 
-                  Comma separated list are evaluated alltogether thus possibly 
+    -c <list>     a comma/slash separated list of prefixes that specify which
+                  metabolite cross-references should be considered.
+                  Comma separated list are evaluated alltogether thus possibly
                   generating conflicts.
-                  Slash separated list are evaluated successively, thus 
-                  possibly generating discrepency 
-                  
+                  Slash separated list are evaluated successively, thus
+                  possibly generating discrepency
+
                   In addition the following keywords are defined:
 
                   ID    Utilize the chemichal identifer (e.g. the SBML identifer)
                   XREFS Utilize all cross references (not recommened)
 
                   For example:
-                  
+
                   -c ID                (this is the default when -c is not set)
                   -c ID,XREF           (use all information available, possibly generating many conflicts)
-                  -c chebi/kegg/ID     (it should speak for itself)         
+                  -c chebi/kegg/ID     (it should speak for itself)
                   -c chebi,slm/ID      (ditto)
 
-    -y <regexp>   use pept xref for mapping 
+    -y <regexp>   use pept xref for mapping
                   ('.' means all which is the defaultby default)
     -G            produce reaction with MetaNetX generic compartments.
                   Destroy the connectivity of compartimentalized models.

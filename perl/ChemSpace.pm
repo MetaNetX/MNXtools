@@ -840,15 +840,15 @@ sub _map_equation{
             if( $eq_new{$comp_new}{$chem_new} == 0 ){            # This is an VERY important test to find problem in the namepace
                 delete $eq_new{$comp_new}{$chem_new};            # to permit debugging in caller context a WARNING is issued that
                 foreach( sort keys %{$new2old{$chem_new}} ){
-                    push @warn, 
+                    push @warn,
                          '- code: REAC_MAP_LOSS',
-                         "  chem: $chem_new # " . $self->{chem_prop}{$chem_new}{name}, 
+                         "  chem: $chem_new # " . $self->{chem_prop}{$chem_new}{name},
                          "  comp: $comp_new # " . $self->{comp_prop}{$chem_new}{name};
                 }
             }
         }
     }
-    
+
     if( exists $eq_old->{BOUNDARY} or $has_PMF ){
         foreach( keys %proton ){              # assume PMF already properly defined
             $eq_new{$_}{MNXM1} = $proton{$_}; # hence, restore protons
@@ -916,7 +916,7 @@ sub _chose_chem{
         @chem = nsort @chem;
         $warn = [
             '- code: CHEM_MAP_MULTIPLE',
-            '  IDs_dst:',            
+            '  IDs_dst:',
         ];
         push @$warn, "      - $_ # " . $self->{chem_prop}{$_}{name} foreach @chem;
     }
@@ -989,9 +989,9 @@ sub _chose_comp{
         @comp = nsort @comp;
         $warn = [
             '- code: COMP_MAP_MULTIPLE',
-            '  IDs_dst:',            
+            '  IDs_dst:',
         ];
-        push @$warn, "      - $_ # " . $self->{chem_prop}{$_}{name} foreach @comp;
+        push @$warn, "      - $_ # " . $self->{chem_prop}{$_}{name}  foreach @comp;
     }
     return ( $comp[0], $warn );
 }
@@ -1004,7 +1004,7 @@ sub _search_comp_depr{
                 $buf{$id2} = 1;
             }
             else{
-                $buf{$_} = 1 foreach $self->_search_comp_depr( $id2 ); # reccursion
+                $buf{$_} = 1  foreach $self->_search_comp_depr( $id2 ); # reccursion
             }
         }
     }
@@ -1012,12 +1012,12 @@ sub _search_comp_depr{
 }
 sub map_comp{ # same procedure as in map_chem
     my( $self, $id_old ) = @_; # , $prefix ) = @_;
-    return ( $id_old, [ '- code: COMP_MAP_UNKNOWN' ] ) if $id_old =~ /^UNK:/;
+    return ( $id_old, [ '- code: COMP_MAP_UNKNOWN' ] )  if $id_old =~ /^UNK:/;
     my $id_new = '';
     my $msg = [];
     if( exists $self->{id_to_comp}{$id_old} ){
         ( $id_new, $msg ) = $self->_chose_comp( keys %{$self->{id_to_comp}{$id_old}} );
-        $msg = [ '- code: COMP_MAP_OK' ] unless @$msg;    
+        $msg = [ '- code: COMP_MAP_OK' ]  unless @$msg;
     }
     if( ! $id_new and $id_old =~ /:(.+)/ and exists $self->{id_to_comp}{$1} ){
         ( $id_new, $msg ) = $self->_chose_comp( keys %{$self->{id_to_comp}{$1}} );

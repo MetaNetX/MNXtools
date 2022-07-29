@@ -19,7 +19,7 @@ The following code are produced:
 
 * This code is only produced when cross-refs are exploited.
 * There are multiple cross-refs that correspond to different unrelated MNXref identifiers.
-* It may happen that this code is reported associated with a single associated cross-ref! In that case there exits another identifier in the model with multiple conflicting cross-refs, including the one reported here. 
+* It may happen that this code is reported associated with a single associated cross-ref! In that case there exits another identifier in the model with multiple conflicting cross-refs, including the one reported here.
 * _Suggested model improvement_: select which cross-ref is the best one, keep it and move the others elsewhere (in comments, for example) to avoid recreating this conflict later.
 
 ** CHEM_XREF_DISCREPANCY **
@@ -127,7 +127,7 @@ The following code are produced:
 
 * A reactant has been lost from an equation, because it was present on both sides of the equation with the same stoichiometric coefficient. As a consequence, the mapped reactions differ from the source reaction by its number of reactants, which is possibly the most severe problem that can be encountered here.
 * This code is not reported for empty reactions.
-* _Suggested model improvement_: Work on the metabolites to enforce the distinction between the one in the left and right terms of the equation. It cannot be excluded that the problem arises from a mistake in the MNXref reconciliation, that should be reported here (thanks in advance). Some polymer noatation are known to cause this problem. 
+* _Suggested model improvement_: Work on the metabolites to enforce the distinction between the one in the left and right terms of the equation. It cannot be excluded that the problem arises from a mistake in the MNXref reconciliation, that should be reported here (thanks in advance). Some polymer noatation are known to cause this problem.
 
 **REAC_MAP_PROTON_SALAD**
 

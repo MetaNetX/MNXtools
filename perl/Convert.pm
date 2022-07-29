@@ -46,14 +46,14 @@ sub _use_xref{
     my %chem_seen = ();
     $chem_seen{$self->{chem_dict}{$_}} = 1 foreach keys %{$self->{chem_dict}}; # already attributed
     foreach my $chem_old ( sort $metnet->select_chem_ids( mnet => $source_name )){
-        next if exists $self->{chem_dict}{$chem_old}; # already assigned 
+        next if exists $self->{chem_dict}{$chem_old}; # already assigned
         my $source_old = $metnet->get_chem_source( $source_name, $chem_old ) || $chem_old;
         my( $desc, $formula, $mass, $charge, $xref ) =  $metnet->get_chem_info( $chem_old );
         my @chem_unk = ();
         my @chem_id = $use_chem_id ? ( $chem_old ) : ();
         if( defined $xref_regexp ){
             foreach( split /;/, $xref ){
-                push @chem_id, $_ if $_ =~ $xref_regexp; 
+                push @chem_id, $_ if $_ =~ $xref_regexp;
             }
         }
         foreach my $chem_id ( @chem_id ){
@@ -100,7 +100,7 @@ sub _use_xref{
                         push @{$self->{chem_log}{$chem_old}{status}}, "    $xref: $chem_new # " . $prop{name};
                     }
                 }
-            }       
+            }
         }
         elsif( @chem_new == 1 ){ # unambiguous one-to-one or many-to-one mapping
              foreach my $chem_old ( @chem_old ){
@@ -187,7 +187,7 @@ sub _interpret_chem_map_rule{
                 $use_xref = 1;
             }
             else{
-                push @xref, $_; 
+                push @xref, $_;
             }
         }
         if( $use_xref ){
@@ -221,18 +221,18 @@ sub convert{
         $eq_orig    = $self->_premap_comp( $eq_orig ) if $self->{option}{comp_premap};
         my $source  = $metnet->get_reac_source( $source_name, $reac_id );
         my( $new_id, # might be '' if reaction is empty
-            $eq_new, 
-            $sign, 
-            $is_balanced, 
-            $msg, 
-            $mnxr_id, 
-            $str_gen, 
-            $sign_gen ) = $self->_premap_map_equation( $eq_orig ); 
+            $eq_new,
+            $sign,
+            $is_balanced,
+            $msg,
+            $mnxr_id,
+            $str_gen,
+            $sign_gen ) = $self->_premap_map_equation( $eq_orig );
         if( $eq_new eq ' = ' or $mnxr_id eq 'EMPTY' ){
             my( $id_new, $msg ) = $self->{ns}->map_reac( $reac_id );
             if( $id_new eq 'EMPTY' ){
                 $self->{reac_log}{$reac_id}{status} = [ '- code: REAC_EMPTY_MNXREF' ];
-            } 
+            }
             else{
                 $self->{reac_log}{$reac_id}{status} = [ '- code: REAC_EMPTY_UNKNOWN' ];
             }
@@ -269,7 +269,7 @@ sub convert{
         else{ # Equations merge: just need to update source and evid
             $reac_info{$new_id}{source}{$_} = 1 foreach split /;/, $source;
             push @{$reac_info{$new_id}{from}}, $reac_id;
-        } 
+        }
         $sign = $option->{generic_comp} ? $sign_gen : $sign;
         my @enzy_info = $metnet->get_enzy_info( $source_name, $reac_id );
         while( my( $complex_old, $lb, $ub, $dir ) = splice @enzy_info, 0, 4 ){
@@ -316,9 +316,9 @@ sub convert{
         $metnet2->set_reac_source( $dest_name, $new_id, join ';', sort keys %{$reac_info{$new_id}{source}} );
         if( @{$reac_info{$new_id}{from}} > 1 ){
             foreach my $reac_old ( @{$reac_info{$new_id}{from}} ){
-                push @{$self->{reac_log}{$reac_old}{status}}, 
-                    '- code: REAC_MNET_MERGE', 
-                    '  IDs_src:', 
+                push @{$self->{reac_log}{$reac_old}{status}},
+                    '- code: REAC_MNET_MERGE',
+                    '  IDs_src:',
                     map { '    - ' . $_ } sort @{$reac_info{$new_id}{from}};
             }
         }
@@ -479,8 +479,8 @@ sub convert{
                 push @member, "    - $_ # $self->{chem_log}{$_}{name_src}";
             }
             foreach( @chem_old ){
-                push @{$self->{chem_log}{$_}{status}}, 
-                    '- code: CHEM_MNET_MERGE', 
+                push @{$self->{chem_log}{$_}{status}},
+                    '- code: CHEM_MNET_MERGE',
                     '  IDs_src:',
                     sort @member;
             }
@@ -490,13 +490,13 @@ sub convert{
     # ------------------------------------------------ #
     # Assemble YAML conver log
     # ------------------------------------------------ #
-    
+
     push @{$self->{log4yaml}}, '---', '', "\nchem:\n";
     foreach my $chem_old ( sort $metnet->select_chem_ids( mnet => $source_name )){
         my @info_old = $metnet->get_chem_info( $chem_old );
         my $chem_new = $self->{chem_log}{$chem_old}{ID_dst};
         my @info_new = eval{ $metnet2->get_chem_info( $chem_new )};
-        @info_new = ( 'NOT FOUND FIXME', '', '', '' ) unless @info_new;
+        @info_new = ( 'NOT FOUND FIXME', '', '', '' )  unless @info_new;
         push @{$self->{log4yaml}},
              '',  # spacer
              "  - ID_src: $chem_old # $self->{chem_log}{$chem_old}{name_src}",
@@ -521,7 +521,7 @@ sub convert{
     push @{$self->{log4yaml}}, "\nreac:";
     foreach my $reac_old ( sort $metnet->select_reac_ids( mnet => $source_name )){
         my $reac_new = $self->{reac_log}{$reac_old}{ID_dst} || '~';
-        my $desc     = $self->{reac_log}{$reac_old}{ID_dst} 
+        my $desc     = $self->{reac_log}{$reac_old}{ID_dst}
                      ? $metnet2->get_reac_equation( $reac_new )
                      : 'EMPTY reaction';
         push @{$self->{log4yaml}},
