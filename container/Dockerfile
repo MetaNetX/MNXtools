@@ -33,15 +33,15 @@ RUN echo '# OS update' \
 	&& export DEBIAN_FRONTEND=noninteractive \
 	&& apt-get update  -y \
 	&& apt-get install -y --no-install-recommends perl libperl-dev libipc-run-perl libsort-naturally-perl libmodule-runtime-perl liblog-log4perl-perl libdigest-crc-perl libtest-simple-perl libmath-bigint-perl wget cmake make libexpat1-dev swig libyaml-dev libbz2-dev zlib1g-dev liblzma-dev check gcc g++ gfortran python3 libexpat1 libbz2-1.0 zlib1g liblzma5 parallel patchelf gnupg apt-utils ca-certificates libterm-readline-gnu-perl readline-common software-properties-common dirmngr git vim nano \
-	&&        echo '# Install R (in a non-interactive way)' \
-	&& echo '# See https://cran.r-project.org/bin/linux/ubuntu/' \
-	&& echo '# Signature of Ubuntu archives on CRAN' \
-	&& wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc \
-	&& echo '# Add the R 4.1 repo from CRAN'  \
-	&& add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)-cran40/" \
-	&& apt-get update -y \
-	&& apt-get install -y  build-essential libssl-dev libncurses5-dev libcurl4-openssl-dev liblzma-dev libbz2-dev libboost-all-dev sqlite3 libsqlite3-0 libsqlite3-dev libgsl0-dev zlib1g-dev libxml2-dev libgmp-dev libgmp10 libmpfr-dev \
-	&& apt-get install -y  r-base r-base-dev \
+	&& #       echo '# Install R (in a non-interactive way)' \
+	&& #echo '# See https://cran.r-project.org/bin/linux/ubuntu/' \
+	&& #echo '# Signature of Ubuntu archives on CRAN' \
+	&& #wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc \
+	&& #echo '# Add the R 4.1 repo from CRAN'  \
+	&& #add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)-cran40/" \
+	&& #apt-get update -y \
+	&& #apt-get install -y  build-essential libssl-dev libncurses5-dev libcurl4-openssl-dev liblzma-dev libbz2-dev libboost-all-dev sqlite3 libsqlite3-0 libsqlite3-dev libgsl0-dev zlib1g-dev libxml2-dev libgmp-dev libgmp10 libmpfr-dev \
+	&& #apt-get install -y  r-base r-base-dev \
 	&&        echo '# Install MNXtools' \
 	&& cd /usr/local \
 	&& git clone https://github.com/MetaNetX/MNXtools.git \
