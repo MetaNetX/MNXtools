@@ -164,14 +164,24 @@ if ( $TSV_directory ){
 #TODO allow a model to be kegg-oriented for example:
 #     without conflicts the id will be kegg ids
 
-#FIXME from reac list, list chem and comp (and geneproducts) AND then warn if defined in reac but not in chem/comp TSVs!
+#FIXME from reac list, list chem and comp (and geneproducts) AND then warn if defined in reac but not in chem/comp TSVs! Compare SBML and MetNet lists!
     # <listOfReactions>
-    my (%reac_chem, %reac_comp, %reac_gpr);#TODO
     my @reac_obj = $MetNet->get_growth_reac_ids($mnet_id);
     for my $reac_id ( uniq nsort $MetNet->select_reac_ids() ){
         Reactions::create_SBML_reaction($MetNet, $mnet_id, $SBML_model, $use_notes, $reac_id, $all_bounds, \@reac_obj);
     }
-
+    #check reaction lists between SBML and MetNet
+    my %diff_reactions = map { $_->getId() => -1 } $SBML_model->getListOfReactions();
+    map { $diff_reactions{ $_ }++ } $MetNet->select_reac_ids();
+    for my $missed_reac ( grep { $diff_reactions{ $_ } != 0 } keys %diff_reactions ){
+        warn "[", $missed_reac, "]\n";
+        if ( $diff_reactions{ $missed_reac } < 0 ){
+            warn "[$missed_reac] reaction in SBML but not in TSV\n";
+        }
+        elsif ( $diff_reactions{ $missed_reac } > 0 ){
+            warn "[$missed_reac] reaction in TSV but not in SBML\n";
+        }
+    }
 
     # <listOfCompartments>
     for my $comp_id ( uniq nsort $MetNet->select_comp_ids() ){
