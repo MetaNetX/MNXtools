@@ -166,6 +166,7 @@ if ( $TSV_directory ){
 
 #FIXME from reac list, list chem and comp (and geneproducts) AND then warn if defined in reac but not in chem/comp TSVs! Compare SBML and MetNet lists!
     # <listOfReactions>
+    # Add reactions in the model, and subsequently the linked chemical species and compartments
     my @reac_obj = $MetNet->get_growth_reac_ids($mnet_id);
     for my $reac_id ( uniq nsort $MetNet->select_reac_ids() ){
         Reactions::create_SBML_reaction($MetNet, $mnet_id, $SBML_model, $use_notes, $reac_id, $all_bounds, \@reac_obj);
@@ -174,7 +175,6 @@ if ( $TSV_directory ){
     my %diff_reactions = map { $_->getId() => -1 } $SBML_model->getListOfReactions();
     map { $diff_reactions{ $_ }++ } $MetNet->select_reac_ids();
     for my $missed_reac ( grep { $diff_reactions{ $_ } != 0 } keys %diff_reactions ){
-        warn "[", $missed_reac, "]\n";
         if ( $diff_reactions{ $missed_reac } < 0 ){
             warn "[$missed_reac] reaction in SBML but not in TSV\n";
         }
@@ -184,8 +184,16 @@ if ( $TSV_directory ){
     }
 
     # <listOfCompartments>
-    for my $comp_id ( uniq nsort $MetNet->select_comp_ids() ){
-#        Compartments::create_SBML_compartment($MetNet, $mnet_id, $SBML_model, $use_notes, $comp_id);
+    #check compartment lists between SBML and MetNet
+    my %diff_compartments = map { $_->getId() => -1 } $SBML_model->getListOfCompartments();
+    map { $diff_compartments{ $_ }++ } $MetNet->select_comp_ids();
+    for my $missed_comp ( grep { $diff_compartments{ $_ } != 0 } keys %diff_compartments ){
+        if ( $diff_compartments{ $missed_comp } < 0 ){
+            warn "[$missed_comp] compartment in SBML but not in TSV\n";
+        }
+        elsif ( $diff_compartments{ $missed_comp } > 0 ){
+            warn "[$missed_comp] compartment in TSV but not in SBML\n";
+        }
     }
 
 
