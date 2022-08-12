@@ -210,7 +210,6 @@ if ( $TSV_directory ){
     }
 
 
-#FIXME from reac list, list chem and comp (and geneproducts) AND then warn if defined in reac but not in chem/comp TSVs! Compare SBML and MetNet lists!
     # <fbc:listOfGeneProducts> setLabel/setName
     if ( $SBML_ns->getLevel() >= 3 ){
         my $gpr_fbc = $SBML_model->getPlugin('fbc');
@@ -224,6 +223,19 @@ if ( $TSV_directory ){
                 }
                 if ( $gpr_xrefs ){
                     $gpr->get($i)->setLabel($gpr_xrefs);
+                }
+            }
+
+            #check gpr lists between SBML and MetNet
+            my $model_gpr_nbr = $gpr->getNumGeneProducts() - 1;
+            my %diff_gprs = map { $gpr->get($_)->getId() => -1 } 0..$model_gpr_nbr;
+            map { $diff_gprs{ $_ }++ } $MetNet->select_pept_ids();
+            for my $missed_gpr ( keys %diff_gprs ){
+                if ( $diff_gprs{ $missed_gpr } < 0 ){
+                    warn "[$missed_gpr] gpr in SBML but not in TSV\n";
+                }
+                elsif ( $diff_gprs{ $missed_gpr } > 0 ){
+                    warn "[$missed_gpr] gpr in TSV but not in SBML\n";
                 }
             }
         }
