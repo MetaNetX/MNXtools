@@ -164,7 +164,6 @@ if ( $TSV_directory ){
 #TODO allow a model to be kegg-oriented for example:
 #     without conflicts the id will be kegg ids
 
-#FIXME from reac list, list chem and comp (and geneproducts) AND then warn if defined in reac but not in chem/comp TSVs! Compare SBML and MetNet lists!
     # <listOfReactions>
     # Add reactions in the model, and subsequently the linked chemical species and compartments
     my @reac_obj = $MetNet->get_growth_reac_ids($mnet_id);
@@ -198,11 +197,20 @@ if ( $TSV_directory ){
 
 
     # <listOfSpecies>
-    for my $chem_id ( uniq nsort $MetNet->select_chem_ids() ){
-#        Chemicals::create_SBML_chemical($MetNet, $mnet_id, $SBML_model, $use_notes, $chem_id);
+    #check chemical species lists between SBML and MetNet
+    my %diff_chemicals = map { my $cid = $_->getId(); $cid =~ s{__64__.+$}{}; $cid => -1 } $SBML_model->getListOfSpecies();
+    map { $diff_chemicals{ $_ }++ } $MetNet->select_chem_ids();
+    for my $missed_chem ( grep { $diff_chemicals{ $_ } != 0 } keys %diff_chemicals ){
+        if ( $diff_chemicals{ $missed_chem } < 0 ){
+            warn "[$missed_chem] chemical in SBML but not in TSV\n";
+        }
+        elsif ( $diff_chemicals{ $missed_chem } > 0 ){
+            warn "[$missed_chem] chemical in TSV but not in SBML\n";
+        }
     }
 
 
+#FIXME from reac list, list chem and comp (and geneproducts) AND then warn if defined in reac but not in chem/comp TSVs! Compare SBML and MetNet lists!
     # <fbc:listOfGeneProducts> setLabel/setName
     if ( $SBML_ns->getLevel() >= 3 ){
         my $gpr_fbc = $SBML_model->getPlugin('fbc');
