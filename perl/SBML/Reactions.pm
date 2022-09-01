@@ -651,13 +651,13 @@ sub create_SBML_reaction {
 
     #Objectives
     if ( any { $_ eq $reac_id_fixed } @$list_obj ){
-        warn "[$reac_id_fixed] is OBJ {$dir}\n";
+        #warn "[$reac_id_fixed] is OBJ {$dir} {$LB_id[0]} {$UB_id[0]}\n";
         my $fbc_obj = $SBML_model->getPlugin('fbc');
         my $obj = $fbc_obj->createObjective();
         $obj->setId("obj_$reac_id_fixed");
-        #FIXME not sure how to link reaction direction and objective type!
         $obj->setType($dir eq 'LR' ? 'maximize' : 'minimize');
-        #TODO fbc:activeObjective -- setActiveObjectiveId (the active one only)
+#TODO check setActiveObjectiveId conditions in case of minimize!!!
+        $fbc_obj->setActiveObjectiveId("obj_$reac_id_fixed")  if ( $LB_id[0] eq $Constants::ZERO_BOUND_ID && $UB_id[0] ne $Constants::ZERO_BOUND_ID); #NOTE the active must have open bounds
         my $flux_obj = $obj->createFluxObjective();
         $flux_obj->setCoefficient(1); #FIXME always 1???
         $flux_obj->setReaction($reac_id_fixed);
