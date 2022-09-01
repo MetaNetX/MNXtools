@@ -161,12 +161,8 @@ if ( $TSV_directory ){
     }
 
 
-#TODO SBML RNG Validator
+#TODO SBML RNG Validator & SBML validator
 #     Error Line 192608 Column 27: element "fbc:listOfObjectives" missing required attribute "fbc:activeObjective"
-#
-#TODO SBML validator
-#     ErrorThe value of attribute 'fbc:chemicalFormula' on the SBML <species> object must be set to a string consisting only of atomic names or user defined compounds and their occurrence. Reference: L3V1 Fbc V3 Section 3.4 Encountered '*' when expecting a capital letter.The chemicalFormula 'C23H41N2O9PS*' has incorrect syntax.
-#       => replace * by R but how many ? Or no fbc:chemicalFormula in that case ! (check mass)
 #
 #TODO -validate         Validate SBML (check consistency)
 #     option returns *Segmentation fault*

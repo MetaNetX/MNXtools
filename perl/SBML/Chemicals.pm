@@ -268,7 +268,7 @@ sub create_SBML_chemical {
     $chem->setSBOTerm( $chem_id eq $Constants::biomass_chem_id ? $Constants::biomass_chem_sbo : $Constants::default_chem_sbo );
     my $chem_fbc = $chem->getPlugin('fbc');
     $chem_fbc->setCharge($chem_charge)            if ( $chem_charge  ne '' );
-    $chem_fbc->setChemicalFormula($chem_formula)  if ( $chem_formula ne '' );
+    $chem_fbc->setChemicalFormula($chem_formula)  if ( $chem_formula ne '' && $chem_formula !~ /\*/ );
     my @chem_xrefs = split(';', $chem_xrefs);
     #notes
     if ( $use_notes ){
@@ -276,7 +276,7 @@ sub create_SBML_chemical {
         $notes .= '<html:p>COMPOUND_ID: '.$chem_id.                                    '</html:p>';
         $notes .= '<html:p>SOURCE: '.     $MetNet->get_chem_source($mnet_id, $chem_id).'</html:p>'  if ( $MetNet->get_chem_source($mnet_id, $chem_id) );
 #        $notes .= '<html:p>FORMULA: '.    $chem_formula.                               '</html:p>'  if ( $chem_formula ne '' ); #TODO exists in SBML3, so only for SBML2 if do not exist
-        $notes .= '<html:p>MASS: '.       $chem_mass.                                  '</html:p>'  if ( $chem_mass    ne '' );
+        $notes .= '<html:p>MASS: '.       $chem_mass.                                  '</html:p>'  if ( $chem_mass    ne '' && $chem_formula !~ /\*/ );
 #        $notes .= '<html:p>CHARGE: '.     $chem_charge.                                '</html:p>'  if ( $chem_charge  ne '' ); #TODO exists in SBML3, so only for SBML2 if do not exist
         $notes .= '<html:p>XREFS: '.      $chem_xrefs.                                 '</html:p>'  if ( $chem_xrefs );
         $notes .= '<html:p>REFERENCE: '.  $chem_xrefs[0].                              '</html:p>'  if ( exists $chem_xrefs[0] );
