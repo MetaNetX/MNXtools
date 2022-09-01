@@ -584,7 +584,8 @@ sub create_SBML_reaction {
         $reac->setSBOTerm($Constants::transport_reac_sbo);
     }
     elsif ( $complex eq $Constants::spontaneous_enz ){
-        $reac->setSBOTerm($Constants::spontaneous_reac_sbo);
+        #$reac->setSBOTerm($Constants::spontaneous_reac_sbo); #NOTE Unknown SBO term 'SBO:0000672' for libSBML
+        $reac->setSBOTerm($Constants::reac_sbo);
     }
     else {
         $reac->setSBOTerm($Constants::reac_sbo); #NOTE or SBO process as before???
