@@ -212,13 +212,13 @@ my %prefix_data =(
     ### Sabio-RK ###
     sabiorkM => {
         scope => 'chem',
-        value => 'http://sabiork.h-its.org/newSearch?q=',
+        value => 'https://sabiork.h-its.org/newSearch?q=',
         ident => 'sabiork.compound',
         depr  => [ 'sabiork' ],
     },
     sabiorkR => {
         scope => 'reac',
-        value => 'http://sabiork.h-its.org/newSearch?q=sabioreactionid:',
+        value => 'https://sabiork.h-its.org/newSearch?q=sabioreactionid:',
         ident => 'sabiork.reaction',
         depr  => [ 'sabiork' ],
     },
