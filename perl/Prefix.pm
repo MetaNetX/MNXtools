@@ -93,17 +93,17 @@ my %prefix_data =(
         depr  => [ 'bigg' ],
     },
     ### VMH ###
-    vmhmetabolite => {
+    vmhM => {
         scope => 'chem',
-        value => 'https://identifiers.org/vmhmetabolite:',
+        value => 'https://vmh.life/#metabolite/',
         ident => 'vmhmetabolite',
     },
-    vmhreaction => {
+    vmhR => {
         scope => 'reac',
-        value => 'https://identifiers.org/vmhreaction:',
+        value => 'https://vmh.life/#reaction/',
         ident => 'vmhreaction'
     },
-#    vmhcompartment => {
+#    vmhC => {
 #        scope => 'comp',
 #        value => 'http://bigg.ucsd.edu/compartments/',
 #    },
