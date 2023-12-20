@@ -69,7 +69,7 @@ if ( $SBML_input ){
 
 
     # Get general model information
-    #NOTE Order of parsing is important because chemicals with oundaryCondition=true will create the boundary compartment
+    #NOTE Order of parsing is important because chemicals with boundaryCondition=true will create the boundary compartment
     Model::parse_Model_Info($SBML_object->getModel(), $SBML_input, $SBML_object);
     Chemicals::parse_Chemicals_Info($SBML_object->getModel(), $SBML_object);
     Reactions::parse_Reactions_Info($SBML_object->getModel(), $SBML_object);
