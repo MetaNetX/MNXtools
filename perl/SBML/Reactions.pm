@@ -493,18 +493,19 @@ sub find_growth_reaction {
 
         # Add biomass consumption (export to boundary) if not there
         if ( $has_biomass_compound && $local_biomass ){
+            my @biomass_reactants = grep { /^$local_biomass$/ } split(/\s+\+\s+/, $reactants);
+            my @biomass_products  = grep { /^$local_biomass$/ } split(/\s+\+\s+/, $products);
             # A biomass consumption reaction already exists?
             for my $reac2 ( keys %$reactions ){
                 my $export = $reactions->{$reac2};
-                my @biomass_reactants = grep { /^$local_biomass$/ } split(/\s+\+\s+/, $reactants);
-                my @biomass_products  = grep { /^$local_biomass$/ } split(/\s+\+\s+/, $products);
                 #biomass consumption exists
-                if (     exists $biomass_reactants[0] && !exists $biomass_products[0] && scalar @reactants == 1 && scalar @products <= 1 && $export->{'Sid'} ne $Constants::biomass_reac_id ){
+                if (     exists $biomass_reactants[0] && !exists $biomass_products[0] && scalar @reactants == 1 && scalar @products == 0 && $export->{'Sid'} ne $Constants::biomass_reac_id ){
                     delete $Reactions::reactions->{ Formaters::format_Reaction($export->{'Sid'}) };
                 }
-                elsif ( !exists $biomass_reactants[0] &&  exists $biomass_products[0] && scalar @reactants >= 1 && scalar @products == 1 && $export->{'Sid'} ne $Constants::biomass_reac_id ){
+                elsif ( !exists $biomass_reactants[0] &&  exists $biomass_products[0] && scalar @reactants == 0 && scalar @products == 1 && $export->{'Sid'} ne $Constants::biomass_reac_id ){
                     delete $Reactions::reactions->{ Formaters::format_Reaction($export->{'Sid'}) };
                 }
+                #FIXME deal with cases where  1 BIOMASS@c --> 1 BIOMASS@BOUNDARY  already there!
             }
         }
 
