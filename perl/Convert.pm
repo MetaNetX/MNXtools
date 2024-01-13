@@ -415,8 +415,9 @@ sub convert{
     # needed. BOUNDARY deserve a special treatment
     # ------------------------------------------------ #
 
-    my @red_proton = eval{ $metnet2->select_spec_ids( mnet => $source_name, chem => 'MNXM01') };
-    if( @red_proton > 0 ){ # most likely case is when MNXM01 does not exist
+    my @red_proton  = eval{ $metnet2->select_spec_ids( mnet => $source_name, chem => 'MNXM01') };
+    my @blue_proton = eval{ $metnet2->select_spec_ids( mnet => $source_name, chem => 'MNXM1') };
+    if( @red_proton > 0 and @blue_proton > 0 ){ # most likely case is when MNXM01 does not exist
         foreach my $red_proton ( @red_proton ){
             my $blue_proton = $red_proton;
             $blue_proton =~ s/^MNXM01\@/MNXM1\@/;
