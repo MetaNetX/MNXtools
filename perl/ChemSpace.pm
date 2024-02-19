@@ -812,7 +812,7 @@ sub _map_equation{
     my %proton    = ();
     my %hydroxyde = ();
     my %new2old   = ();
-    my $has_PMF = 0;
+    my $has_PMF   = 0;
     foreach my $comp_old ( keys %$eq_old ){
         my( $comp_new, $msg ) = $self->map_comp( $comp_old, $prefix );
         foreach my $chem_old ( keys %{$eq_old->{$comp_old}} ){
@@ -843,7 +843,7 @@ sub _map_equation{
                     push @warn,
                          '- code: REAC_MAP_LOSS',
                          "  chem: $chem_new # " . $self->{chem_prop}{$chem_new}{name},
-                         "  comp: $comp_new # " . $self->{comp_prop}{$chem_new}{name};
+                         "  comp: $comp_new # " . $self->{comp_prop}{$comp_new}{name};
                 }
             }
         }
@@ -991,7 +991,7 @@ sub _chose_comp{
             '- code: COMP_MAP_MULTIPLE',
             '  IDs_dst:',
         ];
-        push @$warn, "      - $_ # " . $self->{chem_prop}{$_}{name}  foreach @comp;
+        push @$warn, "      - $_ # " . $self->{comp_prop}{$_}{name}  foreach @comp;
     }
     return ( $comp[0], $warn );
 }
