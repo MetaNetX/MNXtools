@@ -411,11 +411,10 @@ sub _write_chem_isom{
     print $tsv join( "\t", '#parent', 'child', 'description'), "\n";
     foreach my $id ( sort keys %{$self->{chem_isom}} ){
         foreach( @{$self->{chem_isom}{$id}} ){
-            my $comment = # $self->{chem_prop{$id}{name}
             print $tsv join "\t",
-            $id,
-            $_,
-            $self->{chem_prop}{$id}{name} . ' -> ' . $self->{chem_prop}{$_}{name} . "\n";
+                $id,
+                $_,
+                $self->{chem_prop}{$id}{name} . ' -> ' . $self->{chem_prop}{$_}{name} . "\n";
         }
     }
     close $tsv;
@@ -976,8 +975,10 @@ sub search_chem_isom{ # return the list of all isom children + itself
     my( $self, $mnxm_id ) = @_;
     my %id = ( $mnxm_id => 1 );
     foreach my $id ( $self->get_chem_isom( $mnxm_id )){
-        foreach( $self->search_chem_isom( $id )){
-            $id{$_} = 1;
+        if( $id ne $mnxm_id ){
+            foreach( $self->search_chem_isom( $id )){
+                $id{$_} = 1;
+            }
         }
     }
     return sort keys %id;
