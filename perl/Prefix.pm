@@ -246,6 +246,10 @@ my %prefix_data =(
         scope => 'comp',
         value => 'http://rdf.rhea-db.org/compartment/', # invented IRI as far as I know !!!
     },
+    elr => {
+        scope => 'reac',
+        value => 'http://rdf.rhea-db.org/elr/', # invented IRI as far as I know !!!
+    },
     ### UniProt ###
     uniprotkb => {
         scope => 'pept',
