@@ -30,6 +30,10 @@ my %prefix_data =(
         scope => 'other',
         value => 'http://www.w3.org/2002/07/owl#',
     },
+    sh => {
+        scope => 'other',
+        value => 'http://www.w3.org/ns/shacl#',
+    },
     ### MetaNetX ###
     comp => {
         scope => 'comp',
