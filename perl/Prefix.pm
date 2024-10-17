@@ -366,6 +366,56 @@ sub get_turtle_prefixes{
     return join "\n", @line;
 }
 
+sub get_prefix_ontology{
+    my $self = shift;
+    my @line = ( 
+        'prefix   sh: <http://www.w3.org/ns/shacl#>',
+        'prefix  xsd: <http://www.w3.org/2001/XMLSchema#>',
+        'prefix  owl: <http://www.w3.org/2002/07/owl#>',
+        'prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>',
+        '',
+        '_:sparql_examples_prefixes',
+        '   a owl:Ontology ;',
+        '   rdfs:comment """
+This is a collection of SPARQL prefixes used by MetaNetX.
+Nota Bene: There are often two prefixes for the same entity. One corresponds to 
+the IRI used by the RDF community at SIB, and often starts with "http://purl.". It
+is the recommended prefix. The other prefix corresponds to the "MIRIAM" prefixes 
+which were adopted by the Systems Biology community (https://sbml.org/documents/elaborations/miriam_annotation_syntax/), 
+and typically starts with "https://identifiers.org/". Very unfortunately, identifiers.org 
+has promoted the usage of the short form of IRIs in SBML annotations, and is maintaining 
+a list of "official" MIRIAM prefixes at https://registry.identifiers.org. To ensure 
+interoperability with the Systems Biology community and avoid namespace clashes, MetaNetX 
+has to respects the MIRIAM prefixe nomenclature, and has no other choice than to define 
+ad hoc prefixes for those not covered by MIRIAM.   
+
+""" ;',
+        'owl:imports sh: .',    
+       ''
+    );
+    foreach my $dbkey ( sort keys %{$self->{prefix}} ){
+        my $scope = $prefix_data{$dbkey}{scope} || 'other';
+        push @line,
+            "_:sparql_examples_prefixes sh:declare _:prefix_$dbkey .",
+            "_:prefix_$dbkey ",
+            "   rdfs:comment 'A primary prefix for $scope entries';",
+            "   sh:prefix '$dbkey' ;",
+            "   sh:namespace '$self->{prefix}{$dbkey}'^^xsd:anyURI .",
+            '';
+        if( my $dbkey2 = $self->{same_as}{$dbkey} ){
+            push @line,
+                "_:sparql_examples_prefixes sh:declare _:prefix_$dbkey2 .",
+                "_:prefix_$dbkey2 ",
+                "   rdfs:comment 'A secondary prefix for $scope entries, i.e. this is a proxy for $dbkey via identifiers.org';",
+                "   rdfs:seeAlso _:prefix_$dbkey ;",
+                "   sh:prefix '$dbkey2' ;",
+                "   sh:namespace '$self->{prefix2}{$dbkey2}'^^xsd:anyURI .",
+                '';
+        }
+    }
+    return join "\n", @line;
+}
+
 sub get_identifier{
     my( $self, $dbkey, $id ) =@_;
     if( exists $self->{prefix}{$dbkey} ){
