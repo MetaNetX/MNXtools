@@ -31,7 +31,7 @@ my $usage = "$0 [options] <indir> <outdir>
 <indir>   directory with a mnet in MetaNetX TSV format
 <outdir>  directory to write the mapped mnet and the yaml mapping
           report.
-          Nota Bene: the content of <outdir> is completely nerased!
+          Nota Bene: the content of <outdir> is completely erased!
 
 options:
 
@@ -60,12 +60,12 @@ options:
                   -c ID                (this is the default when -c is not set)
                   -c ID,XREF           (use all information available, possibly generating many conflicts)
                   -c chebi/kegg/ID     (it should speak for itself)
-                  -c chebi,slm/ID      (ditto)
+                  -c chebi/slm/ID      (ditto)
 
     -y <regexp>   use pept xref for mapping
-                  ('.' means all which is the defaultby default)
-    -G            produce reaction with MetaNetX generic compartments.
-                  Destroy the connectivity of compartimentalized models.
+                  ('.' means alli, which is the default)
+    -G            produce reactions with MetaNetX generic compartments,
+                  destroying the connectivity of compartimentalized models.
 ";
 
 my %opt;  # GLOBAL: to store the options
