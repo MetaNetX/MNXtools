@@ -297,6 +297,10 @@ my %prefix_data =(
         value => 'http://purl.obolibrary.org/obo/CL_',
         ident => 'CL',
     },
+    reconx => {
+        scope => 'other',
+        value => 'https://reconx.vital-it.ch/kg/',
+    }
 );
 
 sub _validate_prefix_data{
@@ -360,7 +364,7 @@ sub get_turtle_prefixes{
         '# This is how to regenerate it:',
         '# clone https://github.com/MetaNetX/MNXtools.git MNXtools',
         '# cd MNXtools/perl',
-        '# perl -e \'use lib "."; use Prefix; print Prefix->new()->get_turtle_prefixes()\' > prefixes.ttl',
+        q|# perl -e 'use lib "."; use Prefix; print Prefix->new()->get_turtle_prefixes()' > prefixes.ttl|,
         '',
     );
     foreach my $dbkey ( sort keys %{$self->{prefix}} ){
@@ -382,7 +386,7 @@ sub get_prefix_ontology{
         '# This is how to regenerate it:',
         '# clone https://github.com/MetaNetX/MNXtools.git MNXtools',
         '# cd MNXtools/perl',
-        '# perl -e \'use lib "."; use Prefix; print Prefix->new()->get_prefix_ontology()\' > prefixes.ttl',
+        q|# perl -e 'use lib "."; use Prefix; print Prefix->new()->get_prefix_ontology()' > prefixes.ttl|,
         '',
         'prefix   sh: <http://www.w3.org/ns/shacl#>',
         'prefix  xsd: <http://www.w3.org/2001/XMLSchema#>',
