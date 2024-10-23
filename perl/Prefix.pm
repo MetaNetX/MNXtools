@@ -232,27 +232,27 @@ my %prefix_data =(
         value => 'https://www.swisslipids.org/#/entity/SLM:',
         ident => 'SLM',
     },
-    ### RHEA
-    rheaR => {
-        scope => 'reac',
+    ### RHEA # 'rhea:' seems deprecated on identifiers.org :-)
+    rh => {
+        scope => 'reac', # this is the dominant scope, but it is also used for compartment and vocabulary!
         value => 'http://rdf.rhea-db.org/',
         ident => 'rhea',
     },
     rheaP => {
         scope => 'chem',
-        value => 'http://rdf.rhea-db.org/polymer/', # invented IRI as far as I know !!!
+        value => 'http://rhea.example.org/polymer/', # invented IRI as far as I know !!!
     },
     rheaG => {
         scope => 'chem',
-        value => 'http://rdf.rhea-db.org/generic/', # invented IRI as far as I know !!!
+        value => 'http://rhea.example.org/generic/', # invented IRI as far as I know !!!
     },
     rheaC => {
         scope => 'comp',
-        value => 'http://rdf.rhea-db.org/compartment/', # invented IRI as far as I know !!!
+        value => 'http://rhea.example.org/compartment/', # invented IRI as far as I know !!!
     },
     elr => {
         scope => 'reac',
-        value => 'http://rdf.rhea-db.org/elr/', # invented IRI as far as I know !!!
+        value => 'http://rhea.example.org/elr/', # invented IRI as far as I know !!!
     },
     ### UniProt ###
     uniprotkb => {
@@ -275,10 +275,10 @@ my %prefix_data =(
     },
 
     ### Miscelaneous vocabulary ( most of them are RDF predicates, hence they are not in identifiers.org )
-    rheaV => {
-        scope => 'other',
-        value => 'http://rdf.rhea-db.org/',
-    },
+    #rheaV => {
+    #    scope => 'other',
+    #    value => 'http://rdf.rhea-db.org/',
+    #},
     up => {
         scope => 'other',
         value => 'http://purl.uniprot.org/core/',
