@@ -375,7 +375,7 @@ sub get_turtle_prefixes{
 
         ;
     }
-    return join "\n", @line;
+    return join( "\n", @line ) . "\n";
 }
 
 sub get_prefix_ontology{
@@ -432,7 +432,7 @@ ad hoc prefixes for those not covered by MIRIAM.
                 '';
         }
     }
-    return join "\n", @line;
+    return join( "\n", @line ) . "\n";
 }
 
 sub get_identifier{
