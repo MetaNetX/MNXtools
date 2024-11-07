@@ -210,7 +210,8 @@ my %prefix_data =(
     reactomeR => {
         scope => 'reac',
         value => 'https://reactome.org/content/detail/', # same as above !
-        ident => 'reactome',
+        ident => 'reactome', # reactome and identifiers.org utilise the same prefix for metabolites and reactions. 
+                             # Duplicated prefix declarations may cause problem in some implementation of SPARQL engine.
         depr  => [ 'reactome' ],
     },
     ### Sabio-RK ###
@@ -359,7 +360,7 @@ sub get_prefix_data{
 sub get_turtle_prefixes{
     my $self = shift;
     my @line = (
-        '# This output is automatically generated with a perl script.',
+        '# This list of prefixes was automatically generated with a perl script.',
         '# !!! Manual modifications will be lost !!!',
         '# This is how to regenerate it:',
         '# clone https://github.com/MetaNetX/MNXtools.git MNXtools',
