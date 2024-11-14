@@ -210,7 +210,7 @@ my %prefix_data =(
     reactomeR => {
         scope => 'reac',
         value => 'https://reactome.org/content/detail/', # same as above !
-        ident => 'reactome', # reactome and identifiers.org utilise the same prefix for metabolites and reactions. 
+        ident => 'reactome', # reactome and identifiers.org utilise the same prefix for metabolites and reactions.
                              # Duplicated prefix declarations may cause problem in some implementation of SPARQL engine.
         depr  => [ 'reactome' ],
     },
@@ -398,19 +398,19 @@ sub get_prefix_ontology{
         '   a owl:Ontology ;',
         '   rdfs:comment """
 This is a collection of SPARQL prefixes used by MetaNetX.
-Nota Bene: There are often two prefixes for the same entity. One corresponds to 
+Nota Bene: There are often two prefixes for the same entity. One corresponds to
 the IRI used by the RDF community at SIB, and often starts with "http://purl.". It
-is the recommended prefix. The other prefix corresponds to the "MIRIAM" prefixes 
-which were adopted by the Systems Biology community (https://sbml.org/documents/elaborations/miriam_annotation_syntax/), 
-and typically starts with "https://identifiers.org/". Very unfortunately, identifiers.org 
-has promoted the usage of the short form of IRIs in SBML annotations, and is maintaining 
-a list of "official" MIRIAM prefixes at https://registry.identifiers.org. To ensure 
-interoperability with the Systems Biology community and avoid namespace clashes, MetaNetX 
-has to respects the MIRIAM prefixe nomenclature, and has no other choice than to define 
-ad hoc prefixes for those not covered by MIRIAM.   
+is the recommended prefix. The other prefix corresponds to the "MIRIAM" prefixes
+which were adopted by the Systems Biology community (https://sbml.org/documents/elaborations/miriam_annotation_syntax/),
+and typically starts with "https://identifiers.org/". Very unfortunately, identifiers.org
+has promoted the usage of the short form of IRIs in SBML annotations, and is maintaining
+a list of "official" MIRIAM prefixes at https://registry.identifiers.org. To ensure
+interoperability with the Systems Biology community and avoid namespace clashes, MetaNetX
+has to respects the MIRIAM prefixe nomenclature, and has no other choice than to define
+ad hoc prefixes for those not covered by MIRIAM.
 
 """ ;',
-        'owl:imports sh: .',    
+        'owl:imports sh: .',
        ''
     );
     foreach my $dbkey ( sort keys %{$self->{prefix}} ){
