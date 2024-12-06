@@ -233,7 +233,6 @@ my %prefix_data =(
         value => 'https://www.swisslipids.org/#/entity/SLM:',
         ident => 'SLM',
     },
-    ### RHEA # 'rhea:' seems deprecated on identifiers.org :-)
     rh => {
         scope => 'reac', # this is the dominant scope, but it is also used for compartment and vocabulary!
         value => 'http://rdf.rhea-db.org/',
