@@ -475,6 +475,12 @@ sub find_growth_reaction {
             my %compartments;
             map { m/\@(.+)$/; $compartments{$1}++ } split(/\s+\+\s+/, $products);
             my ($best_compartment) = sort { $compartments{$b} <=> $compartments{$a} || $a cmp $b } keys %compartments;
+            # If no products
+            if ( !$best_compartment ){
+                my %comp;
+                map { m/\@(.+)$/; $comp{$1}++ } split(/\s+\+\s+/, $reactants);
+                ($best_compartment) = sort { $comp{$b} <=> $comp{$a} || $a cmp $b } keys %comp;
+            }
             $local_biomass = "1 $Constants::biomass_chem_id\@$best_compartment";
             #Add in chemicals
             my $biomass_chem;
