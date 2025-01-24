@@ -475,8 +475,10 @@ sub find_growth_reaction {
             my %compartments;
             map { m/\@(.+)$/; $compartments{$1}++ } split(/\s+\+\s+/, $products);
             my ($best_compartment) = sort { $compartments{$b} <=> $compartments{$a} || $a cmp $b } keys %compartments;
+            my $has_product = 1;
             # If no products
             if ( !$best_compartment ){
+                $has_product = 0;
                 my %comp;
                 map { m/\@(.+)$/; $comp{$1}++ } split(/\s+\+\s+/, $reactants);
                 ($best_compartment) = sort { $comp{$b} <=> $comp{$a} || $a cmp $b } keys %comp;
@@ -492,7 +494,13 @@ sub find_growth_reaction {
             $biomass_chem->{ $Constants::biomass_chem_id }->{'charge'}  = '';
             push @{ $biomass_chem->{ $Constants::biomass_chem_id }->{'xrefs'} }, "mnx:$Constants::biomass_chem_id";
             Chemicals::add_chemical($biomass_chem);
-            $Reactions::reactions->{ $reac }->{'equation'} .= " + $local_biomass";
+            if ( $has_product ){
+                $Reactions::reactions->{ $reac }->{'equation'} .= " + $local_biomass";
+            }
+            else {
+                #NOTE to avoid adding an empty product if none before!
+                $Reactions::reactions->{ $reac }->{'equation'} .= "$local_biomass";
+            }
             $has_biomass_compound = 1;
         }
 

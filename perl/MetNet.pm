@@ -38,7 +38,7 @@ sub new{
     bless $self, $package;
 }
 
-sub load{ # load a singe mnet from disk
+sub load{ # load a single mnet from disk
     my( $self, $path, $new_mnet_id ) = @_;
 
     my $filename = $path.'/model.tsv';
@@ -254,11 +254,11 @@ sub _store_reac{ # if $reac_id is already stored then the following fields are i
         $self->equa_store( $mnet_num, $reac_num, $equa_id ); # keep the internal data structure up to date
     }
     else{
-        # FIXME: check here the values of $reac_id, $equation, $equa_id
+        #FIXME  check here the values of $reac_id, $equation, $equa_id
         $reac_num = ++$self->{counter};
         $self->{look}{reac}{$reac_id} = $reac_num;
         my( $left, $arrow, $right ) = $equation =~ /(.*) (<\-+|<=+>|\-+>|<\?>|=+) (.*)/;
-        confess "Cannot parse equation $reac_id: $equation\n" unless $left and $arrow and $right;
+        confess "Cannot parse equation $reac_id: $equation\n"  unless $left and $arrow and $right;
         $equation =~ s/ (<\-+|<=+>|\-+>|=+) / <?> /;
         my( %left, %right, %comp );
         foreach(split / \+ /, $left){
@@ -974,6 +974,7 @@ sub write{
                 unless( $seen{$self->{spec}{$spec_num}{chem}} ){
                     my $chem_num  = $self->{spec}{$spec_num}{chem};
                     my $chem_info = $self->{chem}{$chem_num};
+                    next  if ( !$chem_info->{id} );
                     print CHEM join( "\t",
                                      $chem_info->{id},
                                      $chem_info->{desc},
@@ -987,6 +988,7 @@ sub write{
                 unless($seen{$self->{spec}{$spec_num}{comp}}){
                     my $comp_num  = $self->{spec}{$spec_num}{comp};
                     my $comp_info = $self->{comp}{$comp_num};
+                    next  if ( !$comp_info->{id} );
                     print COMP join "\t",
                                     $comp_info->{id},
                                     $comp_info->{desc},
