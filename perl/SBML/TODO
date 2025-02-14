@@ -2,3 +2,9 @@ complicated to transform current stderr (Log::Log4perl) to YAML:
 	- different formats for SBML errors/warnings and my errors/warnings
 		=> must keep the SBML format people "know"
 and still be one warning/error per line for terminals
+
+Add InChI/InChIKey and SMILES in SBML, but they need to be written in the TSV files
+(+RInChI ...)
+
+Add links to UniProt, if any, as gene annotation
+
