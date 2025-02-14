@@ -6,5 +6,5 @@ and still be one warning/error per line for terminals
 Add InChI/InChIKey and SMILES in SBML, but they need to be written in the TSV files
 (+RInChI ...)
 
-Add links to UniProt, if any, as gene annotation
+Add links to UniProt, EC, ... (e.g. kegg.genes, wormbase) as gene annotation
 
