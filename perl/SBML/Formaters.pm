@@ -173,15 +173,33 @@ sub guess_annotation_link {
             $prefix = 'reac';
         }
     }
-    if ( $prefix eq 'kegg' && $scope eq 'chem' ){
+    elsif ( $prefix eq 'kegg' && $scope eq 'chem' ){
         $prefix = $id =~ /^C/ ? 'keggC'
                 : $id =~ /^D/ ? 'keggD'
                 : $id =~ /^G/ ? 'keggG'
                 : $id =~ /^E/ ? 'keggE'
                 : 'keggC';
     }
+    elsif ( $prefix eq 'uniprot' && $scope eq 'pept' ){
+        $prefix = 'uniprotkb';
+    }
 
     my $right_prefix = $Formaters::prefixes->{'toSBML'}->{$scope}->{$prefix} || '';
+    # other peptide links
+    if ( $scope eq 'pept' && $right_prefix eq '' ){
+        if ( $prefix eq 'kegg.genes' ){
+            if ( $id =~ /^CELE_/ ){
+                $right_prefix = $prefix;
+                $id = 'cel:'.$id;
+            }
+            elsif ( $id =~ /^cel:/ ){
+                $right_prefix = $prefix;
+            }
+        }
+        elsif ( $prefix eq 'wormbase' ){
+            $right_prefix = 'wb';
+        }
+    }
 
     return ''  if ( $right_prefix eq '' );
     return "$Constants::identifier$right_prefix:$id";

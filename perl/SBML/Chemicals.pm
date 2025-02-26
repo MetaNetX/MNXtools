@@ -311,7 +311,6 @@ sub create_SBML_chemical {
             $chem->addCVTerm($CV2);
         }
     }
-#TODO inchikey are missing as xref
 
     return;
 }

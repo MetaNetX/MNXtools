@@ -162,12 +162,14 @@ if ( $TSV_directory ){
 
 
 #TODO SBML validator
-#     Unknown SBO term 'SBO:0000672'
+#     SBO term 'SBO:0000289' on the <compartment> is not in the appropriate branch
+#     SBO term 'SBO:0000649' on the <species>     is not in the appropriate branch
 #
 #TODO -validate         Validate SBML (check consistency)
 #     option returns *Segmentation fault*
 #
 #TODO MEMOTE to do
+#
 #TODO allow a model to be kegg-oriented for example:
 #     without conflicts the id will be kegg ids
 
@@ -223,14 +225,7 @@ if ( $TSV_directory ){
         if ( $gpr_fbc ){
             my $gpr = $gpr_fbc->getListOfGeneProducts();
             for (my $i = 0; $i < $gpr->getNumGeneProducts(); $i++){
-                my $gpr_id = $gpr->get($i)->getId();
-                my ($gpr_desc, $gpr_xrefs, $gpr_gene) = $MetNet->get_pept_info($gpr_id);
-                if ( $gpr_desc ){
-                    $gpr->get($i)->setName($gpr_desc);
-                }
-                if ( $gpr_xrefs ){
-                    $gpr->get($i)->setLabel($gpr_xrefs);
-                }
+                Peptides::update_GeneProducts($gpr->get($i), $MetNet);
             }
 
             #check gpr lists between SBML and MetNet
@@ -247,6 +242,7 @@ if ( $TSV_directory ){
             }
         }
     }
+    #TODO add peptide notes only for SBML level 2 ???
 
 
     # Check model
