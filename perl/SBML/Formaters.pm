@@ -193,9 +193,9 @@ sub guess_annotation_link {
         if ( $prefix eq 'ccds' ){
             $right_prefix = $prefix;
         }
-        elsif ( $prefix eq 'cgsc' ){
-            $right_prefix = $prefix;
-        }
+#        elsif ( $prefix eq 'cgsc' ){ #NOTE deprecated
+#            $right_prefix = $prefix;
+#        }
         elsif ( $prefix eq 'echobase' ){
             $right_prefix = $prefix;
         }
@@ -208,9 +208,9 @@ sub guess_annotation_link {
         elsif ( $prefix eq 'hgnc.symbol' ){
             $right_prefix = $prefix;
         }
-        elsif ( $prefix eq 'hprd' ){
-            $right_prefix = $prefix;
-        }
+#        elsif ( $prefix eq 'hprd' ){ #NOTE deprecated
+#            $right_prefix = $prefix;
+#        }
         elsif ( $prefix eq 'interpro' ){
             $right_prefix = $prefix;
         }
