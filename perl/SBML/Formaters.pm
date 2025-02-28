@@ -180,6 +180,9 @@ sub guess_annotation_link {
                 : $id =~ /^E/ ? 'keggE'
                 : 'keggC';
     }
+    elsif ( ($prefix eq 'uniprot' || $prefix eq 'uniprotkb') && $scope eq 'pept' && $id =~ /\-\d+$/ ){
+        $prefix = 'uniprot-isoform';
+    }
     elsif ( $prefix eq 'uniprot' && $scope eq 'pept' ){
         $prefix = 'uniprotkb';
     }
@@ -187,7 +190,31 @@ sub guess_annotation_link {
     my $right_prefix = $Formaters::prefixes->{'toSBML'}->{$scope}->{$prefix} || '';
     # other peptide links
     if ( $scope eq 'pept' && $right_prefix eq '' ){
-        if ( $prefix eq 'kegg.genes' ){
+        if ( $prefix eq 'ccds' ){
+            $right_prefix = $prefix;
+        }
+        elsif ( $prefix eq 'cgsc' ){
+            $right_prefix = $prefix;
+        }
+        elsif ( $prefix eq 'echobase' ){
+            $right_prefix = $prefix;
+        }
+        elsif ( $prefix eq 'ensembl' ){
+            $right_prefix = $prefix;
+        }
+        elsif ( $prefix eq 'goa' ){
+            $right_prefix = $prefix;
+        }
+        elsif ( $prefix eq 'hgnc.symbol' ){
+            $right_prefix = $prefix;
+        }
+        elsif ( $prefix eq 'hprd' ){
+            $right_prefix = $prefix;
+        }
+        elsif ( $prefix eq 'interpro' ){
+            $right_prefix = $prefix;
+        }
+        elsif ( $prefix eq 'kegg.genes' ){
             if ( $id =~ /^CELE_/ ){
                 $right_prefix = $prefix;
                 $id = 'cel:'.$id;
@@ -196,12 +223,25 @@ sub guess_annotation_link {
                 $right_prefix = $prefix;
             }
         }
+        #NOTE Cannot find ncbigi: on identifiers.org
+        elsif ( $prefix eq 'ncbigene' ){
+            $right_prefix = $prefix;
+        }
+        elsif ( $prefix eq 'omim' ){
+            $right_prefix = 'mim';
+        }
+        elsif ( $prefix eq 'sgd' ){
+            $right_prefix = $prefix;
+        }
+        elsif ( $prefix eq 'uniprot-isoform' ){
+            $right_prefix = 'uniprot.isoform';
+        }
         elsif ( $prefix eq 'wormbase' ){
             $right_prefix = 'wb';
         }
     }
 
-    return ''  if ( $right_prefix eq '' );
+    return ''  if ( $right_prefix eq '' ); #TODO warn missed prefixes!
     return "$Constants::identifier$right_prefix:$id";
 }
 

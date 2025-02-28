@@ -76,6 +76,7 @@ sub update_GeneProducts {
     my @gpr_xrefs = sort {
                             ($b =~ /^uniprotkb:/) <=> ($a =~ /^uniprotkb:/)
                          || ($b =~ /^uniprot:/)   <=> ($a =~ /^uniprot:/)
+                         || $a cmp $b
                          }
                     split(';', $gpr_xrefs);
     if ( $gpr_xrefs ){
