@@ -38,20 +38,7 @@ sub clean_comp_annotation {
     my ($annotation) = @_;
     my ($prefix, $id) = split(/:/, $annotation, 2);
 
-    if ( $prefix eq 'go' ){
-        $annotation = 'GO:'.$id;
-    }
-    elsif ( $prefix eq 'bigg.compartment' ){
-        $annotation = 'biggC:'.$id;
-    }
-    elsif ( $prefix eq 'metanetx.compartment' ) {
-        $annotation = 'mnx:'.$id;
-    }
-    elsif ( $prefix eq 'cl' ){
-        $annotation = 'CL:'.$id;
-    }
-
-    return $annotation;
+    return Formaters::guess_prefix('comp', $annotation);
 }
 
 sub clean_chem_annotation {
@@ -139,7 +126,7 @@ sub clean_reac_annotation {
         $annotation = 'biggR:'.$id;
     }
     elsif ( $prefix eq 'rhea' ){
-        $annotation = 'rheaR:'.$id;
+        $annotation = 'rh:'.$id;
     }
     elsif ( $prefix eq 'kegg.reaction' ){
         $annotation = 'keggR:'.$id;
