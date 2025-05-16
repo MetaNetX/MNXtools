@@ -785,7 +785,7 @@ sub map_equation{
     if( ! $reac_id or 16 < length $reac_id or $reac_id eq 'mnxr01' ){
         $reac_id = MetNet::compute_reac_id( $str_spec );
     }
-    my( $str_gen, $sign_gen, $comp_map ) = @{$eq_map[$num]};
+    my( $str_gen, $sign_gen ) = @{$eq_map[$num]};
     my $mnxr_id = $self->{eq_to_mnxr}{$str_gen} || '';
     return ( $reac_id, $str_spec, $sign_spec, $is_balanced, $msg, $mnxr_id, $str_gen, $sign_gen );
 }
