@@ -107,6 +107,11 @@ my %prefix_data =(
         value => 'https://vmh.life/#reaction/',
         ident => 'vmhreaction'
     },
+    vmhG => {
+        scope => 'pept',
+        value => 'https://vmh.life/#gene/',
+        ident => 'vmhgene',
+    },
 #    vmhC => {
 #        scope => 'comp',
 #        value => 'http://bigg.ucsd.edu/compartments/',
