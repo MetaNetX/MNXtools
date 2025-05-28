@@ -372,13 +372,15 @@ sub get_turtle_prefixes{
         q|# perl -e 'use lib "."; use Prefix; print Prefix->new()->get_turtle_prefixes()' > prefixes.ttl|,
         '',
     );
+    my %seen;
     foreach my $dbkey ( sort keys %{$self->{prefix}} ){
+        $seen{$dbkey} = 1;
         push @line, '@prefix ' . $dbkey . ': <' . $self->{prefix}{$dbkey} . "> .";
         if( my $dbkey2 = $self->{same_as}{$dbkey} ){
+            next  if ( $seen{$dbkey2} );
+            $seen{$dbkey2} = 1;
             push @line, '@prefix ' . $dbkey2 . ': <' . $self->{prefix2}{$dbkey2} . "> . # proxy for $dbkey: via identifiers.org";
         }
-
-        ;
     }
     return join( "\n", @line ) . "\n";
 }
