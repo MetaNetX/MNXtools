@@ -235,7 +235,7 @@ my %prefix_data =(
     ### SwissLipids
     slm => {
         scope => 'chem',
-        value => 'https://www.swisslipids.org/#/entity/SLM:',
+        value => 'https://swisslipids.org/rdf/SLM_',
         ident => 'SLM',
     },
     glycosphingo => {
