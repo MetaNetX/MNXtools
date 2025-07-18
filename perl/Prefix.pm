@@ -306,10 +306,6 @@ my %prefix_data =(
         value => 'http://purl.obolibrary.org/obo/CL_',
         ident => 'CL',
     },
-    reconx => {
-        scope => 'other',
-        value => 'https://reconx.vital-it.ch/kg/',
-    }
 );
 
 sub _validate_prefix_data{
