@@ -238,6 +238,10 @@ my %prefix_data =(
         value => 'https://www.swisslipids.org/#/entity/SLM:',
         ident => 'SLM',
     },
+    glycosphingo => {
+        scope => 'chem',
+        value => 'http://slm.example.org/glycosphingo/', # invented IRI as far as I know !!!
+    },
     rh => {
         scope => 'reac', # this is the dominant scope, but it is also used for compartment and vocabulary!
         value => 'http://rdf.rhea-db.org/',
