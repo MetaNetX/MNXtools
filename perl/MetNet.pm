@@ -6,7 +6,7 @@ no warnings;
 use POSIX qw( strftime );
 use Digest::CRC;
 use Carp;
-use Data::Dumper;
+#use Data::Dumper;
 
 sub compute_reac_id{ # A class method
     my( $equation, $prefix) = @_;
@@ -254,7 +254,7 @@ sub _store_reac{ # if $reac_id is already stored then the following fields are i
         $self->equa_store( $mnet_num, $reac_num, $equa_id ); # keep the internal data structure up to date
     }
     else{
-        #FIXME  check here the values of $reac_id, $equation, $equa_id
+        #FIXME check here the values of $reac_id, $equation, $equa_id
         $reac_num = ++$self->{counter};
         $self->{look}{reac}{$reac_id} = $reac_num;
         my( $left, $arrow, $right ) = $equation =~ /(.*) (<\-+|<=+>|\-+>|<\?>|=+) (.*)/;
