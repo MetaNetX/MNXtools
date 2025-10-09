@@ -185,7 +185,7 @@ my %prefix_data =(
     ### LIPIDMAPS ###
     lipidmapsM => {
         scope => 'chem',
-        value => 'http://www.lipidmaps.org/data/LMSDRecord.php?LMID=',
+        value => 'https://www.lipidmaps.org/databases/lmsd/',
         ident => 'lipidmaps',
     },
     ### MetaCyC ###
