@@ -302,13 +302,20 @@ sub convert{
     my %chem_ok = ();
     my %comp_ok = ();
     foreach my $new_id ( sort keys %reac_info ){
-        $metnet2->add_reac_add_enzy(
-            $dest_name,
-            $new_id,
-            $reac_info{$new_id}{equation},
-            $reac_info{$new_id}{mnxr},
-            $metnet2->merge_enzy_info( @{$reac_info{$new_id}{enzy}} ), # will unify the resulting models
-        );
+        eval{
+            $metnet2->add_reac_add_enzy(
+                $dest_name,
+                $new_id,
+                $reac_info{$new_id}{equation},
+                $reac_info{$new_id}{mnxr},
+                $metnet2->merge_enzy_info( @{$reac_info{$new_id}{enzy}} ), # will unify the resulting models
+            );
+        };
+        if( $@ ){
+            warn Dumper $reac_info{$new_id}; # prints out orig equation, which is essential to debug
+            die $@;
+        }
+
         my @info = $metnet->get_reac_info( $reac_info{$new_id}{from}[0] ); # $EC, $pathway, $xref
         @info    = $self->{ns}->get_reac_info( $reac_info{$new_id}{mnxr} ) if $reac_info{$new_id}{mnxr};
         $info[1] = ''; # pathway became a placeholder from now on (Oct 2020)
