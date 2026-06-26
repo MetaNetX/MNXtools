@@ -205,6 +205,12 @@ my %prefix_data =(
         scope => 'comp',
         value => 'http://brg.ai.sri.com/CCO/downloads/cco.html#',
     },
+    ### MetAtlas ### ( no distinction between the chem/reac )
+    metatlas => {
+        scope => 'other', #chem & reac
+        value => 'https://identifiers.org/metatlas:',
+        ident => 'metatlas',
+    },
     ### REACTOME ### ( no distinction between the chem/reac/comp )
     reactomeM => {
         scope => 'chem',
@@ -311,10 +317,10 @@ my %prefix_data =(
 sub _validate_prefix_data{
     foreach my $prefix ( sort keys %prefix_data ){
         foreach( 'scope', 'value' ){
-            die "Missing mandatory key $_ for prefix: $prefix\n" unless exists $prefix_data{$prefix}{$_};
+            die "Missing mandatory key $_ for prefix: $prefix\n"  unless exists $prefix_data{$prefix}{$_};
         }
         foreach( sort keys %{$prefix_data{$prefix}} ){
-            die "Invalid key for prefix $prefix: $_\n" unless /^(scope|value|ident|depr)$/;
+            die "Invalid key for prefix $prefix: $_\n"  unless /^(scope|value|ident|depr)$/;
         }
         unless( $prefix_data{$prefix}{scope} =~ /^(chem|reac|comp|pept|other)$/ ){
             die "Invalid scope for prefix $prefix: $prefix_data{$prefix}{scope}\n";
@@ -327,7 +333,7 @@ sub _validate_prefix_data{
         }
         if( exists $prefix_data{$prefix}{depr} ){
             foreach( @{$prefix_data{$prefix}{depr}} ){
-                die "Invalid ident syntax for prefix $prefix: $_\n" unless /^\w+$/;
+                die "Invalid ident syntax for prefix $prefix: $_\n"  unless /^\w+$/;
             }
         }
     }
