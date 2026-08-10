@@ -70,12 +70,12 @@ my %prefix_data =(
     inchi => {
         scope => 'chem',
         value => 'https://identifiers.org/inchi:',
-        ident => 'inchi',
+        # ident => 'inchi',
     },
     inchikey => {
         scope => 'chem',
         value => 'https://identifiers.org/inchikey:',
-        ident => 'inchikey',
+        # ident => 'inchikey',
     },
     ### BiGG ###
     biggM => {
@@ -126,14 +126,14 @@ my %prefix_data =(
     hmdb => {
         scope => 'chem',
         value => 'https://identifiers.org/hmdb:',
-        ident => 'hmdb',
+        # ident => 'hmdb',
     },
     # KEGG (the orignial IRI are not very consistent!)
     keggC => {
         scope => 'chem',
         value => 'https://www.genome.jp/kegg/',
         ident => 'kegg.compound',
-        depr  => [ 'kegg' ],
+        depr  => [ 'kegg', 'keggE' ],
     },
     keggD => {
         scope => 'chem',
@@ -147,12 +147,12 @@ my %prefix_data =(
         ident => 'kegg.glycan',
         depr  => [ 'kegg' ],
     },
-    keggE => {
-        scope => 'chem',
-        value => 'https://www.genome.jp/kegg/',
-        ident => 'kegg.environ',
-        depr  => [ 'kegg' ],
-    },
+#    keggE => { # deprecated
+#        scope => 'chem',
+#        value => 'https://www.genome.jp/kegg/',
+#        ident => 'kegg.environ',
+#        depr  => [ 'kegg' ],
+#    },
     keggR => {
         scope => 'reac',
         value => 'https://www.genome.jp/kegg/reaction/',
@@ -209,21 +209,25 @@ my %prefix_data =(
     metatlas => {
         scope => 'other', #chem & reac
         value => 'https://identifiers.org/metatlas:',
-        ident => 'metatlas',
+        # ident => 'metatlas',
     },
-    ### REACTOME ### ( no distinction between the chem/reac/comp )
-    reactomeM => {
-        scope => 'chem',
-        value => 'https://reactome.org/content/detail/',
-        ident => 'reactome',
-        depr  => [ 'reactome' ],
-    },
-    reactomeR => {
-        scope => 'reac',
-        value => 'https://reactome.org/content/detail/', # same as above !
-        ident => 'reactome', # reactome and identifiers.org utilise the same prefix for metabolites and reactions.
+    ### REACTOME ### ( no distinction between the chem/reac/pathway )
+#    reactomeM => {
+#        scope => 'other',
+#        value => 'https://reactome.org/content/detail/',
+#        ident => 'reactome',
+#        # depr  => [ 'reactome' ],
+#    },
+#    reactomeR => {
+#        scope => 'reac',
+#        value => 'https://reactome.org/content/detail/', # same as above !
+#        ident => 'reactome', # reactome and identifiers.org utilise the same prefix for metabolites and reactions.
                              # Duplicated prefix declarations may cause problem in some implementation of SPARQL engine.
-        depr  => [ 'reactome' ],
+#        depr  => [ 'reactome' ],
+#    },
+    reactome => {
+        scope => 'other',
+        value => 'https://identifiers.org/reactome:',
     },
     ### Sabio-RK ###
     sabiorkM => {
@@ -274,7 +278,7 @@ my %prefix_data =(
         scope => 'pept',
         value => 'http://purl.uniprot.org/uniprot/',
         ident => 'uniprot',             # 'protein entries'
-        depr  => [ 'up', 'euk', 'arch', 'bact' ],
+        depr  => [ 'euk', 'arch', 'bact' ],
     },
     ### Taxonomy ###
     taxon => {
@@ -328,12 +332,20 @@ sub _validate_prefix_data{
         unless( $prefix_data{$prefix}{value} ){
             die "Empty value for prefix $prefix!\n";
         }
-        if( exists $prefix_data{$prefix}{ident} and $prefix_data{$prefix}{ident} !~ /^[\w\.]+$/ ){
-            die "Invalid ident syntax for prefix $prefix: $prefix_data{$prefix}{ident}\n";
+        if( exists $prefix_data{$prefix}{ident} ){
+            if( $prefix_data{$prefix}{ident} !~ /^[\w\.]+$/ ){
+                die "Invalid ident syntax for prefix $prefix: $prefix_data{$prefix}{ident}\n";
+            }
+            if( exists $prefix_data{$prefix_data{$prefix}{ident}} ){
+                die "Secondary identifiers.org prefix must be different from primary: $prefix\n";
+            }
         }
         if( exists $prefix_data{$prefix}{depr} ){
             foreach( @{$prefix_data{$prefix}{depr}} ){
                 die "Invalid ident syntax for prefix $prefix: $_\n"  unless /^\w+$/;
+                if( exists $prefix_data{$_} ){
+                    die "Deprecated prefix must be different from primary: $_\n";
+                }
             }
         }
     }
@@ -367,17 +379,9 @@ sub get_prefix_data{
     return \%prefix_data;
 }
 
-sub get_turtle_prefixes{
+sub _get_turtle_prefixes{
     my $self = shift;
-    my @line = (
-        '# This list of prefixes was automatically generated with a perl script.',
-        '# !!! Manual modifications will be lost !!!',
-        '# This is how to regenerate it:',
-        '# clone https://github.com/MetaNetX/MNXtools.git MNXtools',
-        '# cd MNXtools/perl',
-        q|# perl -e 'use lib "."; use Prefix; print Prefix->new()->get_turtle_prefixes()' > prefixes.ttl|,
-        '',
-    );
+    my @line = ();
     my %seen;
     foreach my $dbkey ( sort keys %{$self->{prefix}} ){
         $seen{$dbkey} = 1;
@@ -388,6 +392,20 @@ sub get_turtle_prefixes{
             push @line, '@prefix ' . $dbkey2 . ': <' . $self->{prefix2}{$dbkey2} . "> . # proxy for $dbkey: via identifiers.org";
         }
     }
+    return @line;
+}
+sub get_turtle_prefixes{
+    my $self = shift;
+    my @line = (
+        '# This list of prefixes was automatically generated with a perl script.',
+        '# !!! Manual modifications will be lost !!!',
+        '# This is how to regenerate it:',
+        '# clone https://github.com/MetaNetX/MNXtools.git MNXtools',
+        '# cd MNXtools/perl',
+        q|# perl -e 'use lib "."; use Prefix; print Prefix->new()->get_turtle_prefixes()' > prefixes.ttl|,
+        '',
+        $self->_get_turtle_prefixes()
+    );
     return join( "\n", @line ) . "\n";
 }
 
@@ -401,47 +419,72 @@ sub get_prefix_ontology{
         '# cd MNXtools/perl',
         q|# perl -e 'use lib "."; use Prefix; print Prefix->new()->get_prefix_ontology()' > prefixes.ttl|,
         '',
-        'prefix   sh: <http://www.w3.org/ns/shacl#>',
-        'prefix  xsd: <http://www.w3.org/2001/XMLSchema#>',
-        'prefix  owl: <http://www.w3.org/2002/07/owl#>',
-        'prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>',
+        '@prefix  mnx: <https://rdf.metanetx.org/schema/> .',
+        '@prefix   sh: <http://www.w3.org/ns/shacl#> .',
+        '@prefix  xsd: <http://www.w3.org/2001/XMLSchema#> .',
+        '@prefix  owl: <http://www.w3.org/2002/07/owl#> .',
+        '@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .',
+        '@prefix vann: <http://purl.org/vocab/vann/> .',
+        '@prefix skos: <http://www.w3.org/2004/02/skos/core#> .',
+        '@prefix dcterms: <http://purl.org/dc/terms/> .',
         '',
-        '_:sparql_examples_prefixes',
+        $self->_get_turtle_prefixes(),
+        '',
+        'mnx:prefix_ontology',
         '   a owl:Ontology ;',
+        '   rdfs:label "MetaNetX / ReconXKG SPARQL prefixes" ; ',
+        '   owl:versionInfo "2026-07-07" ;',
+        '   dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;',
         '   rdfs:comment """
-This is a collection of SPARQL prefixes used by MetaNetX.
-Nota Bene: There are often two prefixes for the same entity. One corresponds to
-the IRI used by the RDF community at SIB, and often starts with "http://purl.". It
-is the recommended prefix. The other prefix corresponds to the "MIRIAM" prefixes
-which were adopted by the Systems Biology community (https://sbml.org/documents/elaborations/miriam_annotation_syntax/),
-and typically starts with "https://identifiers.org/". Very unfortunately, identifiers.org
-has promoted the usage of the short form of IRIs in SBML annotations, and is maintaining
-a list of "official" MIRIAM prefixes at https://registry.identifiers.org. To ensure
-interoperability with the Systems Biology community and avoid namespace clashes, MetaNetX
-has to respects the MIRIAM prefixe nomenclature, and has no other choice than to define
-ad hoc prefixes for those not covered by MIRIAM.
+This is the collection of SPARQL prefixes used by MetaNetX.
 
-""" ;',
-        'owl:imports sh: .',
+Nota Bene: a resource is often addressable through two prefixes that denote the
+same entities. The PRIMARY (recommended) prefix binds the native, authoritative
+IRI issued by the resource provider - a "http://purl.obolibrary.org/..." or SIB
+purl for OBO/SIB resources, or the provider\'s own IRI otherwise (e.g.
+"http://bigg.ucsd.edu/...", "https://www.genome.jp/kegg/..."). The SECONDARY prefix
+binds the corresponding "MIRIAM" form adopted by the Systems Biology community
+(https://sbml.org/documents/elaborations/miriam_annotation_syntax/), which
+starts with "https://identifiers.org/". Very unfortunately, identifiers.org has
+promoted the short form of IRIs in SBML annotations and maintains the list of
+"official" MIRIAM prefixes at https://registry.identifiers.org. To ensure
+interoperability with the Systems Biology community and avoid namespace clashes,
+MetaNetX provides the MIRIAM prefix nomenclature, and defines ad hoc prefixes for
+resources not covered by MIRIAM.
+
+Conventions used here:
+- each binding is a sh:PrefixDeclaration (sh:prefix / sh:namespace);
+- the primary declaration of a resource carries vann:preferredNamespacePrefix
+  and vann:preferredNamespaceUri, naming the recommended prefix and IRI;
+- the primary and secondary declarations of the same resource are linked, in
+  both directions, by skos:exactMatch (they are interchangeable, not asserted
+  owl:sameAs);
+- some resources exist only under identifiers.org (e.g. hmdb, inchi, inchikey,
+  sbo): there the MIRIAM form has no native counterpart and is itself the primary.
+""" . ',
        ''
     );
     foreach my $dbkey ( sort keys %{$self->{prefix}} ){
         my $scope = $prefix_data{$dbkey}{scope} || 'other';
         push @line,
-            "_:sparql_examples_prefixes sh:declare _:prefix_$dbkey .",
-            "_:prefix_$dbkey ",
+            "mnx:prefix_ontology sh:declare mnx:prefix_$dbkey .",
+            "mnx:prefix_$dbkey a sh:PrefixDeclaration ;",
             "   rdfs:comment 'A primary prefix for $scope entries';",
             "   sh:prefix '$dbkey' ;",
-            "   sh:namespace '$self->{prefix}{$dbkey}'^^xsd:anyURI .",
+            "   sh:namespace '$self->{prefix}{$dbkey}'^^xsd:anyURI ;",
+            "   vann:preferredNamespacePrefix '$dbkey' ;",
+            "   vann:preferredNamespaceUri '$self->{prefix}{$dbkey}'^^xsd:anyURI .",
             '';
         if( my $dbkey2 = $self->{same_as}{$dbkey} ){
             push @line,
-                "_:sparql_examples_prefixes sh:declare _:prefix_$dbkey2 .",
-                "_:prefix_$dbkey2 ",
+                "mnx:prefix_ontology sh:declare mnx:prefix_$dbkey2 .",
+                "mnx:prefix_$dbkey2 a sh:PrefixDeclaration ;",
                 "   rdfs:comment 'A secondary prefix for $scope entries, i.e. this is a proxy for $dbkey via identifiers.org';",
-                "   rdfs:seeAlso _:prefix_$dbkey ;",
                 "   sh:prefix '$dbkey2' ;",
                 "   sh:namespace '$self->{prefix2}{$dbkey2}'^^xsd:anyURI .",
+                '',
+                "mnx:prefix_$dbkey skos:exactMatch mnx:prefix_$dbkey2 .",
+                "mnx:prefix_$dbkey2 skos:exactMatch mnx:prefix_$dbkey .",
                 '';
         }
     }
