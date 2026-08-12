@@ -78,7 +78,8 @@ sub system{
 
     $self->report( 'system', $cmd, 'magenta' ) if $self->{verbose};
     $ENV{MNX_INDENT_COUNTER} += 1;
-    unless( system( $cmd ) == 0 ){
+    my $ret = CORE::system($cmd);
+    unless( $ret == 0 ){
         $self->warn( $cmd ) unless $self->{verbose};
         # the following code was adapted from `perldoc -f system`
         if( $? == -1 ){
