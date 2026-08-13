@@ -228,6 +228,7 @@ my %prefix_data =(
     reactome => {
         scope => 'other',
         value => 'https://identifiers.org/reactome:',
+        depr  => [ 'reactomeR', 'reactomeM' ],
     },
     ### Sabio-RK ###
     sabiorkM => {
