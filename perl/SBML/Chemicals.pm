@@ -123,7 +123,7 @@ sub parse_Chemicals_Info{
                         push @{ $chemicals->{ $clean_Sid }->{'xrefs'} }, map { 'mnx:'.$_ } @{$notes->{$note}};
                     }
                     elsif ( $note eq 'REACTOME' ){
-                        push @{ $chemicals->{ $clean_Sid }->{'xrefs'} }, map { 'reactomeM:'.$_ } @{$notes->{$note}};
+                        push @{ $chemicals->{ $clean_Sid }->{'xrefs'} }, map { 'reactome:'.$_ } @{$notes->{$note}};
                     }
                     elsif ( $note eq 'SEED' ){
                         push @{ $chemicals->{ $clean_Sid }->{'xrefs'} }, map { 'seedM:'.$_ } @{$notes->{$note}};

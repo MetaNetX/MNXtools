@@ -74,8 +74,8 @@ sub clean_chem_annotation {
     elsif ( $prefix eq 'metanetx.chemical' ){
         $annotation = 'mnx:'.$id;
     }
-    elsif ( $prefix eq 'reactome.compound' || $prefix eq 'reactome' ){
-        $annotation = 'reactomeM:'.$id;
+    elsif ( $prefix eq 'reactome.compound' || $prefix eq 'reactomeM' ){
+        $annotation = 'reactome:'.$id;
     }
     elsif ( $prefix eq 'sabiork.compound' ){
         $annotation = 'sabiorkM:'.$id;
@@ -141,8 +141,8 @@ sub clean_reac_annotation {
     elsif ( $prefix eq 'metanetx.reaction' ){
         $annotation = 'mnx:'.$id;
     }
-    elsif ( $prefix eq 'reactome.reaction' || $prefix eq 'reactome' ){
-        $annotation = 'reactomeR:'.$id;
+    elsif ( $prefix eq 'reactome.reaction' || $prefix eq 'reactomeR' ){
+        $annotation = 'reactome:'.$id;
     }
     elsif ( $prefix eq 'sabiork.reaction' ){
         $annotation = 'sabiorkR:'.$id;
