@@ -86,7 +86,7 @@ sub format_Chemical {
         $compartment_in_chem = $original_boundary_compartment;
     }
 
-#    $chemical_Sid =~ s{^M_(.+)$}{$1};
+    $chemical_Sid =~ s{^M_(.+)$}{$1};
     $chemical_Sid =~ s{^_+(.+)$}{$1};
     # Different cases of compartement pasted at the end of chemical id
     if ( $chemical_Sid =~ /^(.+?)__64__${compartment_in_chem}$/ ){
