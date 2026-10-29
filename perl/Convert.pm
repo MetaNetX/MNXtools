@@ -22,12 +22,12 @@ sub new{
         ns           => $chem_space,
         gene_space   => $gene_space,
         prefix_space => Prefix->new(),
-        log4yaml   => [],
-        chem_log   => {}, # helper data structure to build the log
-        comp_log   => {}, # ditto
-        reac_log   => {}, # ditto
-        count      => {},
-        chem_dict  => {},
+        log4yaml     => [],
+        chem_log     => {}, # helper data structure to build the log
+        comp_log     => {}, # ditto
+        reac_log     => {}, # ditto
+        count        => {},
+        chem_dict    => {},
         option => {
             true_PMF     => 0, # the default is to blurr the distinction between H(+) and PMF
             comp_premap  => {},
@@ -44,16 +44,16 @@ sub _use_xref{
     my %chem_map = ();
     my %xref_unk = ();
     my %chem_seen = ();
-    $chem_seen{$self->{chem_dict}{$_}} = 1 foreach keys %{$self->{chem_dict}}; # already attributed
+    $chem_seen{$self->{chem_dict}{$_}} = 1  foreach keys %{$self->{chem_dict}}; # already attributed
     foreach my $chem_old ( sort $metnet->select_chem_ids( mnet => $source_name )){
-        next if exists $self->{chem_dict}{$chem_old}; # already assigned
+        next  if exists $self->{chem_dict}{$chem_old}; # already assigned
         my $source_old = $metnet->get_chem_source( $source_name, $chem_old ) || $chem_old;
         my( $desc, $formula, $mass, $charge, $xref ) =  $metnet->get_chem_info( $chem_old );
         my @chem_unk = ();
         my @chem_id = $use_chem_id ? ( $chem_old ) : ();
         if( defined $xref_regexp ){
             foreach( split /;/, $xref ){
-                push @chem_id, $_ if $_ =~ $xref_regexp;
+                push @chem_id, $_  if $_ =~ $xref_regexp;
             }
         }
         foreach my $chem_id ( @chem_id ){
@@ -63,7 +63,7 @@ sub _use_xref{
                 my %buf = ();
                 foreach my $prefix ( $self->{prefix_space}->get_prefix_from_depr( 'chem', $dbkey )){
                     ( $chem_new, $msg ) = $self->{ns}->map_chem( $prefix . ':' . $id );
-                    $buf{$chem_new} = 1 if $chem_new !~ /^UNK:/;
+                    $buf{$chem_new} = 1  if $chem_new !~ /^UNK:/;
                 }
                 my @buf = keys %buf;
                 if( @buf == 1 ){
@@ -83,12 +83,12 @@ sub _use_xref{
         my @chem_old = keys %$cluster;
         my %val = ();
         foreach my $chem_old ( @chem_old ){
-            $val{$_} = 1 foreach keys %{$cluster->{$chem_old}};
+            $val{$_} = 1  foreach keys %{$cluster->{$chem_old}};
         }
         my @chem_new = keys %val;
         my $ok = 1;
         foreach( @chem_new ){
-            $ok = 0 if exists $chem_seen{$_}
+            $ok = 0  if exists $chem_seen{$_}
         }
         if( ! $ok ){
             foreach my $chem_old ( @chem_old ){
@@ -117,12 +117,12 @@ sub _use_xref{
         else{ # @chem_new > 1 ambiguous or conflicting mappings
             my $parent = ''; # looks for incests, i.e. parent/child relations
             foreach my $chem_new ( @chem_new ){
-                next if $parent;
+                next  if $parent;
                 my %ok = ();
                 $ok{$_} = 1 foreach $self->{ns}->search_chem_isom( $chem_new );
                 $parent = $chem_new;
                 foreach( @chem_new ){
-                    $parent = '' unless exists $ok{$_};
+                    $parent = ''  unless exists $ok{$_};
                 }
             }
             if( $parent ){ # one of chem is a parent of all the others
@@ -173,7 +173,7 @@ sub _premap_map_equation{
 sub _interpret_chem_map_rule{
     my $chem_map_rule = shift;
     $chem_map_rule =~ s/[^\w,\.\-\/]//; # security
-    return ( '', 1 ) unless $chem_map_rule; # ( no xref, use ID ) by default
+    return ( '', 1 )  unless $chem_map_rule; # ( no xref, use ID ) by default
     my @rule = ();
     foreach my $rule ( split /\//, $chem_map_rule ){
         my @xref     = ();
@@ -206,7 +206,7 @@ sub _interpret_chem_map_rule{
 sub convert{
     my( $self, $metnet, $source_name, $metnet2, $dest_name, $chem_map_rule, $option ) = @_;
     foreach( sort keys %$option ){
-        $tb->die( "Invalid option key: $_" ) unless /^prefix|use_chem_ID|use_chem_xref|generic_comp$/;
+        $tb->die( "Invalid option key: $_" )  unless /^prefix|use_chem_ID|use_chem_xref|generic_comp$/;
     }
     $self->{log4yaml}   = []; # reset
     $self->{chem_dict}  = {};
@@ -214,11 +214,11 @@ sub convert{
     $self->{comp_log}   = {};
     $self->{reac_log}   = {};
     my @chem_map_rule = _interpret_chem_map_rule( $chem_map_rule );
-    $self->_use_xref( $metnet, $source_name, @{$_} ) foreach @chem_map_rule;
+    $self->_use_xref( $metnet, $source_name, @{$_} )  foreach @chem_map_rule;
     my %reac_info = (); # Reac-centric temporary data structure to prepare the new model
     foreach my $reac_id ( sort $metnet->select_reac_ids( mnet => $source_name ) ){
         my $eq_orig = $metnet->get_reac_equation( $reac_id );
-        $eq_orig    = $self->_premap_comp( $eq_orig ) if $self->{option}{comp_premap};
+        $eq_orig    = $self->_premap_comp( $eq_orig )  if $self->{option}{comp_premap};
         my $source  = $metnet->get_reac_source( $source_name, $reac_id );
         my( $new_id, # might be '' if reaction is empty
             $eq_new,
@@ -242,7 +242,7 @@ sub convert{
         $self->{reac_log}{$reac_id}{ID_dst} = $new_id;
         my $spec_loss = 0;
         foreach( @$msg ){
-            $spec_loss = 1 if /REAC_MAP_LOSS/;
+            $spec_loss = 1  if /REAC_MAP_LOSS/;
         }
         if( ! $spec_loss ){
             if( $mnxr_id ){
@@ -264,10 +264,10 @@ sub convert{
                 enzy      => [],
                 from      => [ $reac_id ],
             };
-            $reac_info{$new_id}{source}{$_} = 1 foreach split /;/, $source;
+            $reac_info{$new_id}{source}{$_} = 1  foreach split /;/, $source;
         }
         else{ # Equations merge: just need to update source and evid
-            $reac_info{$new_id}{source}{$_} = 1 foreach split /;/, $source;
+            $reac_info{$new_id}{source}{$_} = 1  foreach split /;/, $source;
             push @{$reac_info{$new_id}{from}}, $reac_id;
         }
         $sign = $option->{generic_comp} ? $sign_gen : $sign;
@@ -317,7 +317,7 @@ sub convert{
         }
 
         my @info = $metnet->get_reac_info( $reac_info{$new_id}{from}[0] ); # $EC, $pathway, $xref
-        @info    = $self->{ns}->get_reac_info( $reac_info{$new_id}{mnxr} ) if $reac_info{$new_id}{mnxr};
+        @info    = $self->{ns}->get_reac_info( $reac_info{$new_id}{mnxr} )  if $reac_info{$new_id}{mnxr};
         $info[1] = ''; # pathway became a placeholder from now on (Oct 2020)
         $metnet2->set_reac_info( $new_id, @info );
         $metnet2->set_reac_source( $dest_name, $new_id, join ';', sort keys %{$reac_info{$new_id}{source}} );
@@ -341,7 +341,7 @@ sub convert{
         $self->{chem_log}{$chem_old}{name_src} = $info[0];
         $self->{chem_log}{$chem_old}{sources}  = $source_old;
         push @{$chem_new2old{$chem_new}}, $chem_old;
-        $chem_source{$chem_new}{$_} = 1 foreach split /;/, $source_old;
+        $chem_source{$chem_new}{$_} = 1  foreach split /;/, $source_old;
 #        if( $chem_new =~ /^UNK:/ ){
 #            push @{$self->{chem_log}{$chem_old}{status}}, @$msg;
 #        }
@@ -357,12 +357,12 @@ sub convert{
         my @info = ();
         if( $chem_id =~ /^UNK:(.+)/ ){
             @info = eval{ $metnet->get_chem_info( $1 )};
-            @info = eval{ $metnet->get_chem_info( $chem_id )} if $@;
+            @info = eval{ $metnet->get_chem_info( $chem_id )}  if $@;
         }
         else{
             @info = $self->{ns}->get_chem_info( $chem_id );
         }
-        $info[0] = $chem_id unless $info[0];
+        $info[0] = $chem_id  unless $info[0];
         $metnet2->set_chem_info( $chem_id, @info );
         $metnet2->set_chem_source( $dest_name, $chem_id, join ';', sort keys %{$chem_source{$chem_id}} );
     }
@@ -380,7 +380,7 @@ sub convert{
             my @info = $metnet->get_comp_info( $comp_old );
             my( $comp_new, $msg ) = $self->{ns}->map_comp( $comp_old );
             $self->{comp_log}{$comp_old}{ID_dst} = $comp_new;
-            $comp_source{$comp_new}{$_} = 1 foreach split /;/, $source_old;
+            $comp_source{$comp_new}{$_} = 1  foreach split /;/, $source_old;
             push @{$comp_new2old{$comp_new}}, $comp_old;
             push @{$self->{comp_log}{$comp_old}{status}}, @$msg;
         }
@@ -413,7 +413,7 @@ sub convert{
                 eval{ @info = $metnet->get_pept_info( $2) };
             }
         }
-        $info[0] = $pept_id unless $info[0]; # don't leave this field empty for the sake of display
+        $info[0] = $pept_id  unless $info[0]; # don't leave this field empty for the sake of display
         $metnet2->set_pept_info( $pept_id, @info );
     }
 
@@ -429,10 +429,10 @@ sub convert{
             my $blue_proton = $red_proton;
             $blue_proton =~ s/^MNXM01\@/MNXM1\@/;
             my( $comp ) = $red_proton =~ /\@(\S+)/;
-            next if $comp eq 'BOUNDARY';
+            next  if $comp eq 'BOUNDARY';
             my( $new_id, $eq_new, $sign, $is_balanced, $msg, $mnxr_id, $str_gen, $sign_gen ) = $self->{ns}->map_equation( "1 $red_proton = 1 $blue_proton" );
-            next if exists $reac_info{$new_id};
-            next if $new_id eq 'mnxr01d2'; # mnxr01d1 is enough
+            next  if exists $reac_info{$new_id};
+            next  if $new_id eq 'mnxr01d2'; # mnxr01d1 is enough
             $metnet2->add_reac_add_enzy( $dest_name, $new_id, $eq_new, $mnxr_id, 'SPONTANEOUS', 'NA', 'NA', 'B' );
         }
     }
@@ -445,14 +445,14 @@ sub convert{
     %chem_ok = ();
     foreach( $metnet2->select_chem_ids( mnet => $dest_name )){
         $chem_ok{$_} = 1;
-        $parent{$_}  = 1 if exists $self->{ns}{chem_isom}{$_}; # else ignore to speed up
+        $parent{$_}  = 1  if exists $self->{ns}{chem_isom}{$_}; # else ignore to speed up
     }
     foreach my $parent ( sort keys %parent ){
         my @isom  = $self->{ns}->search_chem_isom( $parent );
         my @child = ();
         foreach my $child ( @isom ){
-            next unless $chem_ok{$child};
-            next if $child eq $parent;
+            next  unless $chem_ok{$child};
+            next  if $child eq $parent;
             push @child, $child;
         }
         if( @child ){
@@ -546,7 +546,7 @@ sub _premap_comp{
     my $str_new = $str_old;
     my %seen = ();
     while( $str_old =~ /\@(\S+) /g ){
-        next if $seen{$1};
+        next  if $seen{$1};
         if( exists $self->{option}{comp_premap}{$1} ){
             my $old_comp = $1;
             $seen{$old_comp} = 1;
